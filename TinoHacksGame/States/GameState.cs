@@ -97,6 +97,14 @@ namespace TinoHacksGame.States
                 Size = new Point(1000, 30),
             };
 
+            Platform plat2 = new Platform(this)
+            {
+                Texture = Content.Load<Texture2D>("Blank"),
+                Position = new Vector2(300, 600),
+                Size = new Point(300, 20),
+            };
+
+            Platforms.Add(plat2);
             Platforms.Add(plat);
         }
 

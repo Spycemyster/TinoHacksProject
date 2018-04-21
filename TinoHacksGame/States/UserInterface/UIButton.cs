@@ -22,6 +22,8 @@ namespace TinoHacksGame.States.UserInterface
             set;
         }
 
+        private float timer;
+
         /// <summary>
         /// Creates a new instance of a <c>UIButton</c>.
         /// </summary>
@@ -37,6 +39,16 @@ namespace TinoHacksGame.States.UserInterface
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (IsSelected)
+            {
+                timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                Opacity = (float)(Math.Cos(timer / 500f) / 2f + 0.5f);
+            }
+            else
+            {
+                timer = 0f;
+                Opacity = Math.Min(1f, Opacity + 0.01f);
+            }
         }
 
         /// <summary>
@@ -48,7 +60,7 @@ namespace TinoHacksGame.States.UserInterface
             base.Draw(spriteBatch);
 
             Rectangle dr = GetDrawRectangle();
-            spriteBatch.Draw(Texture, dr, Color);
+            spriteBatch.Draw(Texture, dr, Color * Opacity);
             Vector2 pos = new Vector2(dr.X + dr.Width / 2 - Font.MeasureString(Text).X / 2,
                 dr.Y + dr.Height / 2 - Font.MeasureString(Text).Y / 2);
             spriteBatch.DrawString(Font, Text, pos + new Vector2(1, 1), Color.Black * 0.3f);

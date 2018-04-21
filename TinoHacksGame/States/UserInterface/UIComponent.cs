@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,11 @@ namespace TinoHacksGame.States.UserInterface
         /// When the user leaves the <c>UIComponent</c>.
         /// </summary>
         public UIEvent OnLeave;
+
+        /// <summary>
+        /// When the user presses on the <c>UIComponent</c>.
+        /// </summary>
+        public UIEvent OnPress;
 
         /// <summary>
         /// The text of the <c>UIComponent</c>.
@@ -83,6 +89,9 @@ namespace TinoHacksGame.States.UserInterface
                 {
                     OnEnter?.Invoke(arg);
                 }
+
+                if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.A))
+                    OnPress?.Invoke(arg);
 
                 isEntered = true;
 

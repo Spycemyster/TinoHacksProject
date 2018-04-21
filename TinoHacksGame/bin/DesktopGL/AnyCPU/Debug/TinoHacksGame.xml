@@ -497,6 +497,11 @@
             When the user leaves the <c>UIComponent</c>.
             </summary>
         </member>
+        <member name="F:TinoHacksGame.States.UserInterface.UIComponent.OnPress">
+            <summary>
+            When the user presses on the <c>UIComponent</c>.
+            </summary>
+        </member>
         <member name="P:TinoHacksGame.States.UserInterface.UIComponent.Text">
             <summary>
             The text of the <c>UIComponent</c>.

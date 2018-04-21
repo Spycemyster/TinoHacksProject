@@ -4,11 +4,11 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>D:/TinoHacksProject/TinoHacksGame/Content/Blank.png</File>
-    <File>D:/TinoHacksProject/TinoHacksGame/Content/Font.spritefont</File>
-    <File>D:/TinoHacksProject/TinoHacksGame/Content/FPSCounter_Font.spritefont</File>
-    <File>D:/TinoHacksProject/TinoHacksGame/Content/BackArrow.png</File>
-    <File>D:/TinoHacksProject/TinoHacksGame/Content/Placeholder.png</File>
-    <File>D:/TinoHacksProject/TinoHacksGame/Content/Cursor.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Blank.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Font.spritefont</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/FPSCounter_Font.spritefont</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/BackArrow.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Placeholder.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Cursor.png</File>
   </SourceFiles>
 </SourceFileCollection>
