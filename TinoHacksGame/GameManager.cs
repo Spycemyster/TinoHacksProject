@@ -60,12 +60,7 @@ namespace TinoHacksGame
         {
             graphicsDevice = game.GraphicsDevice;
             Content = new ContentManager(game.Content.ServiceProvider, "Content");
-<<<<<<< HEAD
-
-            ChangeScreen(Screens.GAME);
-=======
-            ChangeScreen(Screens.MENU);
->>>>>>> 5ce82ee53195aa61ecfba7dcb17a1727f4f4ef23
+            ChangeScreen(Screens.MAINMENU);
         }
 
         /// <summary>
@@ -80,7 +75,7 @@ namespace TinoHacksGame
                 case Screens.GAME:
                     CurrentState = new GameState();
                     break;
-                case Screens.MENU:
+                case Screens.MAINMENU:
                     CurrentState = new MenuState();
                     break;
             }
@@ -120,6 +115,21 @@ namespace TinoHacksGame
         /// <summary>
         /// The state where the player chooses menu options from.
         /// </summary>
-        MENU,
+        MAINMENU,
+
+        /// <summary>
+        /// The state where the player selects their characters.
+        /// </summary>
+        PLAYERSELECT,
+
+        /// <summary>
+        /// The state where the player edits the configs.
+        /// </summary>
+        SETTINGS,
+
+        /// <summary>
+        /// The state where the player chooses an online lobby.
+        /// </summary>
+        ONLINELOBBY,
     }
 }

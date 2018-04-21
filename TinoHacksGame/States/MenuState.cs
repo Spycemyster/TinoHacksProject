@@ -42,6 +42,11 @@ namespace TinoHacksGame.States {
                     option = Math.Min(2, option + 1);
                     selectTimer = 0f;
                 }
+                
+                if (state.IsButtonDown(Buttons.A)) {
+                    Screens[] screens = { Screens.PLAYERSELECT, Screens.ONLINELOBBY, Screens.SETTINGS };
+                    GameManager.GetInstance().ChangeScreen(screens[0]);
+                }
             }
             selectTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
@@ -49,9 +54,9 @@ namespace TinoHacksGame.States {
         public override void Draw(SpriteBatch spriteBatch, GraphicsDevice device) {
             base.Draw(spriteBatch, device);
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Local", new Vector2(100, 100), option == 0 ? Color.Black : Color.Wheat);
-            spriteBatch.DrawString(font, "Online", new Vector2(100, 200), option == 1 ? Color.Black : Color.Wheat);
-            spriteBatch.DrawString(font, "Settings", new Vector2(100, 300), option == 2 ? Color.Black : Color.Wheat);
+            spriteBatch.DrawString(font, "Local", new Vector2(400, 100), option == 0 ? Color.Black : Color.Wheat);
+            spriteBatch.DrawString(font, "Online", new Vector2(400, 200), option == 1 ? Color.Black : Color.Wheat);
+            spriteBatch.DrawString(font, "Settings", new Vector2(400, 300), option == 2 ? Color.Black : Color.Wheat);
             spriteBatch.End();
         }
     }
