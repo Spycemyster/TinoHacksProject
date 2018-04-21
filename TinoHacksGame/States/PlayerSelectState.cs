@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TinoHacksGame.States {
     class PlayerSelectState : State {
+        private int[] playerOption = new int[4];
+        private float backButtonHeld = 0f;
         public PlayerSelectState() {
 
         }
@@ -23,6 +25,13 @@ namespace TinoHacksGame.States {
             
             for(int i = 0; i < 4; i++) {
                 GamePadCapabilities capabilities = GamePad.GetCapabilities(i);
+                if (capabilities.IsConnected) {
+                    GamePadState state = GamePad.GetState(i);
+
+                    if (state.IsButtonDown(Buttons.Back)) {
+                        backButtonHeld += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    }
+                }
             }
         }
 
