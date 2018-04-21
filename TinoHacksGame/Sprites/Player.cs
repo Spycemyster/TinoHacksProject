@@ -28,6 +28,7 @@ namespace TinoHacksGame.Sprites
         /// The speed in which the player moves at.
         /// </summary>
         public const float SPEED = 0.01f;
+        private float currentTime = 0.000f;
 
         /// <summary>
         /// The player number.
@@ -49,6 +50,7 @@ namespace TinoHacksGame.Sprites
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
+            currentTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             base.Update(gameTime);
             Size = Texture.Bounds.Size;
             IsFloating = true;
@@ -79,17 +81,31 @@ namespace TinoHacksGame.Sprites
                     Velocity = new Vector2(0.0f, Velocity.Y);
             }
 
-            if (!IsFloating && GamePad.GetState((int)index).IsButtonDown(Buttons.A))
+            if(!IsFloating)
             {
-                Velocity = new Vector2(Velocity.X, -1.3f);
-                IsFloating = true;
+                currentTime = 0.0f;
             }
 
-            if (IsFloating)
+            if (!IsFloating && GamePad.GetState((int)index).IsButtonDown(Buttons.A))
             {
-                Velocity += new Vector2(0, GameState.GRAVITY);
+                Console.WriteLine(currentTime);
+                currentTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if(currentTime < 15.0)
+                {
+                    Console.WriteLine(currentTime);
+                    Velocity = new Vector2(Velocity.X, -1.3f);
+                    IsFloating = true;
+                    currentTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                }
             }
-            else
+
+            if (IsFloating && !GamePad.GetState((int)index).IsButtonDown(Buttons.A))
+            {
+                if(Velocity.Y < GameState.GRAVITY*20)
+                    Velocity += new Vector2(0, GameState.GRAVITY);
+                currentTime = 0.0f;
+            }
+            else if(!GamePad.GetState((int)index).IsButtonDown(Buttons.A))
             {
                 Velocity = new Vector2(Velocity.X, 0.0f);
             }
