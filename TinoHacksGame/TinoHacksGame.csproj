@@ -56,6 +56,7 @@
     <Compile Include="State.cs" />
     <Compile Include="States\GameState.cs" />
     <Compile Include="States\MenuState.cs" />
+    <Compile Include="States\PlayerSelectState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

@@ -18,3 +18,8 @@ TinoHacksGame/obj/Debug/TinoHacksGame.csproj.FileListAbsolute.txt
 TinoHacksGame/obj/Debug/TinoHacksGame.exe
 TinoHacksGame/obj/Debug/TinoHacksGame.pdb
 .vs/TinoHacksGame/v15/Server/sqlite3/storage.ide-wal
+*.suo
+TinoHacksGame/Content/obj/DesktopGL/.mgcontent
+*.mgcontent
+*.mgcontent
+TinoHacksGame/obj/Debug/CoreCompileInputs.cache
