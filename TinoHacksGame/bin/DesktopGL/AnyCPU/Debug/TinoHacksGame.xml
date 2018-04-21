@@ -417,6 +417,16 @@
             <param name="spriteBatch"></param>
             <param name="device"></param>
         </member>
+        <member name="T:TinoHacksGame.States.PlayerSelectState">
+            <summary>
+            The state in which the players select their character.
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.States.PlayerSelectState.#ctor">
+            <summary>
+            Creates a new instance of the <c>PlayerSelectState</c>.
+            </summary>
+        </member>
         <member name="T:TinoHacksGame.States.UserInterface.Cursor">
             <summary>
             A selective cursor for the game.
@@ -544,6 +554,33 @@
             Creates a new instance of the <c>UIArg</c>.
             </summary>
             <param name="component"></param>
+        </member>
+        <member name="T:TinoHacksGame.States.UserInterface.Slide">
+            <summary>
+            A slide for selecting characters.
+            </summary>
+        </member>
+        <member name="P:TinoHacksGame.States.UserInterface.Slide.Index">
+            <summary>
+            The player controlling this <c>Slide</c>.
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.States.UserInterface.Slide.#ctor(Microsoft.Xna.Framework.Content.ContentManager)">
+            <summary>
+            Creates a new instance of <c>UISlide</c>
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.States.UserInterface.Slide.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the logic and conditional checking for the <c>UISlide</c>.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:TinoHacksGame.States.UserInterface.Slide.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the <c>Slide</c> to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
         </member>
     </members>
 </doc>

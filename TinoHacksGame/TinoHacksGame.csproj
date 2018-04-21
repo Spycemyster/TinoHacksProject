@@ -62,6 +62,7 @@
     <Compile Include="States\UserInterface\Cursor.cs" />
     <Compile Include="States\UserInterface\UIButton.cs" />
     <Compile Include="States\UserInterface\UIComponent.cs" />
+    <Compile Include="States\UserInterface\UISlide.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

@@ -75,9 +75,11 @@ namespace TinoHacksGame
                 case Screens.GAME:
                     CurrentState = new GameState();
                     break;
+
                 case Screens.MENU:
                     CurrentState = new MenuState();
                     break;
+
                 case Screens.PLAYERSELECT:
                     CurrentState = new PlayerSelectState();
                     break;
