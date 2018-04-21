@@ -34,7 +34,7 @@ namespace TinoHacksGame
         /// </summary>
         private GameManager()
         {
-
+            CurrentState = new State();
         }
         #endregion
 
