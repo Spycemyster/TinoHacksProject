@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using TinoHacksGame.Sprites;
 
 namespace TinoHacksGame.States
 {
@@ -23,9 +24,13 @@ namespace TinoHacksGame.States
         private float[] backButtonHeld = new float[4];  //for going back to main menu
         private float[][] selectTimer = new float[4][];  //player 1 2 3 4, down up left right.
 
+<<<<<<< HEAD
         /// <summary>
         /// Creates a new instance of the <c>PlayerSelectState</c>.
         /// </summary>
+=======
+        Texture2D placeHolder;
+>>>>>>> 99d3fb3fbc5f8beee5d620bde7682b3dc19ab92e
         public PlayerSelectState() {
             for (int i = 0; i < selectTimer.Length; i++) selectTimer[i] = new float[4];
             for (int i = 0; i < playerOption.Length; i++) playerOption[i] = -1;
@@ -35,6 +40,7 @@ namespace TinoHacksGame.States
         {
             base.Initialize(Content);
             font = Content.Load<SpriteFont>("Font");
+            placeHolder = Content.Load<Texture2D>("Placeholder");
         }
 
         public override void Update(GameTime gameTime)
@@ -112,7 +118,17 @@ namespace TinoHacksGame.States
                         {
                             int num = 0;
                             for (int j = 0; j < 4; j++) if (characterSelected[j]) num++;
-                            if(num == ControllersConnected()) GameManager.GetInstance().ChangeScreen(Screens.GAME);
+                            if (num == ControllersConnected()) {
+                                GameManager.GetInstance().Players = new List<Player>();
+                                for (int j = 0; j < num; j++) {
+                                    Player p = new Player(null, j) {
+                                        Texture = placeHolder,
+                                        Position = new Vector2(100, 0),
+                                    };
+                                    GameManager.GetInstance().Players.Add(p);
+                                }
+                                GameManager.GetInstance().ChangeScreen(Screens.GAME);
+                            }
                         }
                     }
 

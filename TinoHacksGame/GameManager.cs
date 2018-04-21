@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TinoHacksGame.Sprites;
 using TinoHacksGame.States;
 
 namespace TinoHacksGame
@@ -18,6 +19,11 @@ namespace TinoHacksGame
     {
         #region Single-Ton instance Code
         private static GameManager inst;
+
+        public List<Player> Players {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Retrieves the single ton instance of the <c>GameManager</c>.

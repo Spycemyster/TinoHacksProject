@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/FPSCounter_Font.spritefont</SourceFile>
-  <SourceTime>2018-04-21T11:19:22.0336094-07:00</SourceTime>
-  <DestFile>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/bin/DesktopGL/FPSCounter_Font.xnb</DestFile>
-  <DestTime>2018-04-21T14:07:19.8786771-07:00</DestTime>
+  <SourceFile>E:/GitHub/TinoHacksProject/TinoHacksGame/Content/FPSCounter_Font.spritefont</SourceFile>
+  <SourceTime>2018-04-21T10:49:48.2536395-07:00</SourceTime>
+  <DestFile>E:/GitHub/TinoHacksProject/TinoHacksGame/Content/bin/DesktopGL/FPSCounter_Font.xnb</DestFile>
+  <DestTime>2018-04-21T15:13:04.4026058-07:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2017-03-01T07:05:36-08:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

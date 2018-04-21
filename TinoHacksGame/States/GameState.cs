@@ -49,7 +49,7 @@ namespace TinoHacksGame.States
         /// </summary>
         public GameState()
         {
-            Players = new List<Player>();
+            Players = GameManager.GetInstance().Players;
             Platforms = new List<Platform>();
         }
 
@@ -63,32 +63,7 @@ namespace TinoHacksGame.States
 
             Texture2D placeHolder = Content.Load<Texture2D>("Placeholder");
 
-            Player p1 = new Player(this, PlayerIndex.One)
-            {
-                Texture = placeHolder,
-                Position = new Vector2(100, 0),
-            };
-
-            Player p2 = new Player(this, PlayerIndex.Two)
-            {
-                Texture = placeHolder,
-                Position = new Vector2(300, 0),
-            };
-            Player p3 = new Player(this, PlayerIndex.Three)
-            {
-                Texture = placeHolder,
-                Position = new Vector2(500, 0),
-            };
-            Player p4 = new Player(this, PlayerIndex.Four)
-            {
-                Texture = placeHolder,
-                Position = new Vector2(700, 0),
-            };
-
-            Players.Add(p1);
-            Players.Add(p2);
-            Players.Add(p3);
-            Players.Add(p4);
+            foreach (Player p in Players) p.state = this;
 
             Platform plat = new Platform(this)
             {
