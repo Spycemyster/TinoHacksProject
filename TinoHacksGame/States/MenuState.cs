@@ -32,7 +32,7 @@ namespace TinoHacksGame.States {
             base.Update(gameTime);
             GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
 
-            int selectDelay = 100;
+            int selectDelay = 200;
             if (capabilities.IsConnected) {
                 GamePadState state = GamePad.GetState(PlayerIndex.One);
                 if (state.ThumbSticks.Left.Y > 0.75f && selectTimerDown > selectDelay) {
