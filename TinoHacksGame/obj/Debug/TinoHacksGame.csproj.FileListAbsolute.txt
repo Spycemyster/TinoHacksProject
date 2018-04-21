@@ -14,3 +14,4 @@ E:\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\TinoHacksGam
 E:\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\MonoGame.Framework.dll
 E:\GitHub\TinoHacksProject\TinoHacksGame\obj\Debug\TinoHacksGame.exe
 E:\GitHub\TinoHacksProject\TinoHacksGame\obj\Debug\TinoHacksGame.pdb
+E:\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\Content\Font.xnb

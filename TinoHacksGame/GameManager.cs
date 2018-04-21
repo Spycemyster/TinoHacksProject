@@ -36,7 +36,7 @@ namespace TinoHacksGame
         /// </summary>
         private GameManager()
         {
-            CurrentState = new State();
+            
         }
         #endregion
 
@@ -61,6 +61,7 @@ namespace TinoHacksGame
         {
             graphicsDevice = game.GraphicsDevice;
             Content = new ContentManager(game.Content.ServiceProvider, "Content");
+            ChangeScreen(Screens.MENU);
         }
 
         /// <summary>
