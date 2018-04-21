@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TinoHacksGame.States;
 
 namespace TinoHacksGame
 {
@@ -47,6 +49,8 @@ namespace TinoHacksGame
             private set;
         }
 
+        private ContentManager Content;
+        private Screens Screen;
         private GraphicsDevice graphicsDevice;
 
         /// <summary>
@@ -56,6 +60,24 @@ namespace TinoHacksGame
         public void Initialize(Game1 game)
         {
             graphicsDevice = game.GraphicsDevice;
+        }
+
+        /// <summary>
+        /// Changes the <c>State</c> of the game.
+        /// </summary>
+        /// <param name="screen"></param>
+        public void ChangeScreen(Screens screen)
+        {
+            // switches the screen to the specified screen.
+            switch (screen)
+            {
+                case Screens.GAME:
+                    CurrentState = new GameState();
+                    break;
+                case Screens.MENU:
+                    CurrentState = new MenuState();
+                    break;
+            }
         }
 
         /// <summary>
@@ -75,5 +97,21 @@ namespace TinoHacksGame
         {
             CurrentState.Draw(spriteBatch, graphicsDevice);
         }
+    }
+
+    /// <summary>
+    /// The different screen states within the <c>GameManager</c>.
+    /// </summary>
+    public enum Screens
+    {
+        /// <summary>
+        /// The state where most of the gameplay will occur on.
+        /// </summary>
+        GAME,
+
+        /// <summary>
+        /// The state where the player chooses menu options from.
+        /// </summary>
+        MENU,
     }
 }
