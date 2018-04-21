@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,15 @@ namespace TinoHacksGame
         /// Creates a new instance of a <c>State</c>.
         /// </summary>
         public State()
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes the <c>State</c>.
+        /// </summary>
+        /// <param name="Content"></param>
+        public virtual void Initialize(ContentManager Content)
         {
 
         }

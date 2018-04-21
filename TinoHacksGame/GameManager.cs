@@ -14,7 +14,9 @@ namespace TinoHacksGame
     /// </summary>
     public class GameManager
     {
+        #region Single-Ton instance Code
         private static GameManager inst;
+
         /// <summary>
         /// Retrieves the single ton instance of the <c>GameManager</c>.
         /// </summary>
@@ -34,6 +36,27 @@ namespace TinoHacksGame
         {
 
         }
+        #endregion
+
+        /// <summary>
+        /// The current state of the game.
+        /// </summary>
+        public State CurrentState
+        {
+            get;
+            private set;
+        }
+
+        private GraphicsDevice graphicsDevice;
+
+        /// <summary>
+        /// Performs first time startup initialization and contenting loading.
+        /// </summary>
+        /// <param name="game"></param>
+        public void Initialize(Game1 game)
+        {
+            graphicsDevice = game.GraphicsDevice;
+        }
 
         /// <summary>
         /// Updates the <c>GameManager</c>'s logic and conditional checking.
@@ -41,7 +64,7 @@ namespace TinoHacksGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void Update(GameTime gameTime)
         {
-
+            CurrentState.Update(gameTime);
         }
 
         /// <summary>
@@ -50,7 +73,7 @@ namespace TinoHacksGame
         /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
-
+            CurrentState.Draw(spriteBatch, graphicsDevice);
         }
     }
 }
