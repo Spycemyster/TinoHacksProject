@@ -50,22 +50,11 @@ namespace TinoHacksGame.Sprites
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
             Size = Texture.Bounds.Size;
             IsFloating = true;
             if(Velocity.X < 2.5)
                 Velocity += GamePad.GetState((int)index).ThumbSticks.Left * SPEED;
-
-            if (GamePad.GetState((int)index).ThumbSticks.Left.Length() == 0)
-            {
-                if ((Velocity.X >= 0.1 || Velocity.X <= -0.1))
-                    Velocity -= new Vector2(Velocity.X*0.035f, Velocity.Y);
-                else //prevents player from sliding forever
-                    Velocity = new Vector2(0.0f, Velocity.Y);
-            }
-
-
-
+         
             foreach (Platform p in state.Platforms)
             {
                 Rectangle rect = GetDrawRectangle();
@@ -77,6 +66,20 @@ namespace TinoHacksGame.Sprites
                     IsFloating = false;
                     break;
                 }
+            }
+
+            if (GamePad.GetState((int)index).ThumbSticks.Left.Length() == 0 && !IsFloating)
+            {
+                if ((Velocity.X >= 0.1 || Velocity.X <= -0.1))
+                    Velocity -= new Vector2(Velocity.X * 0.05f, Velocity.Y);
+                else //prevents player from sliding forever
+                    Velocity = new Vector2(0.0f, Velocity.Y);
+            }
+
+            if (!IsFloating && GamePad.GetState((int)index).IsButtonDown(Buttons.A))
+            {
+                Velocity = new Vector2(Velocity.X, -1.3f);
+                IsFloating = true;
             }
 
             if (IsFloating)
