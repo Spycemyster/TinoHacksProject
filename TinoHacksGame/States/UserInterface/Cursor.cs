@@ -36,7 +36,7 @@ namespace TinoHacksGame.States.UserInterface
         {
             base.Update(gameTime);
             Vector2 dPos = GamePad.GetState((int)Index).ThumbSticks.Left;
-            Position += new Vector2(dPos.X, -dPos.Y) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            Position += new Vector2(dPos.X, -dPos.Y) * (float)gameTime.ElapsedGameTime.TotalMilliseconds / 2f;
         }
 
         /// <summary>

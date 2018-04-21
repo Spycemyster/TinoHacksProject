@@ -29,6 +29,9 @@ namespace TinoHacksGame.Sprites
         /// </summary>
         public const float SPEED = 0.01f;
 
+        private float rotation;
+        private float jumpTimer;
+
         /// <summary>
         /// The player number.
         /// </summary>
@@ -52,12 +55,10 @@ namespace TinoHacksGame.Sprites
             base.Update(gameTime);
             Size = Texture.Bounds.Size;
             IsFloating = true;
-            if (Velocity.X < 2.5 && Velocity.X > -2.5)
-            {
-                
+            if (Velocity.X <= 2.5 && Velocity.X >= -2.5)
                 Velocity += GamePad.GetState((int)index).ThumbSticks.Left * SPEED;
-            }
-         
+
+            rotation += GamePad.GetState((int)index).ThumbSticks.Right.X * MathHelper.Pi / 10;
             foreach (Platform p in state.Platforms)
             {
                 Rectangle rect = GetDrawRectangle();
@@ -79,11 +80,16 @@ namespace TinoHacksGame.Sprites
                     Velocity = new Vector2(0.0f, Velocity.Y);
             }
 
-            if (!IsFloating && GamePad.GetState((int)index).IsButtonDown(Buttons.A))
+            //if (!IsFloating && GamePad.GetState((int)index).IsButtonDown(Buttons.A))
+            if (GamePad.GetState((int)index).IsButtonDown(Buttons.A) && (!IsFloating || jumpTimer <= 125f))
             {
+                jumpTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 Velocity = new Vector2(Velocity.X, -1.3f);
                 IsFloating = true;
             }
+
+            if (GamePad.GetState((int)index).IsButtonUp(Buttons.A) && !IsFloating)
+                jumpTimer = 0f;
 
             if (IsFloating)
             {
@@ -103,7 +109,7 @@ namespace TinoHacksGame.Sprites
         {
             base.Draw(spriteBatch);
             Origin = new Vector2(Texture.Width / 2f, Texture.Height / 2f);
-            spriteBatch.Draw(Texture, Position, null, Color.White, 0f, 
+            spriteBatch.Draw(Texture, Position, null, Color.White, rotation, 
                 Origin, GameState.SCALE, SpriteEffects.None, 0f);
         }
     }
