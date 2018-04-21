@@ -78,6 +78,9 @@ namespace TinoHacksGame
                 case Screens.MENU:
                     CurrentState = new MenuState();
                     break;
+                case Screens.PLAYERSELECT:
+                    CurrentState = new PlayerSelectState();
+                    break;
             }
 
             CurrentState.Initialize(Content);
@@ -116,5 +119,20 @@ namespace TinoHacksGame
         /// The state where the player chooses menu options from.
         /// </summary>
         MENU,
+
+        /// <summary>
+        /// The state where the player chooses a characters.
+        /// </summary>
+        PLAYERSELECT,
+
+        /// <summary>
+        /// The state where the player chooses an online lobby.
+        /// </summary>
+        ONLINELOBBY,
+
+        /// <summary>
+        /// The state where the player changes their settings.
+        /// </summary>
+        SETTINGS
     }
 }

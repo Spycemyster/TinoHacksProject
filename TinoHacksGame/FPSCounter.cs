@@ -74,7 +74,7 @@ namespace TinoHacksGame {
                 text += "Player " + (i + 1) + ":";
                 GamePadCapabilities capabilities = GamePad.GetCapabilities(i);
                 if (capabilities.IsConnected) {
-                    GamePadState state = GamePad.GetState(PlayerIndex.One);
+                    GamePadState state = GamePad.GetState(i);
                     Buttons[] buttons = {Buttons.A, Buttons.B, Buttons.X, Buttons.Y, Buttons.Start, Buttons.Back,
                         Buttons.DPadDown, Buttons.DPadUp, Buttons.DPadLeft, Buttons.DPadRight,
                         Buttons.LeftShoulder, Buttons.LeftTrigger, Buttons.RightShoulder, Buttons.RightTrigger,
