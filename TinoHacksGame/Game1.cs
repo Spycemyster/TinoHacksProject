@@ -28,6 +28,11 @@ namespace TinoHacksGame
         {
             FPSCounter counter = new FPSCounter(this, CornerPosition.TOP_LEFT);
             Components.Add(counter);
+
+            IsMouseVisible = true;
+            graphics.PreferredBackBufferWidth = 854;
+            graphics.PreferredBackBufferHeight = 480;
+            
             base.Initialize();
         }
 
