@@ -4,7 +4,7 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/lalam/OneDrive/Documents/GitHub/TinoHacksProject/TinoHacksGame/Content/FPSCounter_Font.spritefont</File>
-    <File>C:/Users/lalam/OneDrive/Documents/GitHub/TinoHacksProject/TinoHacksGame/Content/Blank.png</File>
+    <File>E:/GitHub/TinoHacksProject/TinoHacksGame/Content/FPSCounter_Font.spritefont</File>
+    <File>E:/GitHub/TinoHacksProject/TinoHacksGame/Content/Blank.png</File>
   </SourceFiles>
 </SourceFileCollection>

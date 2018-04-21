@@ -34,3 +34,7 @@ C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\obj\Debu
 C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\obj\Debug\TinoHacksGame.pdb
 C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\Content\Blank.xnb
 C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\Content\FPSCounter_Font.xnb
+E:\GitHub\TinoHacksProject\TinoHacksGame\obj\Debug\TinoHacksGame.csprojResolveAssemblyReference.cache
+E:\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\Content\Font.xnb
+E:\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\Content\Blank.xnb
+E:\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\Content\FPSCounter_Font.xnb

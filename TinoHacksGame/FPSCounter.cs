@@ -7,16 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TinoHacksGame
-{
+namespace TinoHacksGame {
     /// <summary>
     /// Author: 		Spencer Chang
     /// Date Created:	November 27, 2017
     /// 
     /// Calculates and counts the frame rate of the game's display.
     /// </summary>
-    public class FPSCounter : DrawableGameComponent
-    {
+    public class FPSCounter : DrawableGameComponent {
         #region Fields
         private int frameCount, frameRate;
         private ContentManager Content;
@@ -30,9 +28,8 @@ namespace TinoHacksGame
         /// <summary>
         /// Creates a new instance of FPSCounter
         /// </summary>
-        public FPSCounter(Game game, CornerPosition position) 
-            : base (game)
-        {
+        public FPSCounter(Game game, CornerPosition position)
+            : base(game) {
             this.position = position;
             frameCount = 0;
             elapsedTimer = 0f;
@@ -44,8 +41,7 @@ namespace TinoHacksGame
         /// <summary>
         /// Initializes the FPSCounter.
         /// </summary>
-        public override void Initialize()
-        {
+        public override void Initialize() {
             base.Initialize();
 
             font = Content.Load<SpriteFont>("FPSCounter_Font");
@@ -56,13 +52,11 @@ namespace TinoHacksGame
         /// Updates the game logic of the component.
         /// </summary>
         /// <param name="gameTime"></param>
-        public override void Update(GameTime gameTime)
-        {
+        public override void Update(GameTime gameTime) {
             base.Update(gameTime);
             elapsedTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            
-            if (elapsedTimer >= 1000f)
-            {
+
+            if (elapsedTimer >= 1000f) {
                 elapsedTimer = 0f;
                 frameRate = frameCount;
                 frameCount = 0;
@@ -73,21 +67,38 @@ namespace TinoHacksGame
         /// Draws the frames to the screen.
         /// </summary>
         /// <param name="gameTime"></param>
-        public override void Draw(GameTime gameTime)
-        {
+        public override void Draw(GameTime gameTime) {
             string text = "FPS: " + frameRate + "\n";
-            text += "MouseX: " + Mouse.GetState().X + "\n";
-            text += "MouseY: " + Mouse.GetState().Y + "\n";
+
+            for (int i = 0; i < 4; i++) {
+                text += "Player " + (i + 1) + ":";
+                GamePadCapabilities capabilities = GamePad.GetCapabilities(i);
+                if (capabilities.IsConnected) {
+                    GamePadState state = GamePad.GetState(PlayerIndex.One);
+                    Buttons[] buttons = {Buttons.A, Buttons.B, Buttons.X, Buttons.Y, Buttons.Start, Buttons.Back,
+                        Buttons.DPadDown, Buttons.DPadUp, Buttons.DPadLeft, Buttons.DPadRight,
+                        Buttons.LeftShoulder, Buttons.LeftTrigger, Buttons.RightShoulder, Buttons.RightTrigger,
+                        Buttons.LeftStick, Buttons.RightStick};
+                    foreach (Buttons b in buttons) {
+                        if (state.IsButtonDown(b)) text += " " + b;
+                    }
+                    text += "\n    Left Thumbstick: " + state.ThumbSticks.Left;
+                    text += "\n    Right Thumbstick: " + state.ThumbSticks.Right;
+                }
+                else {
+                    text += " Not Connected";
+                }
+                text += "\n";
+            }
 
             spriteBatch.Begin();
 
             int width = Game.GraphicsDevice.Viewport.Width;
             int height = Game.GraphicsDevice.Viewport.Height;
-            int x = (int)font.MeasureString(text).X;
+           int x = (int)font.MeasureString(text).X;
             Vector2 pos = Vector2.Zero;
 
-            switch (position)
-            {
+            switch (position) {
                 case CornerPosition.TOP_RIGHT:
                     pos = new Vector2(width - 10 - x, 10);
                     break;
