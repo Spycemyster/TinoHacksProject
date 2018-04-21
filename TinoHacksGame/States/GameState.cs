@@ -61,17 +61,43 @@ namespace TinoHacksGame.States
         {
             base.Initialize(Content);
 
-            Player p = new Player(this, PlayerIndex.One);
-            p.Texture = Content.Load<Texture2D>("Placeholder");
-            p.Position = new Vector2(100, 0);
-            Players.Add(p);
+            Texture2D placeHolder = Content.Load<Texture2D>("Placeholder");
 
-            Platform p2 = new Platform(this);
-            p2.Texture = Content.Load<Texture2D>("Blank");
-            p2.Position = new Vector2(50, 850);
-            p2.Size = new Point(1000, 30);
+            Player p1 = new Player(this, PlayerIndex.One)
+            {
+                Texture = placeHolder,
+                Position = new Vector2(100, 0),
+            };
 
-            Platforms.Add(p2);
+            Player p2 = new Player(this, PlayerIndex.Two)
+            {
+                Texture = placeHolder,
+                Position = new Vector2(300, 0),
+            };
+            Player p3 = new Player(this, PlayerIndex.Three)
+            {
+                Texture = placeHolder,
+                Position = new Vector2(500, 0),
+            };
+            Player p4 = new Player(this, PlayerIndex.Four)
+            {
+                Texture = placeHolder,
+                Position = new Vector2(700, 0),
+            };
+
+            Players.Add(p1);
+            Players.Add(p2);
+            Players.Add(p3);
+            Players.Add(p4);
+
+            Platform plat = new Platform(this)
+            {
+                Texture = Content.Load<Texture2D>("Blank"),
+                Position = new Vector2(50, 850),
+                Size = new Point(1000, 30),
+            };
+
+            Platforms.Add(plat);
         }
 
         /// <summary>
