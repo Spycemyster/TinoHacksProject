@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Placeholder.png</SourceFile>
-  <SourceTime>2018-04-21T11:19:22.0426339-07:00</SourceTime>
-  <DestFile>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/bin/DesktopGL/Placeholder.xnb</DestFile>
-  <DestTime>2018-04-21T13:35:52.4827316-07:00</DestTime>
+  <SourceFile>D:/TinoHacksProject/TinoHacksGame/Content/Placeholder.png</SourceFile>
+  <SourceTime>2018-04-21T11:45:28.4909977-07:00</SourceTime>
+  <DestFile>D:/TinoHacksProject/TinoHacksGame/Content/bin/DesktopGL/Placeholder.xnb</DestFile>
+  <DestTime>2018-04-21T13:46:47.4307564-07:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T07:05:36-08:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

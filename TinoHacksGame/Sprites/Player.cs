@@ -52,8 +52,11 @@ namespace TinoHacksGame.Sprites
             base.Update(gameTime);
             Size = Texture.Bounds.Size;
             IsFloating = true;
-            if(Velocity.X < 2.5)
+            if (Velocity.X < 2.5 && Velocity.X > -2.5)
+            {
+                
                 Velocity += GamePad.GetState((int)index).ThumbSticks.Left * SPEED;
+            }
          
             foreach (Platform p in state.Platforms)
             {
@@ -71,7 +74,7 @@ namespace TinoHacksGame.Sprites
             if (GamePad.GetState((int)index).ThumbSticks.Left.Length() == 0 && !IsFloating)
             {
                 if ((Velocity.X >= 0.1 || Velocity.X <= -0.1))
-                    Velocity -= new Vector2(Velocity.X * 0.05f, Velocity.Y);
+                    Velocity -= new Vector2(Velocity.X * 0.08f, Velocity.Y);
                 else //prevents player from sliding forever
                     Velocity = new Vector2(0.0f, Velocity.Y);
             }
