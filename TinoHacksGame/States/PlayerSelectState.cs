@@ -23,6 +23,7 @@ namespace TinoHacksGame.States
         private int[] characterOption = new int[4]; //what character each player displays
         private float[] backButtonHeld = new float[4];  //for going back to main menu
         private float[][] selectTimer = new float[4][];  //player 1 2 3 4, down up left right.
+
         private Texture2D placeHolder;
         /// <summary>
         /// Creates a new instance of the <c>PlayerSelectState</c>.
