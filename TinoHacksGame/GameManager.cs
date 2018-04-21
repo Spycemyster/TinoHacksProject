@@ -60,6 +60,7 @@ namespace TinoHacksGame
         public void Initialize(Game1 game)
         {
             graphicsDevice = game.GraphicsDevice;
+            Content = new ContentManager(game.Content.ServiceProvider, "Content");
         }
 
         /// <summary>
@@ -78,6 +79,8 @@ namespace TinoHacksGame
                     CurrentState = new MenuState();
                     break;
             }
+
+            CurrentState.Initialize(Content);
         }
 
         /// <summary>
