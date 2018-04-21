@@ -12,10 +12,15 @@ namespace TinoHacksGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
+        /// <summary>
+        /// Creates a new instance of <c>Game1</c>.
+        /// </summary>
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            graphics.PreferredBackBufferWidth = 1600;
+            graphics.PreferredBackBufferHeight = 900;
         }
 
         /// <summary>
@@ -30,8 +35,6 @@ namespace TinoHacksGame
             Components.Add(counter);
 
             IsMouseVisible = true;
-            graphics.PreferredBackBufferWidth = 1600;
-            graphics.PreferredBackBufferHeight = 900;
             
             base.Initialize();
         }
