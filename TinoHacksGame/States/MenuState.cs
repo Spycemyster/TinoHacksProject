@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using TinoHacksGame.States.UserInterface;
 
 namespace TinoHacksGame.States {
     /// <summary>
@@ -17,17 +18,30 @@ namespace TinoHacksGame.States {
         private int option = 0;
         private float selectTimerDown = 0f;
         private float selectTimerUp = 0f;
+        private Cursor cursor;
+
         /// <summary>
         /// Creates a new instance of <c>MenuState</c>.
         /// </summary>
-        public MenuState() {
-
+        public MenuState()
+        {
         }
+
+        /// <summary>
+        /// Initializes the <c>MenuState</c>.
+        /// </summary>
+        /// <param name="Content"></param>
         public override void Initialize(ContentManager Content) {
             base.Initialize(Content);
             font = Content.Load<SpriteFont>("Font");
+            cursor = new Cursor();
+            //cursor.Texture =
         }
 
+        /// <summary>
+        /// Updates the logic and conditional checking for the <c>MenuState</c>.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
             base.Update(gameTime);
             GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
@@ -53,6 +67,11 @@ namespace TinoHacksGame.States {
             selectTimerUp += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
+        /// <summary>
+        /// Draws the contents of the <c>MenuState</c>.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="device"></param>
         public override void Draw(SpriteBatch spriteBatch, GraphicsDevice device) {
             base.Draw(spriteBatch, device);
             spriteBatch.Begin();

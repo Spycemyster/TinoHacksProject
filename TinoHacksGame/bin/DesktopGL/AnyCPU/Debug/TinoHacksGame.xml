@@ -251,6 +251,11 @@
             The position point of the <c>Sprite</c>.
             </summary>
         </member>
+        <member name="P:TinoHacksGame.Sprites.Sprite.Color">
+            <summary>
+            The color the <c>Sprite</c> is drawn at.
+            </summary>
+        </member>
         <member name="P:TinoHacksGame.Sprites.Sprite.Size">
             <summary>
             The size of the sprite.
@@ -392,6 +397,116 @@
             <summary>
             Creates a new instance of <c>MenuState</c>.
             </summary>
+        </member>
+        <member name="M:TinoHacksGame.States.MenuState.Initialize(Microsoft.Xna.Framework.Content.ContentManager)">
+            <summary>
+            Initializes the <c>MenuState</c>.
+            </summary>
+            <param name="Content"></param>
+        </member>
+        <member name="M:TinoHacksGame.States.MenuState.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the logic and conditional checking for the <c>MenuState</c>.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:TinoHacksGame.States.MenuState.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Graphics.GraphicsDevice)">
+            <summary>
+            Draws the contents of the <c>MenuState</c>.
+            </summary>
+            <param name="spriteBatch"></param>
+            <param name="device"></param>
+        </member>
+        <member name="T:TinoHacksGame.States.UserInterface.Cursor">
+            <summary>
+            A selective cursor for the game.
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.States.UserInterface.Cursor.#ctor">
+            <summary>
+            Creates a new instance of <c>Cursor</c>.
+            </summary>
+        </member>
+        <member name="T:TinoHacksGame.States.UserInterface.UIButton">
+            <summary>
+            A pressable button for the ui component.
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.States.UserInterface.UIButton.#ctor(TinoHacksGame.States.UserInterface.Cursor)">
+            <summary>
+            Creates a new instance of a <c>UIButton</c>.
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.States.UserInterface.UIButton.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the <c>UIButton</c>'s logic and conditional checking
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:TinoHacksGame.States.UserInterface.UIButton.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the <c>UIButton</c> to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="T:TinoHacksGame.States.UserInterface.UIComponent">
+            <summary>
+            A component within the user interface.
+            </summary>
+        </member>
+        <member name="T:TinoHacksGame.States.UserInterface.UIComponent.UIEvent">
+            <summary>
+            The handler for events regarding <c>UIComponent</c>.
+            </summary>
+            <param name="arg"></param>
+        </member>
+        <member name="F:TinoHacksGame.States.UserInterface.UIComponent.OnEnter">
+            <summary>
+            When the user enters the <c>UIComponent</c>
+            </summary>
+        </member>
+        <member name="F:TinoHacksGame.States.UserInterface.UIComponent.OnHover">
+            <summary>
+            When the user is hovering over the <c>UIComponent</c>.
+            </summary>
+        </member>
+        <member name="F:TinoHacksGame.States.UserInterface.UIComponent.OnLeave">
+            <summary>
+            When the user leaves the <c>UIComponent</c>.
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.States.UserInterface.UIComponent.#ctor(TinoHacksGame.States.UserInterface.Cursor)">
+            <summary>
+            Creates a new instance of <c>UIComponent</c>.
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.States.UserInterface.UIComponent.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the <c>UIComponent</c>'s logic and conditional checking.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:TinoHacksGame.States.UserInterface.UIComponent.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the <c>UIComponent</c> to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="T:TinoHacksGame.States.UserInterface.UIArg">
+            <summary>
+            The argument passed through the ui event.
+            </summary>
+        </member>
+        <member name="F:TinoHacksGame.States.UserInterface.UIArg.Component">
+            <summary>
+            The component that is affected by the event.
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.States.UserInterface.UIArg.#ctor(TinoHacksGame.States.UserInterface.UIComponent)">
+            <summary>
+            Creates a new instance of the <c>UIArg</c>.
+            </summary>
+            <param name="component"></param>
         </member>
     </members>
 </doc>
