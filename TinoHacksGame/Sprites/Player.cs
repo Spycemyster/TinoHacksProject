@@ -8,26 +8,46 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TinoHacksGame.States;
 
-namespace TinoHacksGame.Sprites
-{
+namespace TinoHacksGame.Sprites {
     /// <summary>
     /// A player sprite within the game.
     /// </summary>
-    public class Player : Sprite
-    {
+    public class Player : Sprite {
+        /// <summary>
+        /// The maximum slowfall speed.
+        /// </summary>
+        public const float SLOWFALL = 2.5f;
+        /// <summary>
+        /// The maximum fastfall speed.
+        /// </summary>
+        public const float FASTFALL = 4f;
+        /// <summary>
+        /// The maximum walking speed.
+        /// </summary>
+        public const float WALK = 2.5f;
+        /// <summary>
+        /// The maximum dashing speed.
+        /// </summary>
+        public const float DASH = 4f;
+        /// <summary>
+        /// The maximum number of jumps.
+        /// </summary>
+        public const int MAXJUMPS = 2;
+        public int numJumps = 0;
         /// <summary>
         /// If the player is on the ground or not.
         /// </summary>
-        public bool IsFloating
-        {
+        public bool IsFloating {
             get;
             set;
         }
 
+        public bool AisUP = true;
+
         /// <summary>
         /// The speed in which the player moves at.
         /// </summary>
-        public const float SPEED = 0.01f;
+        public const float SPEED = 0.02f;
 
         private float rotation;
         private float jumpTimer;
@@ -40,8 +60,7 @@ namespace TinoHacksGame.Sprites
         /// <summary>
         /// Creates a new instance of <c>Player</c>
         /// </summary>
-        public Player(GameState state, int index) : base(state) 
-        {
+        public Player(GameState state, int index) : base(state) {
             this.index = index;
             IsFloating = true;
         }
@@ -50,53 +69,64 @@ namespace TinoHacksGame.Sprites
         /// Updates the <c>Player</c>'s logic and conditional checking.
         /// </summary>
         /// <param name="gameTime"></param>
-        public override void Update(GameTime gameTime)
-        {
+        public override void Update(GameTime gameTime) {
             base.Update(gameTime);
             Size = Texture.Bounds.Size;
-            IsFloating = true;
-            if (Velocity.X <= 2.5 && Velocity.X >= -2.5)
-                Velocity += GamePad.GetState((int)index).ThumbSticks.Left * SPEED;
+            GamePadState gamePadState = GamePad.GetState(index);
+            rotation += gamePadState.ThumbSticks.Right.X * MathHelper.Pi / 10;
 
-            rotation += GamePad.GetState((int)index).ThumbSticks.Right.X * MathHelper.Pi / 10;
-            foreach (Platform p in state.Platforms)
-            {
+            //left/right movement
+            if (Velocity.X <= WALK && Velocity.X >= -WALK) {
+                if(Velocity.X > 0 && gamePadState.ThumbSticks.Left.X < 0) {
+                    Velocity += new Vector2(-0.2f, 0);
+                }
+                else if (Velocity.X < 0 && gamePadState.ThumbSticks.Left.X > 0) {
+                    Velocity += new Vector2(0.2f, 0);
+                }
+                else Velocity += gamePadState.ThumbSticks.Left * SPEED;
+
+                if (Velocity.X > WALK) Velocity = new Vector2(WALK, Velocity.Y);
+                if (Velocity.X < -WALK) Velocity = new Vector2(-WALK, Velocity.Y);
+            }
+            
+            
+            //ground detection
+            foreach (Platform p in state.Platforms) {
                 Rectangle rect = GetDrawRectangle();
                 Rectangle rect2 = p.GetDrawRectangle();
 
-                if (rect.Intersects(rect2))
-                {
+                if (rect.Intersects(rect2)) {
                     Position = new Vector2(Position.X, rect2.Top - Origin.Y * GameState.SCALE);
                     IsFloating = false;
                     break;
                 }
+                else {
+                    IsFloating = true;
+                }
             }
 
-            if (GamePad.GetState((int)index).ThumbSticks.Left.Length() == 0 && !IsFloating)
-            {
+            //friction
+            if (gamePadState.ThumbSticks.Left.Length() == 0 && !IsFloating) {
                 if ((Velocity.X >= 0.1 || Velocity.X <= -0.1))
-                    Velocity -= new Vector2(Velocity.X * 0.08f, Velocity.Y);
+                    Velocity -= new Vector2(Velocity.X * 0.4f, Velocity.Y);
                 else //prevents player from sliding forever
                     Velocity = new Vector2(0.0f, Velocity.Y);
             }
 
-            //if (!IsFloating && GamePad.GetState((int)index).IsButtonDown(Buttons.A))
-            if (GamePad.GetState((int)index).IsButtonDown(Buttons.A) && (!IsFloating || jumpTimer <= 125f))
-            {
-                jumpTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                Velocity = new Vector2(Velocity.X, -1.3f);
+            //jump
+            if (gamePadState.IsButtonDown(Buttons.A) && AisUP && numJumps < MAXJUMPS) {
+                numJumps++;
+                AisUP = false;
+                Velocity = new Vector2(Velocity.X, -1.5f);
                 IsFloating = true;
             }
+            if (gamePadState.IsButtonUp(Buttons.A)) AisUP = true;
 
-            if (GamePad.GetState((int)index).IsButtonUp(Buttons.A) && !IsFloating)
-                jumpTimer = 0f;
-
-            if (IsFloating)
-            {
+            if (IsFloating) {
                 Velocity += new Vector2(0, GameState.GRAVITY);
             }
-            else
-            {
+            else {
+                numJumps = 0;
                 Velocity = new Vector2(Velocity.X, 0.0f);
             }
         }
@@ -105,13 +135,12 @@ namespace TinoHacksGame.Sprites
         /// Draws the <c>Player</c> to the screen.
         /// </summary>
         /// <param name="spriteBatch"></param>
-        public override void Draw(SpriteBatch spriteBatch)
-        {
+        public override void Draw(SpriteBatch spriteBatch) {
             base.Draw(spriteBatch);
             Origin = new Vector2(Texture.Width / 2f, Texture.Height / 2f);
-            spriteBatch.Draw(Texture, Position, null, Color.White, rotation, 
+            spriteBatch.Draw(Texture, Position, null, Color.White, rotation,
                 Origin, GameState.SCALE, SpriteEffects.None, 0f);
         }
     }
-    
+
 }
