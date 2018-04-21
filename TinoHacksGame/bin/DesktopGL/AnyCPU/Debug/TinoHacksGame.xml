@@ -64,6 +64,11 @@
             This is the main type for your game.
             </summary>
         </member>
+        <member name="M:TinoHacksGame.Game1.#ctor">
+            <summary>
+            Creates a new instance of <c>Game1</c>.
+            </summary>
+        </member>
         <member name="M:TinoHacksGame.Game1.Initialize">
             <summary>
             Allows the game to perform any initialization it needs to before starting to run.
@@ -168,6 +173,54 @@
             The main entry point for the application.
             </summary>
         </member>
+        <member name="T:TinoHacksGame.Sprites.Platform">
+            <summary>
+            A collidable platform
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.Sprites.Platform.#ctor(TinoHacksGame.States.GameState)">
+            <summary>
+            Creates a new instance of a <c>Platform</c>.
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.Sprites.Platform.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the platform to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="T:TinoHacksGame.Sprites.Player">
+            <summary>
+            A player sprite within the game.
+            </summary>
+        </member>
+        <member name="P:TinoHacksGame.Sprites.Player.IsFloating">
+            <summary>
+            If the player is on the ground or not.
+            </summary>
+        </member>
+        <member name="F:TinoHacksGame.Sprites.Player.index">
+            <summary>
+            The player number.
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.Sprites.Player.#ctor(TinoHacksGame.States.GameState,Microsoft.Xna.Framework.PlayerIndex)">
+            <summary>
+            Creates a new instance of <c>Player</c>
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.Sprites.Player.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the <c>Player</c>'s logic and conditional checking.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:TinoHacksGame.Sprites.Player.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the <c>Player</c> to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
         <member name="T:TinoHacksGame.Sprites.Sprite">
             <summary>
             An object that holds textures and positions.
@@ -176,6 +229,16 @@
         <member name="P:TinoHacksGame.Sprites.Sprite.Position">
             <summary>
             The position point of the <c>Sprite</c>.
+            </summary>
+        </member>
+        <member name="P:TinoHacksGame.Sprites.Sprite.Size">
+            <summary>
+            The size of the sprite.
+            </summary>
+        </member>
+        <member name="P:TinoHacksGame.Sprites.Sprite.Velocity">
+            <summary>
+            The change in position of the <c>Sprite</c>.
             </summary>
         </member>
         <member name="P:TinoHacksGame.Sprites.Sprite.Texture">
@@ -188,10 +251,26 @@
             The opacity that the texture is drawn at.
             </summary>
         </member>
-        <member name="M:TinoHacksGame.Sprites.Sprite.#ctor">
+        <member name="P:TinoHacksGame.Sprites.Sprite.Origin">
+            <summary>
+            The origin that the <c>Sprite</c> is located at.
+            </summary>
+        </member>
+        <member name="F:TinoHacksGame.Sprites.Sprite.state">
+            <summary>
+            The game state that the sprite resides in.
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.Sprites.Sprite.#ctor(TinoHacksGame.States.GameState)">
             <summary>
             Creates a new instance of a <c>Sprite</c>.
             </summary>
+        </member>
+        <member name="M:TinoHacksGame.Sprites.Sprite.GetDrawRectangle">
+            <summary>
+            The collidable rectangle of the sprite.
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:TinoHacksGame.Sprites.Sprite.Update(Microsoft.Xna.Framework.GameTime)">
             <summary>
@@ -243,6 +322,21 @@
         <member name="F:TinoHacksGame.States.GameState.GRAVITY">
             <summary>
             The gravitational constant for the objects.
+            </summary>
+        </member>
+        <member name="F:TinoHacksGame.States.GameState.SCALE">
+            <summary>
+            The scale that the sprites are drawn at.
+            </summary>
+        </member>
+        <member name="P:TinoHacksGame.States.GameState.Players">
+            <summary>
+            The players in the game state.
+            </summary>
+        </member>
+        <member name="P:TinoHacksGame.States.GameState.Platforms">
+            <summary>
+            The platforms of the game state.
             </summary>
         </member>
         <member name="M:TinoHacksGame.States.GameState.#ctor">

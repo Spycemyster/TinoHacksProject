@@ -60,7 +60,7 @@ namespace TinoHacksGame
             graphicsDevice = game.GraphicsDevice;
             Content = new ContentManager(game.Content.ServiceProvider, "Content");
 
-            ChangeScreen(Screens.MENU);
+            ChangeScreen(Screens.GAME);
         }
 
         /// <summary>
@@ -116,5 +116,11 @@ namespace TinoHacksGame
         /// The state where the player chooses menu options from.
         /// </summary>
         MENU,
+
+        PLAYERSELECT,
+
+        ONLINELOBBY,
+
+        SETTINGS,
     }
 }
