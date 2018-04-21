@@ -27,7 +27,7 @@ namespace TinoHacksGame.Sprites
         /// <summary>
         /// The speed in which the player moves at.
         /// </summary>
-        public const float SPEED = 3f;
+        public const float SPEED = 0.01f;
 
         /// <summary>
         /// The player number.
@@ -52,8 +52,9 @@ namespace TinoHacksGame.Sprites
             base.Update(gameTime);
 
             Size = Texture.Bounds.Size;
+            IsFloating = true;
 
-            Velocity += GamePad.GetState((int)index).ThumbSticks.Left;
+            Velocity += GamePad.GetState((int)index).ThumbSticks.Left * SPEED;
 
             foreach (Platform p in state.Platforms)
             {

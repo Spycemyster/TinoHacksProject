@@ -95,8 +95,7 @@ namespace TinoHacksGame.Sprites
         /// <param name="gameTime"></param>
         public virtual void Update(GameTime gameTime)
         {
-            Position += Velocity;
-            Velocity = Vector2.Zero;
+            Position += Velocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         /// <summary>

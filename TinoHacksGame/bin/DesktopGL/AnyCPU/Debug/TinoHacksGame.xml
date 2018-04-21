@@ -214,6 +214,11 @@
             If the player is on the ground or not.
             </summary>
         </member>
+        <member name="F:TinoHacksGame.Sprites.Player.SPEED">
+            <summary>
+            The speed in which the player moves at.
+            </summary>
+        </member>
         <member name="F:TinoHacksGame.Sprites.Player.index">
             <summary>
             The player number.

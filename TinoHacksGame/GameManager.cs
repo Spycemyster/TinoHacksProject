@@ -120,13 +120,6 @@ namespace TinoHacksGame
         /// </summary>
         MENU,
 
-<<<<<<< HEAD
-        PLAYERSELECT,
-
-        ONLINELOBBY,
-
-        SETTINGS,
-=======
         /// <summary>
         /// The state where the player chooses a characters.
         /// </summary>
@@ -141,6 +134,5 @@ namespace TinoHacksGame
         /// The state where the player changes their settings.
         /// </summary>
         SETTINGS
->>>>>>> 1d91ec9b45fcd91a8b792d493e1f558ec1488413
     }
 }
