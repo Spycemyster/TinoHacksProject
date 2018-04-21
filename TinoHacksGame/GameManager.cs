@@ -36,6 +36,10 @@ namespace TinoHacksGame
         /// </summary>
         private GameManager()
         {
+<<<<<<< HEAD
+=======
+            
+>>>>>>> f473d1ed700c5b6cf0211791288819069c7834da
         }
         #endregion
 
@@ -60,8 +64,12 @@ namespace TinoHacksGame
         {
             graphicsDevice = game.GraphicsDevice;
             Content = new ContentManager(game.Content.ServiceProvider, "Content");
+<<<<<<< HEAD
 
             ChangeScreen(Screens.GAME);
+=======
+            ChangeScreen(Screens.MENU);
+>>>>>>> f473d1ed700c5b6cf0211791288819069c7834da
         }
 
         /// <summary>
