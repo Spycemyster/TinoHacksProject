@@ -26,7 +26,8 @@ namespace TinoHacksGame
         /// </summary>
         protected override void Initialize()
         {
-
+            FPSCounter counter = new FPSCounter(this, CornerPosition.TOP_LEFT);
+            Components.Add(counter);
             base.Initialize();
         }
 

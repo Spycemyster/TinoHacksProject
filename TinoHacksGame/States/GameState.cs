@@ -16,6 +16,11 @@ namespace TinoHacksGame.States
     public class GameState : State
     {
         /// <summary>
+        /// The gravitational constant for the objects.
+        /// </summary>
+        public const float GRAVITY = 3f;
+
+        /// <summary>
         /// Creates a new instance of <c>GameState</c>.
         /// </summary>
         public GameState()
@@ -39,8 +44,6 @@ namespace TinoHacksGame.States
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
-
         }
 
         /// <summary>
