@@ -1,2 +1,6 @@
 TinoHacksGame\bin
 *.lock
+.vs/TinoHacksGame/v15/.suo
+TinoHacksGame/GameManager.cs
+TinoHacksGame/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+.vs/TinoHacksGame/v15/.suo
