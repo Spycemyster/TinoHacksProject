@@ -422,14 +422,36 @@
             A selective cursor for the game.
             </summary>
         </member>
-        <member name="M:TinoHacksGame.States.UserInterface.Cursor.#ctor">
+        <member name="F:TinoHacksGame.States.UserInterface.Cursor.Index">
+            <summary>
+            The player that is controlling the <c>Cursor</c>.
+            </summary>
+        </member>
+        <member name="M:TinoHacksGame.States.UserInterface.Cursor.#ctor(Microsoft.Xna.Framework.PlayerIndex)">
             <summary>
             Creates a new instance of <c>Cursor</c>.
             </summary>
         </member>
+        <member name="M:TinoHacksGame.States.UserInterface.Cursor.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates the <c>Cursor</c>'s logic and conditional checking.
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="M:TinoHacksGame.States.UserInterface.Cursor.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Draws the <c>Cursor</c> to the screen.
+            </summary>
+            <param name="spriteBatch"></param>
+        </member>
         <member name="T:TinoHacksGame.States.UserInterface.UIButton">
             <summary>
             A pressable button for the ui component.
+            </summary>
+        </member>
+        <member name="P:TinoHacksGame.States.UserInterface.UIButton.Font">
+            <summary>
+            The font of the text.
             </summary>
         </member>
         <member name="M:TinoHacksGame.States.UserInterface.UIButton.#ctor(TinoHacksGame.States.UserInterface.Cursor)">
@@ -473,6 +495,16 @@
         <member name="F:TinoHacksGame.States.UserInterface.UIComponent.OnLeave">
             <summary>
             When the user leaves the <c>UIComponent</c>.
+            </summary>
+        </member>
+        <member name="P:TinoHacksGame.States.UserInterface.UIComponent.Text">
+            <summary>
+            The text of the <c>UIComponent</c>.
+            </summary>
+        </member>
+        <member name="P:TinoHacksGame.States.UserInterface.UIComponent.IsSelected">
+            <summary>
+            Whether the <c>UIComponent</c> is selected by the user.
             </summary>
         </member>
         <member name="M:TinoHacksGame.States.UserInterface.UIComponent.#ctor(TinoHacksGame.States.UserInterface.Cursor)">
