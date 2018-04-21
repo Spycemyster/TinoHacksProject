@@ -68,7 +68,7 @@ namespace TinoHacksGame.States {
 
                     if (state.IsButtonDown(Buttons.A)) {
                         if (playerOption[i] == 0) {
-                            //select a character
+                            //select a characterS
                         }
                         if (playerOption[i] == 1) {
                             //change the name
