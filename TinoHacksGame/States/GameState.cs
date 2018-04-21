@@ -19,7 +19,7 @@ namespace TinoHacksGame.States
         /// <summary>
         /// The gravitational constant for the objects.
         /// </summary>
-        public const float GRAVITY = 0.0981f;
+        public const float GRAVITY = 0.0681f;
 
         /// <summary>
         /// The scale that the sprites are drawn at.
