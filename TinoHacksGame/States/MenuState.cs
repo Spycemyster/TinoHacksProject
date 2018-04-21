@@ -15,7 +15,8 @@ namespace TinoHacksGame.States {
     public class MenuState : State {
         private SpriteFont font;
         private int option = 0;
-        private float selectTimer = 0f;
+        private float selectTimerDown = 0f;
+        private float selectTimerUp = 0f;
         /// <summary>
         /// Creates a new instance of <c>MenuState</c>.
         /// </summary>
@@ -31,24 +32,25 @@ namespace TinoHacksGame.States {
             base.Update(gameTime);
             GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
 
-            int selectDelay = 110;
+            int selectDelay = 200;
             if (capabilities.IsConnected) {
                 GamePadState state = GamePad.GetState(PlayerIndex.One);
-                if (state.ThumbSticks.Left.Y > 0.5f && selectTimer > selectDelay) {
+                if (state.ThumbSticks.Left.Y > 0.75f && selectTimerDown > selectDelay) {
                     option = Math.Max(0, option - 1);
-                    selectTimer = 0f;
+                    selectTimerDown = 0f;
                 }
-                if (state.ThumbSticks.Left.Y < -0.5f && selectTimer > selectDelay) {
+                if (state.ThumbSticks.Left.Y < -0.75f && selectTimerUp > selectDelay) {
                     option = Math.Min(2, option + 1);
-                    selectTimer = 0f;
+                    selectTimerUp = 0f;
                 }
                 
                 if (state.IsButtonDown(Buttons.A)) {
                     Screens[] screens = { Screens.PLAYERSELECT, Screens.ONLINELOBBY, Screens.SETTINGS };
-                    GameManager.GetInstance().ChangeScreen(screens[0]);
+                    GameManager.GetInstance().ChangeScreen(screens[option]);
                 }
             }
-            selectTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            selectTimerDown += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            selectTimerUp += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         public override void Draw(SpriteBatch spriteBatch, GraphicsDevice device) {

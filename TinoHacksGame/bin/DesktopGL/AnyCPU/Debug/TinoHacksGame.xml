@@ -163,6 +163,21 @@
             The state where the player chooses menu options from.
             </summary>
         </member>
+        <member name="F:TinoHacksGame.Screens.PLAYERSELECT">
+            <summary>
+            The state where the player chooses a characters.
+            </summary>
+        </member>
+        <member name="F:TinoHacksGame.Screens.ONLINELOBBY">
+            <summary>
+            The state where the player chooses an online lobby.
+            </summary>
+        </member>
+        <member name="F:TinoHacksGame.Screens.SETTINGS">
+            <summary>
+            The state where the player changes their settings.
+            </summary>
+        </member>
         <member name="T:TinoHacksGame.Program">
             <summary>
             The main class.
