@@ -68,7 +68,7 @@ namespace TinoHacksGame.States
 
             Platform p2 = new Platform(this);
             p2.Texture = Content.Load<Texture2D>("Blank");
-            p2.Position = new Vector2(50, 500);
+            p2.Position = new Vector2(50, 850);
             p2.Size = new Point(1000, 30);
 
             Platforms.Add(p2);
