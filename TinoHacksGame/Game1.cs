@@ -30,8 +30,8 @@ namespace TinoHacksGame
             Components.Add(counter);
 
             IsMouseVisible = true;
-            graphics.PreferredBackBufferWidth = 854;
-            graphics.PreferredBackBufferHeight = 480;
+            graphics.PreferredBackBufferWidth = 1600;
+            graphics.PreferredBackBufferHeight = 900;
             
             base.Initialize();
         }
