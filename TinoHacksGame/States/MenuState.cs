@@ -34,8 +34,9 @@ namespace TinoHacksGame.States {
         public override void Initialize(ContentManager Content) {
             base.Initialize(Content);
             font = Content.Load<SpriteFont>("Font");
-            cursor = new Cursor();
-            //cursor.Texture =
+            cursor = new Cursor(PlayerIndex.One);
+            cursor.Texture = Content.Load<Texture2D>("Cursor");
+            cursor.Size = new Point(cursor.Texture.Width, cursor.Texture.Height);
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace TinoHacksGame.States {
         public override void Update(GameTime gameTime) {
             base.Update(gameTime);
             GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
-
+            cursor.Update(gameTime);
             int selectDelay = 200;
             if (capabilities.IsConnected) {
                 GamePadState state = GamePad.GetState(PlayerIndex.One);
@@ -78,6 +79,7 @@ namespace TinoHacksGame.States {
             spriteBatch.DrawString(font, "Local", new Vector2(400, 100), option == 0 ? Color.Black : Color.Wheat);
             spriteBatch.DrawString(font, "Online", new Vector2(400, 200), option == 1 ? Color.Black : Color.Wheat);
             spriteBatch.DrawString(font, "Settings", new Vector2(400, 300), option == 2 ? Color.Black : Color.Wheat);
+            cursor.Draw(spriteBatch);
             spriteBatch.End();
         }
     }

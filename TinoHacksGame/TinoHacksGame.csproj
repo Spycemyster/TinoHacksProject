@@ -127,6 +127,7 @@
   <ItemGroup>
     <Content Include="Content\BackArrow.png" />
     <Content Include="Content\Blank.png" />
+    <Content Include="Content\Cursor.png" />
     <Content Include="Content\Placeholder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

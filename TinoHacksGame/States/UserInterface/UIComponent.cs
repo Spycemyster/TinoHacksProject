@@ -49,6 +49,15 @@ namespace TinoHacksGame.States.UserInterface
         private bool isEntered;
 
         /// <summary>
+        /// Whether the <c>UIComponent</c> is selected by the user.
+        /// </summary>
+        public bool IsSelected
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Creates a new instance of <c>UIComponent</c>.
         /// </summary>
         public UIComponent(Cursor cursor)
@@ -67,10 +76,13 @@ namespace TinoHacksGame.States.UserInterface
         {
             if (GetDrawRectangle().Contains(cursor.Position))
             {
-                OnEnter?.Invoke(arg);
+                OnHover?.Invoke(arg);
+                IsSelected = true;
 
                 if (!isEntered)
-                    OnHover?.Invoke(arg);
+                {
+                    OnEnter?.Invoke(arg);
+                }
 
                 isEntered = true;
 
@@ -80,6 +92,7 @@ namespace TinoHacksGame.States.UserInterface
                 if (isEntered)
                     OnLeave?.Invoke(arg);
 
+                IsSelected = false;
                 isEntered = false;
             }
         }
