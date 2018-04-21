@@ -24,10 +24,22 @@ namespace TinoHacksGame.Sprites
         }
 
         /// <summary>
+        /// The color the <c>Sprite</c> is drawn at.
+        /// </summary>
+        public Color Color
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// The size of the sprite.
         /// </summary>
         public Point Size
-        { get; set; }
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// The change in position of the <c>Sprite</c>.
@@ -76,6 +88,7 @@ namespace TinoHacksGame.Sprites
         public Sprite(GameState state)
         {
             this.state = state;
+            Color = Color.White;
         }
 
         /// <summary>
