@@ -26,7 +26,6 @@ namespace TinoHacksGame
         /// </summary>
         protected override void Initialize()
         {
-            GameManager.GetInstance().Initialize(this);
 
             base.Initialize();
         }
@@ -40,7 +39,7 @@ namespace TinoHacksGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            GameManager.GetInstance().Initialize(this);
         }
 
         /// <summary>
@@ -49,7 +48,6 @@ namespace TinoHacksGame
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -62,7 +60,7 @@ namespace TinoHacksGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            GameManager.GetInstance().Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -75,7 +73,7 @@ namespace TinoHacksGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            GameManager.GetInstance().Draw(spriteBatch);
 
             base.Draw(gameTime);
         }
