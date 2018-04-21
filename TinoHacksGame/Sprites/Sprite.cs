@@ -80,7 +80,7 @@ namespace TinoHacksGame.Sprites
         /// <summary>
         /// The game state that the sprite resides in.
         /// </summary>
-        protected GameState state;
+        public GameState state;
 
         /// <summary>
         /// Creates a new instance of a <c>Sprite</c>.

@@ -35,12 +35,12 @@ namespace TinoHacksGame.Sprites
         /// <summary>
         /// The player number.
         /// </summary>
-        public PlayerIndex index;
+        public int index;
 
         /// <summary>
         /// Creates a new instance of <c>Player</c>
         /// </summary>
-        public Player(GameState state, PlayerIndex index) : base(state) 
+        public Player(GameState state, int index) : base(state) 
         {
             this.index = index;
             IsFloating = true;

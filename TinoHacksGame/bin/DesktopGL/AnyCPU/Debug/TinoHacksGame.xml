@@ -224,7 +224,7 @@
             The player number.
             </summary>
         </member>
-        <member name="M:TinoHacksGame.Sprites.Player.#ctor(TinoHacksGame.States.GameState,Microsoft.Xna.Framework.PlayerIndex)">
+        <member name="M:TinoHacksGame.Sprites.Player.#ctor(TinoHacksGame.States.GameState,System.Int32)">
             <summary>
             Creates a new instance of <c>Player</c>
             </summary>
