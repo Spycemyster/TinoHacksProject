@@ -14,6 +14,7 @@ E:\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\TinoHacksGam
 E:\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\MonoGame.Framework.dll
 E:\GitHub\TinoHacksProject\TinoHacksGame\obj\Debug\TinoHacksGame.exe
 E:\GitHub\TinoHacksProject\TinoHacksGame\obj\Debug\TinoHacksGame.pdb
+<<<<<<< HEAD
 C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\x86\SDL2.dll
 C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\x64\SDL2.dll
 C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\x86\soft_oal.dll
@@ -34,3 +35,9 @@ C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\obj\Debu
 C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\obj\Debug\TinoHacksGame.pdb
 C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\Content\Blank.xnb
 C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\Content\FPSCounter_Font.xnb
+=======
+E:\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\Content\Font.xnb
+>>>>>>> f473d1ed700c5b6cf0211791288819069c7834da
+C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\Content\Font.xnb
+C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\Content\Placeholder.xnb
+C:\Users\lalam\OneDrive\Documents\GitHub\TinoHacksProject\TinoHacksGame\bin\DesktopGL\AnyCPU\Debug\TinoHacksGame.xml
