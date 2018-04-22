@@ -20,15 +20,15 @@ namespace TinoHacksGame.Sprites {
         /// <summary>
         /// The maximum fastfall speed.
         /// </summary>
-        public const float FASTFALL = 4f;
+        public const float FASTFALL = 12f;
         /// <summary>
         /// The maximum walking speed.
         /// </summary>
-        public const float WALK = 1f;
+        public const float WALK = 0.5f;
         /// <summary>
         /// The maximum dashing speed.
         /// </summary>
-        public const float DASH = 2.5f;
+        public const float DASH = 1.5f;
         /// <summary>
         /// The maximum number of jumps.
         /// </summary>
@@ -43,7 +43,16 @@ namespace TinoHacksGame.Sprites {
         }
 
         public bool AisUP = true;
+
         public bool fastFalling = false;
+        private bool firstTapDown = false;
+        private bool secondTapNotDown = false;
+        private float fastFallTimer = 0f;
+
+        private bool dashing = false;
+        private int firstTapSide = 0;
+        private int secondTapNotSide = 0;
+        private float dashTimer = 0f;
 
         /// <summary>
         /// The speed in which the player moves at.
@@ -65,7 +74,7 @@ namespace TinoHacksGame.Sprites {
             this.index = index;
             IsFloating = true;
         }
-       
+
 
         /// <summary>
         /// Updates the <c>Player</c>'s logic and conditional checking.
@@ -77,25 +86,47 @@ namespace TinoHacksGame.Sprites {
             GamePadState gamePadState = GamePad.GetState(index);
             rotation += gamePadState.ThumbSticks.Right.X * MathHelper.Pi / 10;
 
-            //left/right movement
+            //dashing
             float left = gamePadState.ThumbSticks.Left.X;
-            
-            if (gamePadState.ThumbSticks.Left.X < 0 && Velocity.X > 0) Velocity += new Vector2(-0.25f, 0);
-            else if (gamePadState.ThumbSticks.Left.X > 0 && Velocity.X < 0) Velocity += new Vector2(0.25f, 0);
+            if (gamePadState.ThumbSticks.Left.X == -1) {
+                if (secondTapNotSide == -1 && dashTimer < 100f) {
+                    dashing = true;
+                    firstTapSide = 0;
+                    secondTapNotSide = 0;
+                }
+                else firstTapSide = -1;
+                dashTimer = 0f;
+            }
+            else if (gamePadState.ThumbSticks.Left.X == 1) {
+                if (secondTapNotSide == 1 && dashTimer < 100f) {
+                    dashing = true;
+                    firstTapSide = 0;
+                    secondTapNotSide = 0;
+                }
+                else firstTapSide = 1;
+                dashTimer = 0f;
+            }
+            else if (firstTapSide != 0) secondTapNotSide = firstTapSide;
+            //left/right movement
+            if (left < 0 && Velocity.X > 0) Velocity += new Vector2(-0.25f, 0);
+            else if (left > 0 && Velocity.X < 0) Velocity += new Vector2(0.25f, 0);
+            else Velocity = new Vector2(Math.Max(Math.Min(dashing ? DASH : WALK, Velocity.X + left * SPEED), -(dashing ? DASH : WALK)), Velocity.Y);
+            dashTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             //air and ground friction
             if (gamePadState.ThumbSticks.Left.Length() == 0) {
                 float coeff = IsFloating ? 0.02f : 0.4f;
                 if ((Velocity.X >= 0.1 || Velocity.X <= -0.1)) Velocity -= new Vector2(Velocity.X * coeff, 0);
-                else Velocity = new Vector2(0.0f, Velocity.Y);
+                else {
+                    Velocity = new Vector2(0.0f, Velocity.Y);
+                    dashing = false;
+                }
             }
 
             //ground detection
             foreach (Platform p in state.Platforms) {
                 Rectangle rect = GetDrawRectangle();
                 Rectangle rect2 = p.GetDrawRectangle();
-
-                
                 if (rect.Intersects(rect2)) {
                     fastFalling = false;
                     Position = new Vector2(Position.X, rect2.Top - Origin.Y * GameState.SCALE);
@@ -111,42 +142,52 @@ namespace TinoHacksGame.Sprites {
 
             //jump
             if (gamePadState.IsButtonDown(Buttons.A)) {
-                Console.WriteLine(numJumps);
                 if (AisUP && numJumps < MAXJUMPS) {
                     jumpTimer = 0f;
                     numJumps++;
+                    fastFalling = false;
                     AisUP = false;
                     Velocity = new Vector2(Velocity.X, -1.5f);
                     IsFloating = true;
                 }
                 else if (IsFloating) {
-                    if (jumpTimer < 75f) Velocity = new Vector2(Velocity.X, -1.5f);
-                    else if (jumpTimer < 100f) Velocity = new Vector2(Velocity.X, -1.75f);
+                    Console.WriteLine("lolz"+jumpTimer);
+                    if (jumpTimer < 175f) Velocity = new Vector2(Velocity.X, -1.75f);
+                    else if (jumpTimer < 200f) Velocity = new Vector2(Velocity.X, -2f);
                 }
                 jumpTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
             else if (gamePadState.IsButtonUp(Buttons.A)) {
                 AisUP = true;
-                
+                jumpTimer = 200f;
             }
-            
-        
-            if (IsFloating && GamePad.GetState(index).ThumbSticks.Left.Y < 0)
-            {
-                fastFalling = true;
+            //fast falling
+            if (IsFloating && gamePadState.ThumbSticks.Left.Y == -1) {
+                if (secondTapNotDown && fastFallTimer < 100f) {
+                    fastFalling = true;
+                    firstTapDown = false;
+                    secondTapNotDown = false;
+                }
+                else firstTapDown = true;
+                fastFallTimer = 0f;
             }
-            
-
-            if(fastFalling && IsFloating)
-            {
-                Velocity += new Vector2(0, FASTFALL*GameState.GRAVITY);
+            else if(firstTapDown) secondTapNotDown = true;
+            //gravity
+            if (fastFalling && IsFloating) {
+                Velocity += new Vector2(0, FASTFALL * GameState.GRAVITY);
             }
             else if (IsFloating) {
-                Velocity += new Vector2(0, SLOWFALL*GameState.GRAVITY);
+                Velocity += new Vector2(0, SLOWFALL * GameState.GRAVITY);
+                jumpTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                fastFallTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
             else {
                 numJumps = 0;
                 Velocity = new Vector2(Velocity.X, 0.0f);
+                fastFallTimer = 0f;
+                firstTapDown = false;
+                secondTapNotDown = false;
+                fastFalling = false;
             }
         }
 
