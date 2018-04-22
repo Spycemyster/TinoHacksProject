@@ -80,10 +80,10 @@ namespace TinoHacksGame
 
             GameManager.GetInstance().Update(gameTime);
 
-            if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.RightTrigger))
-                GamePad.SetVibration(0, 50f, 50f);
-            else if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftTrigger))
-                GamePad.SetVibration(0, 10f, 10f);
+            //if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.RightTrigger))
+            //    GamePad.SetVibration(0, 50f, 50f);
+            //else if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftTrigger))
+            //    GamePad.SetVibration(0, 10f, 10f);
 
 
             base.Update(gameTime);

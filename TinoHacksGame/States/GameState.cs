@@ -65,7 +65,7 @@ namespace TinoHacksGame.States {
             songList.Add(Content.Load<Song>("endScreen"));
 
             Random rand = new Random();
-            MediaPlayer.Play(songList[(int)(rand.Next(songList.Count - 1)]);
+            MediaPlayer.Play(songList[(int)(rand.Next(songList.Count - 1))]);
             MediaPlayer.IsRepeating = true;
 
             for (int i = 0; i < Players.Count; i++) {

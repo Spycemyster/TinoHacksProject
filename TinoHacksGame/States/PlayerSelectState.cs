@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using TinoHacksGame.Sprites;
 using TinoHacksGame.States.UserInterface;
 
@@ -28,6 +29,7 @@ namespace TinoHacksGame.States
         public Slide[] slides;
         private Texture2D[] logos;
         private int stage;
+        private Song song;
 
         private Texture2D placeHolder, blank;
         private Texture2D[] backgroundColleges;
@@ -36,6 +38,7 @@ namespace TinoHacksGame.States
         /// </summary>
         public PlayerSelectState()
         {
+            
             for (int i = 0; i < selectTimer.Length; i++) selectTimer[i] = new float[4];
             for (int i = 0; i < playerOption.Length; i++) playerOption[i] = -1;
         }
@@ -46,6 +49,9 @@ namespace TinoHacksGame.States
         /// <param name="Content"></param>
         public override void Initialize(ContentManager Content)
         {
+            song = Content.Load<Song>("characterSelect");
+            MediaPlayer.Play(song);
+            MediaPlayer.IsRepeating = true;
             stage = 0;
             slides = new Slide[4];
             int border = 32;

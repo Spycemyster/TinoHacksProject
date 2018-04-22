@@ -279,18 +279,6 @@
 /processorParam:TextureFormat=Color
 /build:Fall_Left.png
 
-#begin Giraffe_standing_1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Giraffe_standing_1.png
-
 #begin Aerial Down Left.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -566,18 +554,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Neutral2.png
-
-#begin Platform.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Platform.png
 
 #begin Side Left.png
 /importer:TextureImporter

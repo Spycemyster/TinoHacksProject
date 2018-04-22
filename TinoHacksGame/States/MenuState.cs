@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using TinoHacksGame.States.UserInterface;
 
 namespace TinoHacksGame.States {
@@ -21,6 +22,7 @@ namespace TinoHacksGame.States {
         private Cursor cursor;
         private Texture2D backgroundPic;
         private UIButton[] button = new UIButton[4];
+        private Song song;
 
         /// <summary>
         /// Creates a new instance of <c>MenuState</c>.
@@ -37,6 +39,9 @@ namespace TinoHacksGame.States {
             base.Initialize(Content);
             font = Content.Load<SpriteFont>("Font");
             Texture2D cursorTexture = Content.Load<Texture2D>("Cursor");
+            song = Content.Load<Song>("stageSelect");
+            MediaPlayer.Play(song);
+            MediaPlayer.IsRepeating = true;
             cursor = new Cursor(PlayerIndex.One)
             {
                 Texture = cursorTexture,
