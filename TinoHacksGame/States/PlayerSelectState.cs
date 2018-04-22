@@ -104,18 +104,22 @@ namespace TinoHacksGame.States
 
                 Platform plat = new Platform(null) {
                     Texture = blank,
-                    Position = new Vector2(50, 875),
-                    Size = new Point(1000, 100),
+                    Position = new Vector2(-150, 875),
+                    Size = new Point(1900, 100),
+                    Scale = 1f,
                 };
 
                 Platform plat2 = new Platform(null) {
                     Texture = blank,
-                    Position = new Vector2(300, 550),
-                    Size = new Point(300, 17),
+                    Position = new Vector2(350, 550),
+                    Size = new Point(700, 34),
+                    Scale = 1f,
                 };
-                List<Platform> platforms = new List<Platform>();
-                platforms.Add(plat2);
-                platforms.Add(plat);
+                List<Platform> platforms = new List<Platform>
+                {
+                    plat2,
+                    plat
+                };
                 GameManager.GetInstance().stage = new Stage(platforms, backgroundCollege, blank);
                 //stagemaking END
 

@@ -37,6 +37,7 @@ namespace TinoHacksGame
         private SpriteFont font;
 
         private float countDownTimer, timerMax;
+        private Random rand;
 
         /// <summary>
         /// Creates a new instance of a <c>Stage</c>.
@@ -46,11 +47,12 @@ namespace TinoHacksGame
         /// <param name="blank"></param>
         public Stage(List<Platform> platforms, Texture2D college, Texture2D blank)
         {
+            rand = new Random();
             font = GameManager.GetInstance().Content.Load<SpriteFont>("Font");
             this.blank = blank;
             width = 800;
             DangerZone = new Rectangle(0, 0, width, 900);
-            timerMax = 10000f;
+            timerMax = 5000f;
             Platforms = platforms;
             isLeft = true;
             this.college = college;
@@ -68,9 +70,10 @@ namespace TinoHacksGame
             if (countDownTimer >= timerMax)
             {
                 isLeft = !isLeft;
-                timerMax /= 1.1f;
-                width = (int)(width * 1.1);
+                timerMax /= 1.05f;
+                width = Math.Min((int)(width * 1.05), 1400);
                 countDownTimer = 0f;
+                CheckDamageEntity();
             }
 
             if (isLeft)
@@ -82,20 +85,41 @@ namespace TinoHacksGame
         }
 
         /// <summary>
+        /// Checks for entities within the Danger Zone and inflicts damage accordingly.
+        /// </summary>
+        public void CheckDamageEntity()
+        {
+            foreach (Player p in GameManager.GetInstance().Players)
+            {
+                if (p.GetDrawRectangle().Intersects(DangerZone))
+                {
+                    if (isLeft)
+                    {
+                        p.getHit(100, new Vector2(rand.Next(0, 2), rand.Next(0, 2)), 0f);
+                    }
+                    else
+                        p.getHit(100, new Vector2(rand.Next(-2, 0), rand.Next(0, 2)), 0f);
+                }
+            }
+        }
+
+        /// <summary>
         /// Draws the <c>Stage</c> and all its contents to the screen.
         /// </summary>
         /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(college, new Rectangle(0, 0, 1600, 900), Color.White);
+            Rectangle timerRect = new Rectangle(0, 0, (int)(1600 - 1600 * (countDownTimer / timerMax)), 32);
 
             foreach(Platform p in Platforms)
-            {
                 p.Draw(spriteBatch);
-            }
+
             spriteBatch.Draw(blank, DangerZone, Color.Red * (opacity + 0.2f) * 0.3f);
+            spriteBatch.Draw(blank, DangerZone, Color.White * (countDownTimer / (timerMax - 1000)));
+            spriteBatch.Draw(blank, timerRect, Color.DarkRed);
             string text = "" + (int)((timerMax - countDownTimer) / 1000f);
-            Vector2 pos = new Vector2(800 - font.MeasureString(text).X / 2, 32);
+            Vector2 pos = new Vector2(800 - font.MeasureString(text).X / 2, 32f*0);
             spriteBatch.DrawString(font, text, pos, Color.Blue, 0f, font.MeasureString(text) / 2, 2f, SpriteEffects.None, 0f);
         }
     }

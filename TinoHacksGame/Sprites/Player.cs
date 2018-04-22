@@ -287,7 +287,6 @@ namespace TinoHacksGame.Sprites {
 
             if (idleTexture != null)
                 Origin = new Vector2(idleTexture.Width / 2f, idleTexture.Height / 2f);
-            Size = new Point(Size.X / 2, Size.Y);
 
             bool left = Velocity.X < 0f;
 
@@ -345,10 +344,14 @@ namespace TinoHacksGame.Sprites {
 
         }
 
+        /// <summary>
+        /// Overriding the <c>GetDrawRectangle</c>.
+        /// </summary>
+        /// <returns></returns>
         public override Rectangle GetDrawRectangle() {
             return new Rectangle((int)(Position.X - Origin.X * Scale),
                 (int)(Position.Y - Origin.Y * Scale), (int)(Size.X *
-                Scale), (int)(Size.Y * Scale));
+                Scale / 2f), (int)(Size.Y * Scale));
         }
     }
 
