@@ -44,6 +44,8 @@ namespace TinoHacksGame.States
             private set;
         }
 
+        private Texture2D backgroundCollege;
+
         /// <summary>
         /// Creates a new instance of <c>GameState</c>.
         /// </summary>
@@ -62,7 +64,7 @@ namespace TinoHacksGame.States
             base.Initialize(Content);
 
             Texture2D placeHolder = Content.Load<Texture2D>("Placeholder");
-
+            backgroundCollege = Content.Load<Texture2D>("jhu");
             foreach (Player p in Players) p.state = this;
 
             Platform plat = new Platform(this)
@@ -108,6 +110,8 @@ namespace TinoHacksGame.States
             base.Draw(spriteBatch, device);
 
             spriteBatch.Begin();
+
+            spriteBatch.Draw(backgroundCollege, new Rectangle(0, 0, 1600, 900), Color.White);
 
             foreach (Player p in Players)
                 p.Draw(spriteBatch);

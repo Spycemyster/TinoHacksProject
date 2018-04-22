@@ -109,6 +109,9 @@ namespace TinoHacksGame.States {
             //GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
             cursor.Update(gameTime);
 
+            if (InputManager.GetInstance().IsPressed(Buttons.B, PlayerIndex.One))
+                GameManager.GetInstance().ChangeScreen(Screens.TITLE);
+
             foreach (UIButton b in button)
                 b.Update(gameTime);
 

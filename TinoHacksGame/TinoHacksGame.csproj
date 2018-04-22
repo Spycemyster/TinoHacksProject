@@ -131,9 +131,13 @@
   <ItemGroup>
     <Content Include="Content\BackArrow.png" />
     <Content Include="Content\Blank.png" />
+    <Content Include="Content\cambridge.png" />
     <Content Include="Content\Card.png" />
     <Content Include="Content\Cursor.png" />
+    <Content Include="Content\deanza.png" />
+    <Content Include="Content\jhu.png" />
     <Content Include="Content\Placeholder.png" />
+    <Content Include="Content\stanford.png" />
     <Content Include="Content\StartScreen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

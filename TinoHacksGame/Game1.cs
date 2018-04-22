@@ -10,8 +10,8 @@ namespace TinoHacksGame
     /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
         
         /// <summary>
         /// Creates a new instance of <c>Game1</c>.
@@ -23,7 +23,6 @@ namespace TinoHacksGame
             graphics.PreferredBackBufferWidth = 1600;
             graphics.PreferredBackBufferHeight = 900;
             graphics.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(GPDS);
-            IsFixedTimeStep = false;
         }
 
         private void GPDS(object sender, PreparingDeviceSettingsEventArgs e)
@@ -44,7 +43,8 @@ namespace TinoHacksGame
             Components.Add(counter);
 
             IsMouseVisible = false;
-            
+            IsFixedTimeStep = false;
+
             base.Initialize();
         }
 
