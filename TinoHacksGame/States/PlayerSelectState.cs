@@ -116,7 +116,7 @@ namespace TinoHacksGame.States
                 List<Platform> platforms = new List<Platform>();
                 platforms.Add(plat2);
                 platforms.Add(plat);
-                GameManager.GetInstance().stage = new Stage(platforms, backgroundCollege);
+                GameManager.GetInstance().stage = new Stage(platforms, backgroundCollege, blank);
                 //stagemaking END
 
                 GameManager.GetInstance().ChangeScreen(Screens.GAME);
@@ -132,6 +132,7 @@ namespace TinoHacksGame.States
         {
             base.Draw(spriteBatch, device);
             spriteBatch.Begin();
+            spriteBatch.Draw(backgroundCollege, new Rectangle(0, 0, 1600, 900), Color.White);
             foreach (Slide s in slides) s.Draw(spriteBatch);
             spriteBatch.Draw(blank, new Rectangle(32, 464, 1536, 404), Color.Red);
             spriteBatch.End();

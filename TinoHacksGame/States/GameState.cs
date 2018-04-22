@@ -73,6 +73,7 @@ namespace TinoHacksGame.States
 
             foreach (Platform p in currentStage.Platforms)
                 p.Update(gameTime);
+            GameManager.GetInstance().stage.Update(gameTime);
 
             if (InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.One) || InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.Two) ||
                 (InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.Three) || InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.Four)))

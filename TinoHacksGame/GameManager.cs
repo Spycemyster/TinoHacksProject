@@ -58,7 +58,14 @@ namespace TinoHacksGame
             private set;
         }
 
-        private ContentManager Content;
+        /// <summary>
+        /// The content manager instance for the <c>GameManager</c>
+        /// </summary>
+        public ContentManager Content
+        {
+            get { return content; }
+        }
+        private ContentManager content;
         private GraphicsDevice graphicsDevice;
 
         /// <summary>
@@ -68,7 +75,7 @@ namespace TinoHacksGame
         public void Initialize(Game1 game)
         {
             graphicsDevice = game.GraphicsDevice;
-            Content = new ContentManager(game.Content.ServiceProvider, "Content");
+            content = new ContentManager(game.Content.ServiceProvider, "Content");
 
             ChangeScreen(Screens.PLAYERSELECT);
         }
