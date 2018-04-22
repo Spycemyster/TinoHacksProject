@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace TinoHacksGame {
         public Vector2[] spawnpoints;
         private float countDownTimer, timerMax;
         private Random rand;
-
+        public SoundEffect lapBell;
         /// <summary>
         /// Creates a new instance of a <c>Stage</c>.
         /// </summary>
@@ -47,6 +48,7 @@ namespace TinoHacksGame {
             rand = new Random();
             this.spawnpoints = spawnpoints;
             font = GameManager.GetInstance().Content.Load<SpriteFont>("Font");
+            lapBell = GameManager.GetInstance().Content.Load<SoundEffect>("lapBell");
             this.blank = blank;
             width = 800;
             DangerZone = new Rectangle(0, 0, width, 900);
@@ -83,6 +85,8 @@ namespace TinoHacksGame {
         /// Checks for entities within the Danger Zone and inflicts damage accordingly.
         /// </summary>
         public void CheckDamageEntity() {
+            var instance = lapBell.CreateInstance();
+            instance.Play();
             foreach (Player p in GameManager.GetInstance().Players) {
                 if (p.GetDrawRectangle().Intersects(DangerZone)) {
                     if (isLeft) {

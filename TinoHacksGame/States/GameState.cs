@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TinoHacksGame.Sprites;
+using Microsoft.Xna.Framework.Media;
 
 namespace TinoHacksGame.States {
     /// <summary>
@@ -32,6 +33,8 @@ namespace TinoHacksGame.States {
             get;
             private set;
         }
+        public List<Song> songList = new List<Song>();
+        
 
         public Stage currentStage;
         private Texture2D blank;
@@ -58,8 +61,14 @@ namespace TinoHacksGame.States {
             font = Content.Load<SpriteFont>("Font");
             blank = Content.Load<Texture2D>("Blank");
 
-            for (int i = 0; i < Players.Count; i++)
-            {
+            for (int i = 1; i <= 6; i++) songList.Add(Content.Load<Song>("level " + i));
+            songList.Add(Content.Load<Song>("endScreen"));
+
+            Random rand = new Random();
+            MediaPlayer.Play(songList[(int)(rand.Next(songList.Count - 1)]);
+            MediaPlayer.IsRepeating = true;
+
+            for (int i = 0; i < Players.Count; i++) {
                 Players[i].state = this;
                 Players[i].Position = currentStage.spawnpoints[i];
             }
@@ -79,8 +88,13 @@ namespace TinoHacksGame.States {
                     i--;
                 }
                 if (Players.Count <= 1) {
+                    if (!gameOver) {
+                        MediaPlayer.Play(songList[songList.Count - 1]);
+                        MediaPlayer.IsRepeating = true;
+                    }
                     gameOver = true;
                     if (Players.Count > 0) winner = Players[0].index + 1;
+
                 }
             }
 
