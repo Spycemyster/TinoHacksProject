@@ -28,7 +28,7 @@ namespace TinoHacksGame.Sprites {
         /// <summary>
         /// The maximum dashing speed.
         /// </summary>
-        public const float DASH = 1.5f;
+        public const float DASH = 1.25f;
         /// <summary>
         /// The maximum number of jumps.
         /// </summary>
@@ -78,14 +78,15 @@ namespace TinoHacksGame.Sprites {
         /// </summary>
         public int index;
 
+        public int lives = 10;
+        public int percentage = 0;
+        public float stunTimer = 0f;
         /// <summary>
         /// Creates a new instance of <c>Player</c>
         /// </summary>
-        public Player(GameState state, int index) : base(state)
-        {
+        public Player(GameState state, int index) : base(state) {
             this.index = index;
             Scale = GameState.SCALE;
-
             IsFloating = false;
         }
 
@@ -94,16 +95,14 @@ namespace TinoHacksGame.Sprites {
         /// Updates the <c>Player</c>'s logic and conditional checking.
         /// </summary>
         /// <param name="gameTime"></param>
-        public override void Update(GameTime gameTime)
-        {
+        public override void Update(GameTime gameTime) {
             base.Update(gameTime);
             Size = Texture.Bounds.Size;
             GamePadState gamePadState = GamePad.GetState(index);
             rotation += gamePadState.ThumbSticks.Right.X * MathHelper.Pi / 10;
 
             // animations
-            if (walkLeftTexture == null)
-            {
+            if (walkLeftTexture == null) {
                 walkLeftTexture = state.Content.Load<Texture2D>("Move_Left");
                 walkRightTexture = state.Content.Load<Texture2D>("Move_Right");
                 idleTexture = state.Content.Load<Texture2D>("Idle");
@@ -118,35 +117,25 @@ namespace TinoHacksGame.Sprites {
             }
 
             float left = gamePadState.ThumbSticks.Left.X;
-            if (Math.Abs(left) > 0)
-            {
+            //walk and jump and dash animations
+            if (Math.Abs(left) > 0) {
                 walkAnimationTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (walkAnimationTimer >= 250f)
-                {
+                if (walkAnimationTimer >= 250f) {
                     walkAnimationTimer = 0f;
                     walkAnimationFrameNumber = (walkAnimationFrameNumber + 1) % 4;
                 }
             }
-
-            if (left > 0)
-                wasLeft = false;
-            else if (left < 0)
-                wasLeft = true;
-
-            if (isJumping)
-            {
+            if (left > 0) wasLeft = false;
+            else if (left < 0) wasLeft = true;
+            if (isJumping) {
                 jumpAnimationTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
                 if (jumpAnimationTimer > 200f)
                     jumpAnimationFrame = 1;
             }
-
-            if (dashing)
-            {
+            if (dashing) {
                 dashTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-                if (dashTimer >= 100f)
-                {
+                if (dashTimer >= 100f) {
                     dashTimer = 0f;
                     if (dashAnimationFrameNumber == 0)
                         dashAnimationFrameNumber = 1;
@@ -156,7 +145,7 @@ namespace TinoHacksGame.Sprites {
             }
 
             //dashing
-            if (gamePadState.ThumbSticks.Left.X == -1) {
+            if (gamePadState.ThumbSticks.Left.X == -1 && stunTimer == 0) {
                 if (secondTapNotSide == -1 && dashTimer < 50f) {
                     dashing = true;
                     firstTapSide = 0;
@@ -165,7 +154,7 @@ namespace TinoHacksGame.Sprites {
                 else firstTapSide = -1;
                 dashTimer = 0f;
             }
-            else if (gamePadState.ThumbSticks.Left.X == 1) {
+            else if (gamePadState.ThumbSticks.Left.X == 1 && stunTimer == 0) {
                 if (secondTapNotSide == 1 && dashTimer < 50f) {
                     dashing = true;
                     firstTapSide = 0;
@@ -174,17 +163,20 @@ namespace TinoHacksGame.Sprites {
                 else firstTapSide = 1;
                 dashTimer = 0f;
             }
-            else if (firstTapSide != 0) {
+            else if (firstTapSide != 0 && stunTimer == 0) {
                 secondTapNotSide = firstTapSide;
             }
             //left/right movement
-            if (left < 0 && Velocity.X > 0)
-                Velocity += new Vector2(-0.25f, 0);
-            else if (left > 0 && Velocity.X < 0)
-                Velocity += new Vector2(0.25f, 0);
-            else
-                Velocity = new Vector2(Math.Max(Math.Min(dashing ? DASH : WALK, Velocity.X + left * SPEED),
-                    -(dashing ? DASH : WALK)), Velocity.Y);
+            if (stunTimer == 0) {
+                if (left < 0 && Velocity.X > 0)
+                    Velocity += new Vector2(-0.25f, 0);
+                else if (left > 0 && Velocity.X < 0)
+                    Velocity += new Vector2(0.25f, 0);
+                else if (left > 0 && Velocity.X >= 0 && Velocity.X <= (dashing ? DASH : WALK))
+                    Velocity = new Vector2(Math.Max(Math.Min(dashing ? DASH : WALK, Velocity.X + left * SPEED), -(dashing ? DASH : WALK)), Velocity.Y);
+                else if (left < 0 && Velocity.X <= 0 && Velocity.X >= -(dashing ? DASH : WALK))
+                    Velocity = new Vector2(Math.Max(Math.Min(dashing ? DASH : WALK, Velocity.X + left * SPEED), -(dashing ? DASH : WALK)), Velocity.Y);
+            }
             dashTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             //air and ground friction
@@ -204,10 +196,8 @@ namespace TinoHacksGame.Sprites {
                 Rectangle rect = GetDrawRectangle();
                 Rectangle rect3 = new Rectangle(rect.X, rect.Y, rect.Width / 2, rect.Height - 10);
                 Rectangle rect2 = p.GetDrawRectangle();
-                if (rect3.Intersects(rect2))
-                {
-                    if (rect3.Bottom <= rect2.Bottom && Velocity.Y > 0)
-                    {
+                if (rect3.Intersects(rect2)) {
+                    if (rect3.Bottom <= rect2.Bottom && Velocity.Y > 0) {
                         Position = new Vector2(Position.X, rect2.Top - Origin.Y * GameState.SCALE - 1);
                         FastFalling = false;
                         IsFloating = false;
@@ -221,9 +211,7 @@ namespace TinoHacksGame.Sprites {
             }
 
             //jump
-            if (gamePadState.IsButtonDown(Buttons.A))
-
-            {
+            if (gamePadState.IsButtonDown(Buttons.A) && stunTimer == 0) {
                 isJumping = true;
                 if (AisUP && numJumps < MAXJUMPS) {
                     jumpTimer = 0f;
@@ -234,19 +222,18 @@ namespace TinoHacksGame.Sprites {
                     IsFloating = true;
                 }
                 else if (IsFloating) {
-                    Console.WriteLine("lolz" + jumpTimer);
                     if (jumpTimer < 125f) Velocity = new Vector2(Velocity.X, -1.55f);
                     else if (jumpTimer < 150f) Velocity = new Vector2(Velocity.X, -1.55f);
                 }
                 jumpTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
-            else if (gamePadState.IsButtonUp(Buttons.A)) {
+            else if (gamePadState.IsButtonUp(Buttons.A) && stunTimer == 0) {
                 AisUP = true;
                 jumpTimer = 200f;
                 isJumping = false;
             }
             //fast falling
-            if (IsFloating && gamePadState.ThumbSticks.Left.Y == -1) {
+            if (IsFloating && gamePadState.ThumbSticks.Left.Y == -1 && stunTimer == 0) {
                 if (secondTapNotDown && fastFallTimer < 50f) {
                     FastFalling = true;
                     firstTapDown = false;
@@ -255,7 +242,7 @@ namespace TinoHacksGame.Sprites {
                 else firstTapDown = true;
                 fastFallTimer = 0f;
             }
-            else if (firstTapDown) secondTapNotDown = true;
+            else if (firstTapDown && stunTimer == 0) secondTapNotDown = true;
             //gravity
             if (FastFalling && IsFloating) {
                 Velocity += new Vector2(0, FASTFALL * GameState.GRAVITY);
@@ -273,18 +260,33 @@ namespace TinoHacksGame.Sprites {
                 secondTapNotDown = false;
                 FastFalling = false;
             }
+            if (stunTimer == 0 && InputManager.GetInstance().IsPressed(Buttons.X, (PlayerIndex)index)) attack(gamePadState.ThumbSticks.Left, IsFloating);
+            stunTimer = Math.Max(0f, stunTimer - (float)gameTime.ElapsedGameTime.TotalMilliseconds);
+
+        }
+
+        public void getHit(int dmg, Vector2 knockback, float stunTime) {
+            percentage += dmg;
+            Velocity = knockback * (float)Math.Log10(percentage);
+            Velocity = new Vector2(Velocity.X, -Velocity.Y * 1.2f);
+
+            stunTimer = stunTime * (float)Math.Log10(percentage) * 20f;
+            Console.WriteLine(percentage + " " + Velocity + " " + stunTimer);
+        }
+
+        public void attack(Vector2 dir, bool inAir) {
+            getHit(10, dir, 10f);
         }
 
         /// <summary>
         /// Draws the <c>Player</c> to the screen.
         /// </summary>
         /// <param name="spriteBatch"></param>
-        public override void Draw(SpriteBatch spriteBatch)
-        {
+        public override void Draw(SpriteBatch spriteBatch) {
             base.Draw(spriteBatch);
 
             if (idleTexture != null)
-            Origin = new Vector2(idleTexture.Width / 2f, idleTexture.Height / 2f);
+                Origin = new Vector2(idleTexture.Width / 2f, idleTexture.Height / 2f);
             Size = new Point(Size.X / 2, Size.Y);
 
             bool left = Velocity.X < 0f;
@@ -293,31 +295,27 @@ namespace TinoHacksGame.Sprites {
 
             if (wasLeft)
                 drawnTexture = idleLeftTexture;
-            
-            if (dashing)
-            {
+
+            if (dashing) {
                 if (left)
                     drawnTexture = dashLeftTexture;
                 else
                     drawnTexture = dashRightTexture;
             }
-            else if (Math.Abs(Velocity.X) > 0)
-            {
+            else if (Math.Abs(Velocity.X) > 0) {
                 if (!left)
                     drawnTexture = walkRightTexture;
                 else
                     drawnTexture = walkLeftTexture;
             }
 
-            if (isJumping)
-            {
+            if (isJumping) {
                 if (!wasLeft)
                     drawnTexture = jumpRightTexture;
                 else
                     drawnTexture = jumpLeftTexture;
             }
-            else if (Velocity.Y > 0.1f)
-            {
+            else if (Velocity.Y > 0.1f) {
                 //if (!FastFalling)
                 //    drawnTexture = slowFallTexture;
                 //else
@@ -329,8 +327,7 @@ namespace TinoHacksGame.Sprites {
                     drawnTexture = fallLeftTexture;
             }
 
-            if (drawnTexture != null)
-            {
+            if (drawnTexture != null) {
                 //spriteBatch.Draw(blank, GetDrawRectangle(), Color.White * 0.4f);
                 if (drawnTexture == walkLeftTexture || drawnTexture == walkRightTexture)
                     spriteBatch.Draw(drawnTexture, Position, new Rectangle(29 * walkAnimationFrameNumber, 0, 29, 44), Color.White, rotation,
@@ -345,11 +342,10 @@ namespace TinoHacksGame.Sprites {
                     spriteBatch.Draw(drawnTexture, Position, null, Color.White, rotation,
                         Origin, GameState.SCALE, SpriteEffects.None, 0f);
             }
-            
+
         }
 
-        public override Rectangle GetDrawRectangle()
-        {
+        public override Rectangle GetDrawRectangle() {
             return new Rectangle((int)(Position.X - Origin.X * Scale),
                 (int)(Position.Y - Origin.Y * Scale), (int)(Size.X *
                 Scale), (int)(Size.Y * Scale));
