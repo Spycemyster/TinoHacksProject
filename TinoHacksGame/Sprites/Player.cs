@@ -42,9 +42,6 @@ namespace TinoHacksGame.Sprites {
             set;
         }
 
-        private bool isWalking, isDashing;
-        private Vector2 lastPressed;
-
         public bool AisUP = true;
 
         /// <summary>
@@ -67,20 +64,7 @@ namespace TinoHacksGame.Sprites {
             this.index = index;
             IsFloating = true;
         }
-        
-        /// <summary>
-        /// Checks if the boi was dashing
-        /// </summary>
-        /// <returns></returns>
-        public bool CheckIfDashing()
-        {
-            GamePadState gamePadState = GamePad.GetState(index);
-            if(gamePadState.ThumbSticks.Left.Equals(lastPressed))
-            {
-                return true;
-            }
-            return false;
-        }
+       
 
         /// <summary>
         /// Updates the <c>Player</c>'s logic and conditional checking.
@@ -97,20 +81,9 @@ namespace TinoHacksGame.Sprites {
             
             if (gamePadState.ThumbSticks.Left.X < 0 && Velocity.X > 0) Velocity += new Vector2(-0.25f, 0);
             else if (gamePadState.ThumbSticks.Left.X > 0 && Velocity.X < 0) Velocity += new Vector2(0.25f, 0);
-            else
-            {
-                if (!CheckIfDashing())
-                {
-                    lastPressed = gamePadState.ThumbSticks.Left;
-                    Velocity = new Vector2(Math.Max(Math.Min(WALK, Velocity.X + left * SPEED), -WALK), Velocity.Y);
-
-                }
-            }
 
             //air and ground friction
             if (gamePadState.ThumbSticks.Left.Length() == 0) {
-                isWalking = false;
-                isDashing = false;
                 float coeff = IsFloating ? 0.02f : 0.4f;
                 if ((Velocity.X >= 0.1 || Velocity.X <= -0.1)) Velocity -= new Vector2(Velocity.X * coeff, 0);
                 else Velocity = new Vector2(0.0f, Velocity.Y);
@@ -154,9 +127,14 @@ namespace TinoHacksGame.Sprites {
                 AisUP = true;
                 
             }
-
-            if (IsFloating) {
-                Velocity += new Vector2(0, GameState.GRAVITY);
+            
+        
+            if (IsFloating && GamePad.GetState(index).ThumbSticks.Left.Y < 0)
+            {
+                Velocity += new Vector2(0, FASTFALL*GameState.GRAVITY);
+            }
+            else if (IsFloating) {
+                Velocity += new Vector2(0, SLOWFALL*GameState.GRAVITY);
             }
             else {
                 numJumps = 0;
