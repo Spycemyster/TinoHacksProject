@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TinoHacksGame.States;
@@ -43,8 +44,10 @@ namespace TinoHacksGame.Sprites {
         }
 
         private Texture2D walkRightTexture, walkLeftTexture, dashRightTexture, dashLeftTexture,
-            idleTexture, idleLeftTexture, fastFallTexture, fallRightTexture, jumpLeftTexture,
-            jumpRightTexture, fallLeftTexture, blank;
+            idleTexture, idleLeftTexture, fallRightTexture, jumpLeftTexture,
+            jumpRightTexture, fallLeftTexture, ADRight,ADLeft, AULeft, AURight, ASLeft, 
+            ASRight, BHLeft, BHRight,FHLeft, FHRight, NLeft, NRight, SLeft, SRight, Spin,
+            URight, ULeft, blank;
 
         public bool AisUP = true;
         private bool wasLeft = false;
@@ -106,18 +109,36 @@ namespace TinoHacksGame.Sprites {
 
             // animations
             if (walkLeftTexture == null) {
-                walkLeftTexture = state.Content.Load<Texture2D>("Move_Left");
-                walkRightTexture = state.Content.Load<Texture2D>("Move_Right");
-                idleTexture = state.Content.Load<Texture2D>("Idle");
-                dashLeftTexture = state.Content.Load<Texture2D>("Dash_Left");
-                dashRightTexture = state.Content.Load<Texture2D>("Dash_Right");
-                jumpRightTexture = state.Content.Load<Texture2D>("Jump_Right");
-                jumpLeftTexture = state.Content.Load<Texture2D>("Jump_Left");
-                blank = state.Content.Load<Texture2D>("Blank");
-                fallRightTexture = state.Content.Load<Texture2D>("Fall");
-                fallLeftTexture = state.Content.Load<Texture2D>("Fall_Left");
-                idleLeftTexture = state.Content.Load<Texture2D>("Idle_Left");
-                tri = state.Content.Load<Texture2D>("Arrow");
+                ContentManager Content = state.Content;
+                walkLeftTexture = Content.Load<Texture2D>("Move_Left");
+                walkRightTexture = Content.Load<Texture2D>("Move_Right");
+                idleTexture = Content.Load<Texture2D>("Idle");
+                dashLeftTexture = Content.Load<Texture2D>("Dash_Left");
+                dashRightTexture = Content.Load<Texture2D>("Dash_Right");
+                jumpRightTexture = Content.Load<Texture2D>("Jump_Right");
+                jumpLeftTexture = Content.Load<Texture2D>("Jump_Left");
+                blank = Content.Load<Texture2D>("Blank");
+                fallRightTexture = Content.Load<Texture2D>("Fall");
+                fallLeftTexture = Content.Load<Texture2D>("Fall_Left");
+                idleLeftTexture = Content.Load<Texture2D>("Idle_Left");
+                tri = Content.Load<Texture2D>("Arrow");
+                ADRight = Content.Load<Texture2D>("Aerial Down Right");
+                ADLeft = Content.Load<Texture2D>("Aerial Down Left");
+                AULeft = Content.Load<Texture2D>("Aerial Up Left");
+                AURight = Content.Load<Texture2D>("Aerial Up Right");
+                ASLeft = Content.Load<Texture2D>("Aerial Side Left");
+                ASRight = Content.Load<Texture2D>("Aerial Side Right");
+                BHLeft = Content.Load<Texture2D>("BackHit Left");
+                BHRight = Content.Load<Texture2D>("BackHit Right");
+                FHLeft = Content.Load<Texture2D>("FrontHit Left");
+                FHRight = Content.Load<Texture2D>("FrontHit Right");
+                NLeft = Content.Load<Texture2D>("Neutral Left");
+                NRight = Content.Load<Texture2D>("Neutral Right");
+                SLeft = Content.Load<Texture2D>("Side Left");
+                SRight = Content.Load<Texture2D>("Side Right");
+                Spin = Content.Load<Texture2D>("Spin");
+                URight = Content.Load<Texture2D>("Up Right");
+                ULeft = Content.Load<Texture2D>("Up Left");
             }
 
             float left = gamePadState.ThumbSticks.Left.X;
@@ -264,7 +285,8 @@ namespace TinoHacksGame.Sprites {
                 secondTapNotDown = false;
                 FastFalling = false;
             }
-            if (stunTimer == 0 && InputManager.GetInstance().IsPressed(Buttons.X, (PlayerIndex)index)) attack(gamePadState.ThumbSticks.Left, IsFloating);
+            if (stunTimer == 0 && InputManager.GetInstance().IsPressed(Buttons.X, (PlayerIndex)index))
+                attack(gamePadState.ThumbSticks.Left, IsFloating);
             stunTimer = Math.Max(0f, stunTimer - (float)gameTime.ElapsedGameTime.TotalMilliseconds);
 
         }
@@ -282,19 +304,30 @@ namespace TinoHacksGame.Sprites {
         public void attack(Vector2 dir, bool inAir) {
             inAir = inAir && Math.Abs(Velocity.Y) > 0.1f;
             if (!inAir) {
-                if (dir.X <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else if (dir.X >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else if (dir.Y >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else if (dir.Y <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-50, 25), blank, new Point(50, 10), 20f, 10, 5f));
-                else if (wasLeft) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-Size.X - 25, 0), blank, new Point(25, 10), 20f, 10, 5f));
-                else GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(25, 10), 20f, 10, 5f));
+                if (dir.X <= -0.75f) GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else if (dir.X >= 0.75f) GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else if (dir.Y >= 0.75f) GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else if (dir.Y <= -0.75f) GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(-50, 25), blank, new Point(50, 10), 20f, 10, 5f));
+                else if (wasLeft) GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(-Size.X - 25, 0), blank, new Point(25, 10), 20f, 10, 5f));
+                else GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(25, 10), 20f, 10, 5f));
             }
             else {
-                if (dir.X <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else if (dir.X >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else if (dir.Y >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else if (dir.Y <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-25, -25), blank, new Point(50, 50), 20f, 10, 5f));
+                if (dir.X <= -0.75f) GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else if (dir.X >= 0.75f) GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else if (dir.Y >= 0.75f) GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else if (dir.Y <= -0.75f) GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(-25, -25), blank, new Point(50, 50), 20f, 10, 5f));
             }
         }
 
