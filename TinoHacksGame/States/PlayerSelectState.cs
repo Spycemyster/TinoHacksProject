@@ -154,15 +154,15 @@ namespace TinoHacksGame.States
             {
                 Texture = blank,
                 Position = new Vector2(0, 800),
-                Size = new Point(600, 300),
+                Size = new Point(500, 300),
                 Scale = 1f,
                 Color = Color.RosyBrown,
             };
             Platform plat8 = new Platform(null)
             {
                 Texture = blank,
-                Position = new Vector2(1000, 800),
-                Size = new Point(600, 300),
+                Position = new Vector2(1100, 800),
+                Size = new Point(500, 300),
                 Scale = 1f,
                 Color = Color.RosyBrown,
             };
