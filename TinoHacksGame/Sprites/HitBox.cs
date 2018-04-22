@@ -17,7 +17,7 @@ namespace TinoHacksGame.Sprites
         public float duration;
         public int dmg;
 
-        public HitBox(GameState state, Player p, Vector2 os, Texture2D sprite, Point size, float d, int damage, float st) : base(state) {
+        public HitBox(GameState state, Player p, Vector2 os, Texture2D sprite, Point size, float d, int damage) : base(state) {
             player = p;
             offset = os;
             index = p.index;

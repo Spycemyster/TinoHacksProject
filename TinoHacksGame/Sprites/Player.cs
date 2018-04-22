@@ -304,30 +304,21 @@ namespace TinoHacksGame.Sprites {
         public void attack(Vector2 dir, bool inAir) {
             inAir = inAir && Math.Abs(Velocity.Y) > 0.1f;
             if (!inAir) {
-                if (dir.X <= -0.75f) GameManager.GetInstance().hitBoxes.Add(
-                    new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else if (dir.X >= 0.75f) GameManager.GetInstance().hitBoxes.Add(
-                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else if (dir.Y >= 0.75f) GameManager.GetInstance().hitBoxes.Add(
-                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else if (dir.Y <= -0.75f) GameManager.GetInstance().hitBoxes.Add(
-                    new HitBox(null, this, new Vector2(-50, 25), blank, new Point(50, 10), 20f, 10, 5f));
-                else if (wasLeft) GameManager.GetInstance().hitBoxes.Add(
-                    new HitBox(null, this, new Vector2(-Size.X - 25, 0), blank, new Point(25, 10), 20f, 10, 5f));
-                else GameManager.GetInstance().hitBoxes.Add(
-                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(25, 10), 20f, 10, 5f));
+
+                if (dashing) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-25, -25), blank, new Point(50, 50), 150f, 8));  //dash attack
+                else if (dir.X <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 70f, 9));  //left attack
+                else if (dir.X >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 150f, 9));  //right attack
+                else if (dir.Y >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-30, -80), blank, new Point(30, 50), 100f, 7));  //up attack
+                else if (dir.Y <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-50, 25), blank, new Point(50, 10), 200f, 10));  //down attack
+                else if (wasLeft) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-Size.X - 25, 0), blank, new Point(25, 10), 25f, 4));  //neutral left
+                else GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(25, 10), 25f, 4));  //neutral right
             }
             else {
-                if (dir.X <= -0.75f) GameManager.GetInstance().hitBoxes.Add(
-                    new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else if (dir.X >= 0.75f) GameManager.GetInstance().hitBoxes.Add(
-                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else if (dir.Y >= 0.75f) GameManager.GetInstance().hitBoxes.Add(
-                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else if (dir.Y <= -0.75f) GameManager.GetInstance().hitBoxes.Add(
-                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
-                else GameManager.GetInstance().hitBoxes.Add(
-                    new HitBox(null, this, new Vector2(-25, -25), blank, new Point(50, 50), 20f, 10, 5f));
+                if (dir.X <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 100f, 10));  //left air
+                else if (dir.X >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 100f, 10));  //right air
+                else if (dir.Y >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-30, -80), blank, new Point(30, 50), 175f, 8));  //up air
+                else if (dir.Y <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-30, 30), blank, new Point(30, 50), 250f, 12));  //down air
+                else GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-25, -25), blank, new Point(50, 50), 200f, 7));  //neutral air
             }
         }
 
