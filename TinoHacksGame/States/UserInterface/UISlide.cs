@@ -43,16 +43,25 @@ namespace TinoHacksGame.States.UserInterface
             get;set;
         }
 
-        private int select;
+        /// <summary>
+        /// The selected color.
+        /// </summary>
+        public int Select
+        {
+            get;
+            set;
+        }
         private float timer;
         private GamePadState prevState;
         private Texture2D blank, mugshot;
+        private PlayerSelectState state;
 
         /// <summary>
         /// Creates a new instance of <c>UISlide</c>
         /// </summary>
-        public Slide(ContentManager Content) : base(null)
+        public Slide(PlayerSelectState state, ContentManager Content) : base(null)
         {
+            this.state = state;
             FinishedSelecting = false;
             Index = PlayerIndex.One;
             Origin = Vector2.Zero;
@@ -86,20 +95,72 @@ namespace TinoHacksGame.States.UserInterface
             //if (currentState.ThumbSticks.Left.Y > 0 && timer > time)
             if (!FinishedSelecting && InputManager.GetInstance().IsPressed(Buttons.RightShoulder, Index))
             {
-                select++;
+                Select++;
 
-                if (select > 8)
-                    select = 0;
+                if (Select > 8)
+                    Select = 0;
+
+                bool isTaken = false;
+
+                foreach (Slide s in state.slides)
+                {
+                    if (s != this && s.Select == Select)
+                    {
+                        isTaken = true;
+                    }
+                }
+
+                while (isTaken)
+                {
+                    Select++;
+                    if (Select > 8)
+                        Select = 0;
+
+                    isTaken = false;
+                    foreach (Slide s in state.slides)
+                    {
+                        if (s != this && s.Select == Select)
+                        {
+                            isTaken = true;
+                        }
+                    }
+                }
 
                 timer = 0f;
             }
             else if (!FinishedSelecting && InputManager.GetInstance().IsPressed(Buttons.LeftShoulder, Index))
             //else if (currentState.ThumbSticks.Left.Y < 0 && timer > time)
             {
-                select--;
+                Select--;
 
-                if (select < 0)
-                    select = 8;
+                if (Select < 0)
+                    Select = 8;
+
+                bool isTaken = false;
+
+                foreach (Slide s in state.slides)
+                {
+                    if (s != this && s.Select == Select)
+                    {
+                        isTaken = true;
+                    }
+                }
+                
+                while (isTaken)
+                {
+                    Select--;
+                    if (Select < 0)
+                        Select = 8;
+
+                    isTaken = false;
+                    foreach (Slide s in state.slides)
+                    {
+                        if (s != this && s.Select == Select)
+                        {
+                            isTaken = true;
+                        }
+                    }
+                }
 
                 timer = 0f;
             }
@@ -117,7 +178,7 @@ namespace TinoHacksGame.States.UserInterface
 
             if (IsActive)
             {
-                switch (select)
+                switch (Select)
                 {
                     case 0:
                         Color = Color.Red;

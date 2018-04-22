@@ -25,7 +25,7 @@ namespace TinoHacksGame.States
         private int[] characterOption = new int[4]; //what character each player displays
         private float[] backButtonHeld = new float[4];  //for going back to main menu
         private float[][] selectTimer = new float[4][];  //player 1 2 3 4, down up left right.
-        private Slide[] slides;
+        public Slide[] slides;
         private Texture2D[] logos;
         private int stage;
 
@@ -59,12 +59,13 @@ namespace TinoHacksGame.States
             logos[3] = Content.Load<Texture2D>("Stanford Logo");
             for (int i = 0; i < slides.Length; i++)
             {
-                slides[i] = new Slide(Content)
+                slides[i] = new Slide(this, Content)
                 {
                     Index = (PlayerIndex)i,
                     Position = new Vector2(width * i + (i + 1) * border, border),
                     Texture = blank,
                     Size = new Point(width, 400),
+                    Select = i,
                 };
 
                 if (i + 1 <= num)
@@ -81,8 +82,8 @@ namespace TinoHacksGame.States
             Platform plat = new Platform(null)
             {
                 Texture = blank,
-                Position = new Vector2(-150, 875),
-                Size = new Point(1900, 100),
+                Position = new Vector2(-50, 875),
+                Size = new Point(1700, 100),
                 Scale = 1f,
                 Color = Color.LawnGreen,
             };
@@ -100,7 +101,12 @@ namespace TinoHacksGame.States
                 plat2,
                 plat
             };
-            Stages.Add(new Stage(platforms, backgroundCollege, blank));
+            Vector2[] spawn0 = new Vector2[4];
+            spawn0[0] = new Vector2(50, 400);
+            spawn0[1] = new Vector2(1550, 400);
+            spawn0[2] = new Vector2(300, 400);
+            spawn0[3] = new Vector2(1300, 400);
+            Stages.Add(new Stage(platforms, backgroundCollege, blank, spawn0));
 
             // Cambridge
             backgroundCollege = Content.Load<Texture2D>("cambridge");
@@ -129,6 +135,11 @@ namespace TinoHacksGame.States
                 Scale = 1f,
                 Color = Color.LightSkyBlue,
             };
+            Vector2[] spawn1 = new Vector2[4];
+            spawn1[0] = new Vector2(175, 200);
+            spawn1[1] = new Vector2(1425, 200);
+            spawn1[2] = new Vector2(500, 600);
+            spawn1[3] = new Vector2(1300, 600);
 
             List<Platform> platforms2 = new List<Platform>
             {
@@ -137,7 +148,7 @@ namespace TinoHacksGame.States
                 plat3,
             };
 
-            Stages.Add(new Stage(platforms2, backgroundCollege, blank));
+            Stages.Add(new Stage(platforms2, backgroundCollege, blank, spawn1));
 
             // De Anza
             backgroundCollege = Content.Load<Texture2D>("deanza");
@@ -152,8 +163,13 @@ namespace TinoHacksGame.States
             };
             List<Platform> platforms3 = new List<Platform>();
             platforms3.Add(plat6);
+            Vector2[] spawn2 = new Vector2[4];
+            spawn2[0] = new Vector2(30, 300);
+            spawn2[1] = new Vector2(1570, 300);
+            spawn2[2] = new Vector2(100, 300);
+            spawn2[3] = new Vector2(1500, 300);
 
-            Stages.Add(new Stage(platforms3, backgroundCollege, blank));
+            Stages.Add(new Stage(platforms3, backgroundCollege, blank, spawn2));
 
             // Stanford
             backgroundCollege = Content.Load<Texture2D>("stanford");
@@ -225,8 +241,13 @@ namespace TinoHacksGame.States
             platforms4.Add(plat11);
             platforms4.Add(plat12);
             platforms4.Add(plat13);
+            Vector2[] spawn3 = new Vector2[4];
+            spawn3[0] = new Vector2(100, 200);
+            spawn3[1] = new Vector2(1500, 200);
+            spawn3[2] = new Vector2(100, 800);
+            spawn3[3] = new Vector2(1500, 800);
 
-            Stages.Add(new Stage(platforms4, backgroundCollege, blank));
+            Stages.Add(new Stage(platforms4, backgroundCollege, blank, spawn3));
 
             GameManager.GetInstance().stage = Stages[3];
         }

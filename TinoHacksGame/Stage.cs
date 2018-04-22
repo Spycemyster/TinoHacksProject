@@ -32,7 +32,7 @@ namespace TinoHacksGame {
         private int width;
         private float opacity;
         private SpriteFont font;
-
+        public Vector2[] spawnpoints;
         private float countDownTimer, timerMax;
         private Random rand;
 
@@ -42,8 +42,10 @@ namespace TinoHacksGame {
         /// <param name="platforms"></param>
         /// <param name="college"></param>
         /// <param name="blank"></param>
-        public Stage(List<Platform> platforms, Texture2D college, Texture2D blank) {
+        /// <param name="spawnpoints"></param>
+        public Stage(List<Platform> platforms, Texture2D college, Texture2D blank, Vector2[] spawnpoints) {
             rand = new Random();
+            this.spawnpoints = spawnpoints;
             font = GameManager.GetInstance().Content.Load<SpriteFont>("Font");
             this.blank = blank;
             width = 800;

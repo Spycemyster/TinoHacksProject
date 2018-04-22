@@ -57,7 +57,12 @@ namespace TinoHacksGame.States {
             Texture2D placeHolder = Content.Load<Texture2D>("Placeholder");
             font = Content.Load<SpriteFont>("Font");
             blank = Content.Load<Texture2D>("Blank");
-            foreach (Player p in Players) p.state = this;
+
+            for (int i = 0; i < Players.Count; i++)
+            {
+                Players[i].state = this;
+                Players[i].Position = currentStage.spawnpoints[i];
+            }
         }
 
         /// <summary>
