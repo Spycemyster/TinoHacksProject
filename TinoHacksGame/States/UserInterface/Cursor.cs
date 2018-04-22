@@ -26,6 +26,7 @@ namespace TinoHacksGame.States.UserInterface
         public Cursor(PlayerIndex index) : base(null)
         {
             Index = index;
+            Color = Color.BlanchedAlmond;
         }
 
         /// <summary>
@@ -48,6 +49,9 @@ namespace TinoHacksGame.States.UserInterface
             base.Draw(spriteBatch);
 
             Origin = new Vector2(0, 0);
+            Rectangle drawRect = new Rectangle((GetDrawRectangle().Location.ToVector2() + 
+                new Vector2(1, 1)).ToPoint(), GetDrawRectangle().Size);
+            spriteBatch.Draw(Texture, drawRect, Color.Black * 0.3f);
             spriteBatch.Draw(Texture, GetDrawRectangle(), Color);
         }
     }

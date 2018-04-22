@@ -39,35 +39,39 @@ namespace TinoHacksGame.States {
             cursor = new Cursor(PlayerIndex.One);
             cursor.Texture = Content.Load<Texture2D>("Cursor");
             cursor.Size = new Point(cursor.Texture.Width, cursor.Texture.Height);
+            cursor.Position = new Vector2(800, 250);
             Texture2D blank = Content.Load<Texture2D>("Blank");
             backgroundPic = Content.Load<Texture2D>("StartScreen");
 
             button[0] = new UIButton(cursor);
-            button[0].Position = new Vector2(400, 100);
-            button[0].Size = new Point(150, 25);
+            button[0].Position = new Vector2(650, 450);
+            button[0].Size = new Point(300, 50);
             button[0].Text = "Local";
             button[0].Texture = blank;
             button[0].Font = font;
             button[0].Color = Color.Green;
             button[0].OnPress += OnPress;
+            button[0].Scale = 1f;
 
             button[1] = new UIButton(cursor);
-            button[1].Position = new Vector2(400, 200);
-            button[1].Size = new Point(150, 25);
+            button[1].Position = new Vector2(650, 550);
+            button[1].Size = new Point(300, 50);
             button[1].Text = "Online";
             button[1].Texture = blank;
             button[1].Font = font;
             button[1].Color = Color.Green;
             button[1].OnPress += OnPress;
+            button[1].Scale = 1f;
 
             button[2] = new UIButton(cursor);
-            button[2].Position = new Vector2(400, 300);
-            button[2].Size = new Point(150, 25);
+            button[2].Position = new Vector2(650, 660);
+            button[2].Size = new Point(300, 50);
             button[2].Text = "Settings";
             button[2].Texture = blank;
             button[2].Font = font;
             button[2].Color = Color.Green;
             button[2].OnPress += OnPress;
+            button[2].Scale = 1f;
         }
 
         private void OnPress(UIArg arg)

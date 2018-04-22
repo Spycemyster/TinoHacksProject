@@ -13,6 +13,8 @@ namespace TinoHacksGame
         [STAThread]
         static void Main()
         {
+            Console.WriteLine("Super Stress Bros. Version 1.0.0a");
+            Console.WriteLine("Written by Spencer Chang, Henry Li, Ryan Niu, Joshua Hong");
             using (var game = new Game1())
                 game.Run();
         }
