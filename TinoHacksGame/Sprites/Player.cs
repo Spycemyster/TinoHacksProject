@@ -89,7 +89,7 @@ namespace TinoHacksGame.Sprites {
             //dashing
             float left = gamePadState.ThumbSticks.Left.X;
             if (gamePadState.ThumbSticks.Left.X == -1) {
-                if (secondTapNotSide == -1 && dashTimer < 100f) {
+                if (secondTapNotSide == -1 && dashTimer < 50f) {
                     dashing = true;
                     firstTapSide = 0;
                     secondTapNotSide = 0;
@@ -98,7 +98,7 @@ namespace TinoHacksGame.Sprites {
                 dashTimer = 0f;
             }
             else if (gamePadState.ThumbSticks.Left.X == 1) {
-                if (secondTapNotSide == 1 && dashTimer < 100f) {
+                if (secondTapNotSide == 1 && dashTimer < 50f) {
                     dashing = true;
                     firstTapSide = 0;
                     secondTapNotSide = 0;
@@ -106,7 +106,9 @@ namespace TinoHacksGame.Sprites {
                 else firstTapSide = 1;
                 dashTimer = 0f;
             }
-            else if (firstTapSide != 0) secondTapNotSide = firstTapSide;
+            else if (firstTapSide != 0) {
+                secondTapNotSide = firstTapSide;
+            }
             //left/right movement
             if (left < 0 && Velocity.X > 0) Velocity += new Vector2(-0.25f, 0);
             else if (left > 0 && Velocity.X < 0) Velocity += new Vector2(0.25f, 0);
@@ -116,7 +118,7 @@ namespace TinoHacksGame.Sprites {
             //air and ground friction
             if (gamePadState.ThumbSticks.Left.Length() == 0) {
                 float coeff = IsFloating ? 0.02f : 0.4f;
-                if ((Velocity.X >= 0.1 || Velocity.X <= -0.1)) Velocity -= new Vector2(Velocity.X * coeff, 0);
+                if (Velocity.X >= 0.1 || Velocity.X <= -0.1) Velocity -= new Vector2(Velocity.X * coeff, 0);
                 else {
                     Velocity = new Vector2(0.0f, Velocity.Y);
                     dashing = false;
@@ -151,7 +153,7 @@ namespace TinoHacksGame.Sprites {
                     IsFloating = true;
                 }
                 else if (IsFloating) {
-                    Console.WriteLine("lolz"+jumpTimer);
+                    Console.WriteLine("lolz" + jumpTimer);
                     if (jumpTimer < 175f) Velocity = new Vector2(Velocity.X, -1.75f);
                     else if (jumpTimer < 200f) Velocity = new Vector2(Velocity.X, -2f);
                 }
@@ -163,7 +165,7 @@ namespace TinoHacksGame.Sprites {
             }
             //fast falling
             if (IsFloating && gamePadState.ThumbSticks.Left.Y == -1) {
-                if (secondTapNotDown && fastFallTimer < 100f) {
+                if (secondTapNotDown && fastFallTimer < 50f) {
                     fastFalling = true;
                     firstTapDown = false;
                     secondTapNotDown = false;
@@ -171,7 +173,7 @@ namespace TinoHacksGame.Sprites {
                 else firstTapDown = true;
                 fastFallTimer = 0f;
             }
-            else if(firstTapDown) secondTapNotDown = true;
+            else if (firstTapDown) secondTapNotDown = true;
             //gravity
             if (fastFalling && IsFloating) {
                 Velocity += new Vector2(0, FASTFALL * GameState.GRAVITY);
