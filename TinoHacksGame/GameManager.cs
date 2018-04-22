@@ -24,6 +24,10 @@ namespace TinoHacksGame
             get;
             set;
         }
+        public Stage stage {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Retrieves the single ton instance of the <c>GameManager</c>.
