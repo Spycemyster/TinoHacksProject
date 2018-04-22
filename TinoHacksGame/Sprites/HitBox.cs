@@ -9,7 +9,7 @@ using TinoHacksGame.States;
 
 namespace TinoHacksGame.Sprites
 {
-    class HitBox : Sprite
+    public class HitBox : Sprite
     {
         public Player player;
         public Vector2 offset;
@@ -18,14 +18,16 @@ namespace TinoHacksGame.Sprites
         public int dmg;
         public float stuntime;
 
-        public HitBox(GameState state, Player p, Vector2 os, Sprite sprite, float d, int damage, float st) : base(state) {
+        public HitBox(GameState state, Player p, Vector2 os, Texture2D sprite, Point size, float d, int damage, float st) : base(state) {
             player = p;
             offset = os;
             index = p.index;
             duration = d;
             dmg = damage;
             stuntime = st;
+            this.Size = size;
             Scale = GameState.SCALE;
+            this.Texture = sprite;
         }
 
         public override void Update(GameTime gameTime) {
@@ -37,7 +39,7 @@ namespace TinoHacksGame.Sprites
                     Rectangle pRect = p.GetDrawRectangle();
                     Rectangle hRect = GetDrawRectangle();
                     if (pRect.Intersects(hRect)) {
-                        p.getHit(dmg, new Vector2(hRect.X - pRect.X, hRect.Y - pRect.Y), stuntime);
+                        p.getHit(dmg, Vector2.Normalize(new Vector2(hRect.X - pRect.X, hRect.Y - pRect.Y)), stuntime);
                     }
                 }
             }

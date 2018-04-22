@@ -275,7 +275,8 @@ namespace TinoHacksGame.Sprites {
         }
 
         public void attack(Vector2 dir, bool inAir) {
-            getHit(10, dir, 10f);
+            int side = wasLeft ? -1 : 1;
+            GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2 * side - (wasLeft ? 50 + Size.X / 2 : 0), 0), blank, new Point(50, 5), 20f, 10, 5f));
         }
 
         /// <summary>
