@@ -51,6 +51,7 @@ namespace TinoHacksGame.Sprites {
 
         public bool AisUP = true;
         private bool wasLeft = false;
+        private bool hasAttacked = false;
 
         /// <summary>
         /// Whether the <c>Player</c> is fast falling.
@@ -85,6 +86,7 @@ namespace TinoHacksGame.Sprites {
         public int percentage = 0;
         public float stunTimer = 0f;
         private Texture2D tri;
+        private float animationTimer, delayTimer;
 
         /// <summary>
         /// Creates a new instance of <c>Player</c>
@@ -157,7 +159,10 @@ namespace TinoHacksGame.Sprites {
             if (isJumping) {
                 jumpAnimationTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (jumpAnimationTimer > 200f)
+                {
+                    jumpAnimationTimer = 0f;
                     jumpAnimationFrame = 1;
+                }
             }
             if (dashing) {
                 dashTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -287,10 +292,28 @@ namespace TinoHacksGame.Sprites {
                 secondTapNotDown = false;
                 FastFalling = false;
             }
-            if (stunTimer == 0 && InputManager.GetInstance().IsPressed(Buttons.X, (PlayerIndex)index))
+            if (stunTimer == 0 && delayTimer == 0 && InputManager.GetInstance().IsPressed(Buttons.X, (PlayerIndex)index))
                 attack(gamePadState.ThumbSticks.Left, IsFloating);
             stunTimer = Math.Max(0f, stunTimer - (float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            delayTimer = Math.Max(0f, delayTimer - (float)gameTime.ElapsedGameTime.TotalMilliseconds);
 
+
+            if (hasAttacked)
+            {
+                animationTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+                if (animationTimer >= 200f)
+                {
+                    hasAttacked = false;
+                    animationTimer = 0f;
+                }
+            }
+
+            if(Position.X < -200 || Position.X > 1800 || Position.Y < -200 || Position.Y > 1100)
+            {
+                lives--;
+                Position = new Vector2(0, 0);
+            }
         }
 
         public void getHit(int dmg, Vector2 knockback) {
@@ -299,7 +322,7 @@ namespace TinoHacksGame.Sprites {
             Velocity = new Vector2(Velocity.X, -Velocity.Y * 1.2f);
 
             // TODO: Calibrate later
-            stunTimer = knockback.Length() * (float)Math.Log10(percentage) * 20f;
+            stunTimer = knockback.Length() * (float)Math.Log10(percentage) * 100f;
             Console.WriteLine(percentage + " " + Velocity + " " + stunTimer);
         }
 
@@ -320,10 +343,12 @@ namespace TinoHacksGame.Sprites {
             IDLE,
         }
 
-        private AnimationFrame frame;
+        private AnimationFrame frame = AnimationFrame.IDLE;
 
         public void attack(Vector2 dir, bool inAir) {
             inAir = inAir && Math.Abs(Velocity.Y) > 0.1f;
+            hasAttacked = true;
+            animationTimer = 0f;
             if (!inAir)
             {
                 if (dashing)
@@ -331,42 +356,49 @@ namespace TinoHacksGame.Sprites {
                     GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this,
                         new Vector2(-25, -25), blank, new Point(50, 50), 150f, 8));  //dash attack
                     frame = AnimationFrame.DASH;
+                    delayTimer += 350f;
                 }
                 else if (dir.X <= -0.75f)
                 {
                     GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this,
                         new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 70f, 9));  //left attack
                     frame = AnimationFrame.SIDE_LEFT;
+                    delayTimer += 350f;
                 }
                 else if (dir.X >= 0.75f)
                 {
                     GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(
                         Size.X / 2, 0), blank, new Point(50, 5), 150f, 9));  //right attack
                     frame = AnimationFrame.SIDE_RIGHT;
+                    delayTimer += 350f;
                 }
                 else if (dir.Y >= 0.75f)
                 {
                     GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(
                         -30, -80), blank, new Point(30, 50), 100f, 7));  //up attack
                     frame = AnimationFrame.UP;
+                    delayTimer += 300f;
                 }
                 else if (dir.Y <= -0.75f)
                 {
                     GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(
                         -50, 25), blank, new Point(50, 10), 200f, 10));  //down attack
                     frame = AnimationFrame.DOWN;
+                    delayTimer += 375f;
                 }
                 else if (wasLeft)
                 {
                     GameManager.GetInstance().hitBoxes.Add(
                     new HitBox(null, this, new Vector2(-Size.X - 25, 0), blank, new Point(25, 10), 25f, 4));  //neutral left
                     frame = AnimationFrame.NEUTRAL_LEFT;
+                    delayTimer += 225f;
                 }
                 else
                 {
                     GameManager.GetInstance().hitBoxes.Add(
                     new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(25, 10), 25f, 4));  //neutral right
                     frame = AnimationFrame.NEUTRAL_RIGHT;
+                    delayTimer += 125f;
                 }
             }
             else
@@ -376,30 +408,35 @@ namespace TinoHacksGame.Sprites {
                     GameManager.GetInstance().hitBoxes.Add(
                     new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 100f, 10));  //left air
                     frame = AnimationFrame.LEFT_AIR;
+                    delayTimer += 150f;
                 }
                 else if (dir.X >= 0.75f)
                 {
                     GameManager.GetInstance().hitBoxes.Add(
                     new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 100f, 10));  //right air
                     frame = AnimationFrame.RIGHT_AIR;
+                    delayTimer += 150f;
                 }
                 else if (dir.Y >= 0.75f)
                 {
                     GameManager.GetInstance().hitBoxes.Add(
                     new HitBox(null, this, new Vector2(-30, -80), blank, new Point(30, 50), 175f, 8));  //up air
                     frame = AnimationFrame.UP_AIR;
+                    delayTimer += 250f;
                 }
                 else if (dir.Y <= -0.75f)
                 {
                     GameManager.GetInstance().hitBoxes.Add(
                     new HitBox(null, this, new Vector2(-30, 30), blank, new Point(30, 50), 250f, 12));  //down air
                     frame = AnimationFrame.DOWN_AIR;
+                    delayTimer += 300f;
                 }
                 else
                 {
                     GameManager.GetInstance().hitBoxes.Add(
                     new HitBox(null, this, new Vector2(-25, -25), blank, new Point(50, 50), 200f, 7));  //neutral air
                     frame = AnimationFrame.NEUTRAL_AIR;
+                    delayTimer += 200f;
                 }
             }
         }
@@ -473,68 +510,90 @@ namespace TinoHacksGame.Sprites {
                 //    (int)(tri.Height)), Color);
                 Texture2D texture = null;
                 bool draw = true;
-                switch (frame)
+
+                if (frame.Equals(AnimationFrame.IDLE) && Velocity.Length() > 0.1f)
                 {
-                    case AnimationFrame.DASH:
-                        draw = false;
-                        texture = dashLeftTexture;
-                        if (!wasLeft)
-                            texture = dashRightTexture;
-                        spriteBatch.Draw(dashRightTexture, Position, new Rectangle(34 * dashAnimationFrameNumber, 0, 34, 50), Color.White, rotation,
-                        Origin, Scale, SpriteEffects.None, 0f);
-                        break;
-                    case AnimationFrame.DOWN:
-                        texture = DLeft;
-                        if (!wasLeft)
-                            texture = DRight;
-                        break;
-                    case AnimationFrame.DOWN_AIR:
-                        texture = ADLeft;
-                        if (!wasLeft)
-                            texture = ADRight;
-                        break;
-                    case AnimationFrame.IDLE:
-                        texture = idleLeftTexture;
-                        if (!wasLeft)
-                            texture = idleTexture;
-                        break;
-                    case AnimationFrame.LEFT_AIR:
-                        texture = ASLeft;
-                        break;
-                    case AnimationFrame.NEUTRAL_AIR:
-                        texture = Spin;
-                        break;
-                    case AnimationFrame.NEUTRAL_LEFT:
-                        texture = NLeft;
-                        break;
-                    case AnimationFrame.NEUTRAL_RIGHT:
-                        texture = NRight;
-                        break;
-                    case AnimationFrame.RIGHT_AIR:
-                        texture = ASRight;
-                        break;
-                    case AnimationFrame.SIDE_LEFT:
-                        texture = SLeft;
-                        break;
-                    case AnimationFrame.SIDE_RIGHT:
-                        texture = SRight;
-                        break;
-                    case AnimationFrame.UP:
-                        texture = ULeft;
-                        if (!wasLeft)
-                            texture = URight;
-                        break;
-                    case AnimationFrame.UP_AIR:
-                        texture = AULeft;
-                        if (!wasLeft)
-                            texture = AURight;
-                        break;
+                    draw = false;
+                    Texture2D texture2 = walkLeftTexture;
+                    if (!wasLeft)
+                        texture2 = walkRightTexture;
+                    spriteBatch.Draw(texture2, Position, new Rectangle(29 * walkAnimationFrameNumber, 0, 29, 44), Color.White, rotation,
+                        Origin, GameState.SCALE, SpriteEffects.None, 0f);
                 }
+                else
+                {
+
+                    switch (frame)
+                    {
+                        case AnimationFrame.DASH:
+                            //draw = false;
+                            //texture = dashLeftTexture;
+                            //if (!wasLeft)
+                            //    texture = dashRightTexture;
+                            //spriteBatch.Draw(dashRightTexture, Position, new Rectangle(34 * dashAnimationFrameNumber, 0, 34, 50), Color.White, rotation,
+                            //Origin, Scale, SpriteEffects.None, 0f);
+                            texture = Spin;
+                            break;
+                        case AnimationFrame.DOWN:
+                            texture = DLeft;
+                            if (!wasLeft)
+                                texture = DRight;
+                            break;
+                        case AnimationFrame.DOWN_AIR:
+                            texture = ADLeft;
+                            if (!wasLeft)
+                                texture = ADRight;
+                            break;
+                        case AnimationFrame.IDLE:
+                            texture = idleLeftTexture;
+                            if (!wasLeft)
+                                texture = idleTexture;
+                            break;
+                        case AnimationFrame.LEFT_AIR:
+                            texture = ASLeft;
+                            break;
+                        case AnimationFrame.NEUTRAL_AIR:
+                            texture = Spin;
+                            break;
+                        case AnimationFrame.NEUTRAL_LEFT:
+                            texture = NLeft;
+                            break;
+                        case AnimationFrame.NEUTRAL_RIGHT:
+                            texture = NRight;
+                            break;
+                        case AnimationFrame.RIGHT_AIR:
+                            texture = ASRight;
+                            break;
+                        case AnimationFrame.SIDE_LEFT:
+                            texture = SLeft;
+                            break;
+                        case AnimationFrame.SIDE_RIGHT:
+                            texture = SRight;
+                            break;
+                        case AnimationFrame.UP:
+                            texture = ULeft;
+                            if (!wasLeft)
+                                texture = URight;
+                            break;
+                        case AnimationFrame.UP_AIR:
+                            texture = AULeft;
+                            if (!wasLeft)
+                                texture = AURight;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
 
                 if (draw)
                     spriteBatch.Draw(texture, Position, null, Color.White, rotation, Origin, Scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(tri, new Rectangle((int)(Position.X - (tri.Width) / 2),
+                    (int)(Position.Y - (tri.Height) / 2) - 80, (tri.Width),
+                    (tri.Height)), Color);
 
-                frame = AnimationFrame.IDLE;
+                if (!hasAttacked)
+                    frame = AnimationFrame.IDLE;
 
             }
 
