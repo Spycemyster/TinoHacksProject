@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TinoHacksGame.States;
+using Microsoft.Xna.Framework.Audio;
 
 namespace TinoHacksGame.Sprites {
     /// <summary>
@@ -89,6 +90,8 @@ namespace TinoHacksGame.Sprites {
         private Texture2D tri;
         private float animationTimer, delayTimer;
 
+        public SoundEffect dmgSFX;
+
         /// <summary>
         /// Creates a new instance of <c>Player</c>
         /// </summary>
@@ -113,6 +116,7 @@ namespace TinoHacksGame.Sprites {
             // animations
             if (walkLeftTexture == null) {
                 ContentManager Content = state.Content;
+                dmgSFX = Content.Load<SoundEffect>("takeDmg");
                 walkLeftTexture = Content.Load<Texture2D>("Move_Left");
                 walkRightTexture = Content.Load<Texture2D>("Move_Right");
                 idleTexture = Content.Load<Texture2D>("Idle");
@@ -320,6 +324,9 @@ namespace TinoHacksGame.Sprites {
         }
 
         public void getHit(int dmg, Vector2 knockback) {
+            var instance = dmgSFX.CreateInstance();
+            instance.Play();
+
             percentage += dmg;
             Velocity = knockback * (float)Math.Log10(percentage);
             Velocity = new Vector2(Velocity.X * 1.1f, -Velocity.Y * 1.25f);

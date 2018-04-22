@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,6 +73,8 @@ namespace TinoHacksGame
         private GraphicsDevice graphicsDevice;
         private Game1 game;
 
+        public List<Song> songList = new List<Song>();
+
         /// <summary>
         /// Performs first time startup initialization and contenting loading.
         /// </summary>
@@ -81,7 +84,8 @@ namespace TinoHacksGame
             this.game = game;
             graphicsDevice = game.GraphicsDevice;
             content = new ContentManager(game.Content.ServiceProvider, "Content");
-
+            for(int i = 1; i <= 6; i++) songList.Add(Content.Load<Song>("level "+i));
+            songList.Add(Content.Load<Song>("endScreen"));
             ChangeScreen(Screens.TITLE);
         }
         
