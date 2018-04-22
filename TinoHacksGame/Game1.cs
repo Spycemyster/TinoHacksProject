@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace TinoHacksGame
 {
@@ -21,6 +22,14 @@ namespace TinoHacksGame
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 1600;
             graphics.PreferredBackBufferHeight = 900;
+            graphics.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(GPDS);
+            IsFixedTimeStep = false;
+        }
+
+        private void GPDS(object sender, PreparingDeviceSettingsEventArgs e)
+        {
+            e.GraphicsDeviceInformation.PresentationParameters.PresentationInterval 
+                = PresentInterval.One;
         }
 
         /// <summary>
@@ -70,6 +79,12 @@ namespace TinoHacksGame
                 Exit();
 
             GameManager.GetInstance().Update(gameTime);
+
+            if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.RightTrigger))
+                GamePad.SetVibration(0, 50f, 50f);
+            else if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftTrigger))
+                GamePad.SetVibration(0, 10f, 10f);
+
 
             base.Update(gameTime);
         }
