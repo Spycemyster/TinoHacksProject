@@ -67,8 +67,10 @@ namespace TinoHacksGame
         {
             get { return content; }
         }
+
         private ContentManager content;
         private GraphicsDevice graphicsDevice;
+        private Game1 game;
 
         /// <summary>
         /// Performs first time startup initialization and contenting loading.
@@ -76,10 +78,19 @@ namespace TinoHacksGame
         /// <param name="game"></param>
         public void Initialize(Game1 game)
         {
+            this.game = game;
             graphicsDevice = game.GraphicsDevice;
             content = new ContentManager(game.Content.ServiceProvider, "Content");
 
             ChangeScreen(Screens.PLAYERSELECT);
+        }
+        
+        /// <summary>
+        /// Exits the game.
+        /// </summary>
+        public void Exit()
+        {
+            game.Exit();
         }
 
         /// <summary>

@@ -4,11 +4,58 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>E:/GitHub/TinoHacksProject/TinoHacksGame/Content/Blank.png</File>
-    <File>E:/GitHub/TinoHacksProject/TinoHacksGame/Content/Font.spritefont</File>
-    <File>E:/GitHub/TinoHacksProject/TinoHacksGame/Content/FPSCounter_Font.spritefont</File>
-    <File>E:/GitHub/TinoHacksProject/TinoHacksGame/Content/BackArrow.png</File>
-    <File>E:/GitHub/TinoHacksProject/TinoHacksGame/Content/Placeholder.png</File>
-    <File>E:/GitHub/TinoHacksProject/TinoHacksGame/Content/Cursor.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Blank.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Font.spritefont</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/FPSCounter_Font.spritefont</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/BackArrow.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Placeholder.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Cursor.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/StartScreen.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/cambridge.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Card.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/deanza.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/jhu.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/stanford.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Move_Left.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Move_Right.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Idle.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Dash_Left.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Dash_Right.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Jump_Left.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Jump_Right.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Idle_Left.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Arrow.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Fall.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Fall_Left.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Giraffe_standing_1.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Aerial Down Left.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Aerial Down Right.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Aerial Up Left.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Aerial Up Right.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Arial Side Left.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Arial Side Right.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/BackHit Left.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/BackHit Right.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Dash.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Dash2.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Down Left.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Down Right.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/FrontHit Left.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/FrontHit Right.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Jump1.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Jump2.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Move1.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Move2.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Move3.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Move4.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Neutral Left.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Neutral Right.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Neutral2.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Platform.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Side Left.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Side Right.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Spin.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Up Right.png</File>
+    <File>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/Up Left.png</File>
   </SourceFiles>
 </SourceFileCollection>

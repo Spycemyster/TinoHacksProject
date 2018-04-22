@@ -119,7 +119,7 @@ namespace TinoHacksGame.States
 
                 //stagemaking START
                 for (int i = 0; i < num; i++) {
-                    Player p = new Player(null, i) {
+                    Player p = new Player(null, i, slides[i].Color) {
                         Texture = placeHolder,
                         Position = new Vector2(100, 0),
                     };
