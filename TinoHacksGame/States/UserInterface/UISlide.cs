@@ -117,13 +117,13 @@ namespace TinoHacksGame.States.UserInterface
                     Color = Color.Yellow;
                     break;
                 case 1:
-                    Color = Color.Gray;
+                    Color = Color.DarkOliveGreen;
                     break;
                 case 2:
-                    Color = Color.AliceBlue;
+                    Color = Color.DarkBlue;
                     break;
                 case 3:
-                    Color = Color.DarkOliveGreen;
+                    Color = Color.Red;
                     break;
             }
 
