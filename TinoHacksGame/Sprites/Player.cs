@@ -307,7 +307,7 @@ namespace TinoHacksGame.Sprites {
                 }
             }
 
-            if (Position.X < -200 || Position.X > 1800 || Position.Y < -200 || Position.Y > 1100) {
+            if (Position.X < -200 || Position.X > 1800 || Position.Y < -50 || Position.Y > 1100) {
                 lives--;
                 Velocity = new Vector2(0, 0);
                 Position = new Vector2(800, 0);
