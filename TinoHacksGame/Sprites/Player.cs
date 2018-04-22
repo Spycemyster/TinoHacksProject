@@ -126,7 +126,7 @@ namespace TinoHacksGame.Sprites {
             }
 
             //ground detection
-            foreach (Platform p in state.Platforms) {
+            foreach (Platform p in state.currentStage.Platforms) {
                 Rectangle rect = GetDrawRectangle();
                 Rectangle rect2 = p.GetDrawRectangle();
                 if (rect.Intersects(rect2)) {

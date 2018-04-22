@@ -35,16 +35,8 @@ namespace TinoHacksGame.States
             private set;
         }
 
-        /// <summary>
-        /// The platforms of the game state.
-        /// </summary>
-        public List<Platform> Platforms
-        {
-            get;
-            private set;
-        }
-
-        private Texture2D backgroundCollege;
+        public Stage currentStage;
+        
 
         /// <summary>
         /// Creates a new instance of <c>GameState</c>.
@@ -52,7 +44,7 @@ namespace TinoHacksGame.States
         public GameState()
         {
             Players = GameManager.GetInstance().Players;
-            Platforms = new List<Platform>();
+            currentStage = GameManager.GetInstance().stage;
         }
 
         /// <summary>
@@ -64,25 +56,7 @@ namespace TinoHacksGame.States
             base.Initialize(Content);
 
             Texture2D placeHolder = Content.Load<Texture2D>("Placeholder");
-            backgroundCollege = Content.Load<Texture2D>("jhu");
             foreach (Player p in Players) p.state = this;
-
-            Platform plat = new Platform(this)
-            {
-                Texture = Content.Load<Texture2D>("Blank"),
-                Position = new Vector2(50, 850),
-                Size = new Point(1000, 30),
-            };
-
-            Platform plat2 = new Platform(this)
-            {
-                Texture = Content.Load<Texture2D>("Blank"),
-                Position = new Vector2(300, 600),
-                Size = new Point(300, 20),
-            };
-
-            Platforms.Add(plat2);
-            Platforms.Add(plat);
         }
 
         /// <summary>
@@ -96,7 +70,7 @@ namespace TinoHacksGame.States
             foreach (Player p in Players)
                 p.Update(gameTime);
 
-            foreach (Platform p in Platforms)
+            foreach (Platform p in currentStage.Platforms)
                 p.Update(gameTime);
         }
 
@@ -111,12 +85,12 @@ namespace TinoHacksGame.States
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(backgroundCollege, new Rectangle(0, 0, 1600, 900), Color.White);
+            GameManager.GetInstance().stage.Draw(spriteBatch);
 
             foreach (Player p in Players)
                 p.Draw(spriteBatch);
 
-            foreach (Platform p in Platforms)
+            foreach (Platform p in currentStage.Platforms)
                 p.Draw(spriteBatch);
 
             spriteBatch.End();
