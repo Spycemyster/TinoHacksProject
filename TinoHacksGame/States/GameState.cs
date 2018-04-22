@@ -89,7 +89,7 @@ namespace TinoHacksGame.States {
             else {
                 if (InputManager.GetInstance().IsPressed(Buttons.Start, PlayerIndex.One) || InputManager.GetInstance().IsPressed(Buttons.Start, PlayerIndex.Two) ||
                 (InputManager.GetInstance().IsPressed(Buttons.Start, PlayerIndex.Three) || InputManager.GetInstance().IsPressed(Buttons.Start, PlayerIndex.Four)))
-                    GameManager.GetInstance().ChangeScreen(Screens.MENU);
+                    GameManager.GetInstance().ChangeScreen(Screens.PLAYERSELECT );
             }
             if (InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.One) || InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.Two) ||
                 (InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.Three) || InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.Four)))
@@ -138,7 +138,7 @@ namespace TinoHacksGame.States {
                 string text = "GAME!";
                 spriteBatch.DrawString(font, text, new Vector2(800 - font.MeasureString(text).X * 2, 400) + new Vector2(2, 2), Color.Black, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0f);
                 spriteBatch.DrawString(font, text, new Vector2(800 - font.MeasureString(text).X * 2, 400), Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0f);
-                text = "Press Start to return to the title.";
+                text = "Press Start to return to the Character Select.";
                 spriteBatch.DrawString(font, text, new Vector2(800 - font.MeasureString(text).X / 2, 200) + new Vector2(2, 2), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
                 spriteBatch.DrawString(font, text, new Vector2(800 - font.MeasureString(text).X / 2, 200), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
