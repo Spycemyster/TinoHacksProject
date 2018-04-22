@@ -95,10 +95,10 @@ namespace TinoHacksGame
                 {
                     if (isLeft)
                     {
-                        p.getHit(100, new Vector2(rand.Next(0, 2), rand.Next(0, 2)), 0f);
+                        p.getHit(100, new Vector2(rand.Next(0, 2), rand.Next(0, 2)), 5f);
                     }
                     else
-                        p.getHit(100, new Vector2(rand.Next(-2, 0), rand.Next(0, 2)), 0f);
+                        p.getHit(100, new Vector2(rand.Next(-2, 0), rand.Next(0, 2)), 5f);
                 }
             }
         }
@@ -119,7 +119,7 @@ namespace TinoHacksGame
             spriteBatch.Draw(blank, DangerZone, Color.White * (countDownTimer / (timerMax - 1000)));
             spriteBatch.Draw(blank, timerRect, Color.DarkRed);
             string text = "" + (int)((timerMax - countDownTimer) / 1000f);
-            Vector2 pos = new Vector2(800 - font.MeasureString(text).X / 2, 32f*0);
+            Vector2 pos = new Vector2(800 - font.MeasureString(text).X / 2, 32f);
             spriteBatch.DrawString(font, text, pos, Color.Blue, 0f, font.MeasureString(text) / 2, 2f, SpriteEffects.None, 0f);
         }
     }
