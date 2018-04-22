@@ -7,15 +7,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TinoHacksGame.States;
 
-namespace TinoHacksGame.Sprites
-{
-    public class HitBox : Sprite
-    {
+namespace TinoHacksGame.Sprites {
+    public class HitBox : Sprite {
         public Player player;
         public Vector2 offset;
         public int index;
         public float duration;
         public int dmg;
+        public List<Player> alreadyHit = new List<Player>();
 
         public HitBox(GameState state, Player p, Vector2 os, Texture2D sprite, Point size, float d, int damage) : base(state) {
             player = p;
@@ -32,12 +31,13 @@ namespace TinoHacksGame.Sprites
             base.Update(gameTime);
             if (!isActive()) return;
             Position = new Vector2(player.Position.X + offset.X, player.Position.Y + offset.Y);
-            foreach(Player p in GameManager.GetInstance().Players) {
-                if(p.index != index) {
+            foreach (Player p in GameManager.GetInstance().Players) {
+                if (p.index != index && !alreadyHit.Contains(p)) {
                     Rectangle pRect = p.GetDrawRectangle();
                     Rectangle hRect = GetDrawRectangle();
                     if (pRect.Intersects(hRect)) {
-                        p.getHit(dmg, Vector2.Normalize(new Vector2(hRect.X - pRect.X, hRect.Y - pRect.Y)));
+                        p.getHit(dmg, Vector2.Normalize(new Vector2(pRect.X - hRect.X, hRect.Y - pRect.Y)));
+                        alreadyHit.Add(p);
                     }
                 }
             }
@@ -49,7 +49,7 @@ namespace TinoHacksGame.Sprites
             if (!isActive()) return;
 
             Origin = Vector2.Zero;
-            spriteBatch.Draw(Texture, GetDrawRectangle(), Color.White);
+            spriteBatch.Draw(Texture, GetDrawRectangle(), Color.White * 0.2f);
         }
 
         public override Rectangle GetDrawRectangle() {
