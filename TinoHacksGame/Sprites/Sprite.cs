@@ -69,6 +69,15 @@ namespace TinoHacksGame.Sprites
         }
 
         /// <summary>
+        /// The scale at which the <c>Sprite</c> is drawn at.
+        /// </summary>
+        public float Scale
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// The origin that the <c>Sprite</c> is located at.
         /// </summary>
         public Vector2 Origin
@@ -89,6 +98,7 @@ namespace TinoHacksGame.Sprites
         {
             this.state = state;
             Color = Color.White;
+            Scale = GameState.SCALE;
         }
 
         /// <summary>
@@ -97,9 +107,9 @@ namespace TinoHacksGame.Sprites
         /// <returns></returns>
         public Rectangle GetDrawRectangle()
         {
-            return new Rectangle((int)(Position.X - Origin.X * GameState.SCALE), 
-                (int)(Position.Y - Origin.Y * GameState.SCALE), (int)(Size.X *
-                GameState.SCALE), (int)(Size.Y * GameState.SCALE));
+            return new Rectangle((int)(Position.X - Origin.X * Scale), 
+                (int)(Position.Y - Origin.Y * Scale), (int)(Size.X *
+                Scale), (int)(Size.Y * Scale));
         }
 
         /// <summary>

@@ -100,6 +100,7 @@ namespace TinoHacksGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void Update(GameTime gameTime)
         {
+            InputManager.GetInstance().Update(gameTime);
             CurrentState.Update(gameTime);
         }
 

@@ -25,21 +25,38 @@ namespace TinoHacksGame.States.UserInterface
             set;
 
         }
+
+        /// <summary>
+        /// The state of which the slide is done selecting.
+        /// </summary>
+        public bool FinishedSelecting
+        {
+            get;
+            set;
+        }
+
         private int select;
+        private float timer;
         private GamePadState prevState;
         private Texture2D[] textures;
+        private Texture2D blank;
 
         /// <summary>
         /// Creates a new instance of <c>UISlide</c>
         /// </summary>
         public Slide(ContentManager Content) : base(null)
         {
+            FinishedSelecting = false;
             Index = PlayerIndex.One;
             textures = new Texture2D[4];
-            textures[0] = Content.Load<Texture2D>("");
-            textures[1] = Content.Load<Texture2D>("");
-            textures[2] = Content.Load<Texture2D>("");
-            textures[3] = Content.Load<Texture2D>("");
+            Origin = Vector2.Zero;
+            Scale = 1f;
+            blank = Content.Load<Texture2D>("Blank");
+            //Texture = Content.Load<Texture2D>("Card");
+            textures[0] = Content.Load<Texture2D>("Blank");
+            textures[1] = Content.Load<Texture2D>("Blank");
+            textures[2] = Content.Load<Texture2D>("Blank");
+            textures[3] = Content.Load<Texture2D>("Blank");
         }
 
         /// <summary>
@@ -50,21 +67,33 @@ namespace TinoHacksGame.States.UserInterface
         {
             base.Update(gameTime);
 
-            GamePadState currentState = GamePad.GetState(Index);
+            timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (currentState.ThumbSticks.Left.Y > 0)
+            GamePadState currentState = GamePad.GetState(Index);
+            float time = 300f;
+            if (currentState.Buttons.A.Equals(ButtonState.Pressed))
+                FinishedSelecting = true;
+            else if (currentState.Buttons.B.Equals(ButtonState.Pressed))
+                FinishedSelecting = false;
+            //if (currentState.ThumbSticks.Left.Y > 0 && timer > time)
+            if (InputManager.GetInstance().IsPressed(Buttons.LeftShoulder, Index))
             {
                 select++;
 
                 if (select > 3)
                     select = 0;
+
+                timer = 0f;
             }
-            else if (currentState.ThumbSticks.Left.Y < 0)
+            else if (InputManager.GetInstance().IsPressed(Buttons.RightShoulder, Index))
+            //else if (currentState.ThumbSticks.Left.Y < 0 && timer > time)
             {
                 select--;
 
                 if (select < 0)
                     select = 3;
+
+                timer = 0f;
             }
 
             prevState = GamePad.GetState(Index);
@@ -77,8 +106,30 @@ namespace TinoHacksGame.States.UserInterface
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+            Color c = Color.White;
+            switch(select)
+            {
+                case 0:
+                    c = Color.Yellow;
+                    break;
+                case 1:
+                    c = Color.Gray;
+                    break;
+                case 2:
+                    c = Color.AliceBlue;
+                    break;
+                case 3:
+                    c = Color.DarkOliveGreen;
+                    break;
+            }
 
-            spriteBatch.Draw(textures[select], GetDrawRectangle(), Color.White);
+            spriteBatch.Draw(Texture, GetDrawRectangle(), Color.White);
+            spriteBatch.Draw(textures[select], GetDrawRectangle(), c);
+
+            if (FinishedSelecting)
+            {
+                spriteBatch.Draw(blank, GetDrawRectangle(), Color.White * 0.5f);
+            }
         }
     }
 }
