@@ -35,11 +35,18 @@ namespace TinoHacksGame.States.UserInterface
             set;
         }
 
+        /// <summary>
+        /// The activeness of the player controlling the <c>Slide</c>.
+        /// </summary>
+        public bool IsActive
+        {
+            get;set;
+        }
+
         private int select;
         private float timer;
         private GamePadState prevState;
-        private Texture2D[] textures;
-        private Texture2D blank;
+        private Texture2D blank, mugshot;
 
         /// <summary>
         /// Creates a new instance of <c>UISlide</c>
@@ -48,15 +55,11 @@ namespace TinoHacksGame.States.UserInterface
         {
             FinishedSelecting = false;
             Index = PlayerIndex.One;
-            textures = new Texture2D[4];
             Origin = Vector2.Zero;
             Scale = 1f;
             blank = Content.Load<Texture2D>("Blank");
-            //Texture = Content.Load<Texture2D>("Card");
-            textures[0] = Content.Load<Texture2D>("Blank");
-            textures[1] = Content.Load<Texture2D>("Blank");
-            textures[2] = Content.Load<Texture2D>("Blank");
-            textures[3] = Content.Load<Texture2D>("Blank");
+            mugshot = Content.Load<Texture2D>("Profile");
+            IsActive = false;
         }
 
         /// <summary>
@@ -81,22 +84,22 @@ namespace TinoHacksGame.States.UserInterface
                     FinishedSelecting = false;
             }
             //if (currentState.ThumbSticks.Left.Y > 0 && timer > time)
-            if (!FinishedSelecting && InputManager.GetInstance().IsPressed(Buttons.LeftShoulder, Index))
+            if (!FinishedSelecting && InputManager.GetInstance().IsPressed(Buttons.RightShoulder, Index))
             {
                 select++;
 
-                if (select > 3)
+                if (select > 8)
                     select = 0;
 
                 timer = 0f;
             }
-            else if (!FinishedSelecting && InputManager.GetInstance().IsPressed(Buttons.RightShoulder, Index))
+            else if (!FinishedSelecting && InputManager.GetInstance().IsPressed(Buttons.LeftShoulder, Index))
             //else if (currentState.ThumbSticks.Left.Y < 0 && timer > time)
             {
                 select--;
 
                 if (select < 0)
-                    select = 3;
+                    select = 8;
 
                 timer = 0f;
             }
@@ -111,28 +114,52 @@ namespace TinoHacksGame.States.UserInterface
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            switch(select)
+
+            if (IsActive)
             {
-                case 0:
-                    Color = Color.Yellow;
-                    break;
-                case 1:
-                    Color = Color.DarkOliveGreen;
-                    break;
-                case 2:
-                    Color = Color.DarkBlue;
-                    break;
-                case 3:
-                    Color = Color.Red;
-                    break;
+                switch (select)
+                {
+                    case 0:
+                        Color = Color.Red;
+                        break;
+                    case 1:
+                        Color = Color.Orange;
+                        break;
+                    case 2:
+                        Color = Color.Yellow;
+                        break;
+                    case 3:
+                        Color = Color.Green;
+                        break;
+                    case 4:
+                        Color = Color.Blue;
+                        break;
+                    case 5:
+                        Color = Color.Purple;
+                        break;
+                    case 6:
+                        Color = Color.White;
+                        break;
+                    case 7:
+                        Color = Color.Brown;
+                        break;
+                    case 8:
+                        Color = Color.Black;
+                        break;
+                }
+
+                spriteBatch.Draw(Texture, GetDrawRectangle(), Color.White);
+                spriteBatch.Draw(blank, GetDrawRectangle(), Color);
+                spriteBatch.Draw(mugshot, GetDrawRectangle(), Color.White);
+                if (FinishedSelecting)
+                {
+                    spriteBatch.Draw(blank, GetDrawRectangle(), Color.White * 0.5f);
+                }
             }
-
-            spriteBatch.Draw(Texture, GetDrawRectangle(), Color.White);
-            spriteBatch.Draw(textures[select], GetDrawRectangle(), Color);
-
-            if (FinishedSelecting)
+            else
             {
-                spriteBatch.Draw(blank, GetDrawRectangle(), Color.White * 0.5f);
+                spriteBatch.Draw(mugshot, GetDrawRectangle(), Color.White * 0.5f);
+                spriteBatch.Draw(blank, GetDrawRectangle(), Color.DarkGray * 0.7f);
             }
         }
     }

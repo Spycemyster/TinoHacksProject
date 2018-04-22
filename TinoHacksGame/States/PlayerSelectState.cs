@@ -48,6 +48,7 @@ namespace TinoHacksGame.States
             int border = 32;
             int width = 360;
             blank = Content.Load<Texture2D>("Blank");
+            int num = ControllersConnected();
             for (int i = 0; i < slides.Length; i++)
             {
                 slides[i] = new Slide(Content)
@@ -57,6 +58,9 @@ namespace TinoHacksGame.States
                     Texture = blank,
                     Size = new Point(width, 400),
                 };
+
+                if (i + 1 <= num)
+                    slides[i].IsActive = true;
             }
 
             base.Initialize(Content);

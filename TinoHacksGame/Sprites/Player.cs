@@ -52,6 +52,7 @@ namespace TinoHacksGame.Sprites {
         public bool AisUP = true;
         private bool wasLeft = false;
         private bool hasAttacked = false;
+        private bool isHurt;
 
         /// <summary>
         /// Whether the <c>Player</c> is fast falling.
@@ -312,7 +313,13 @@ namespace TinoHacksGame.Sprites {
             if(Position.X < -200 || Position.X > 1800 || Position.Y < -200 || Position.Y > 1100)
             {
                 lives--;
-                Position = new Vector2(0, 0);
+                Velocity = new Vector2(0, 0);
+                Position = new Vector2(800, 0);
+                percentage = 0;
+                stunTimer = 0;
+                fastFallTimer = 0;
+                delayTimer = 0;
+                animationTimer = 0;
             }
         }
 
@@ -322,7 +329,7 @@ namespace TinoHacksGame.Sprites {
             Velocity = new Vector2(Velocity.X, -Velocity.Y * 1.2f);
 
             // TODO: Calibrate later
-            stunTimer = knockback.Length() * (float)Math.Log10(percentage) * 100f;
+            stunTimer = knockback.Length() * (float)Math.Log10(percentage) * 250f;
             Console.WriteLine(percentage + " " + Velocity + " " + stunTimer);
         }
 
@@ -510,8 +517,15 @@ namespace TinoHacksGame.Sprites {
                 //    (int)(tri.Height)), Color);
                 Texture2D texture = null;
                 bool draw = true;
-
-                if (frame.Equals(AnimationFrame.IDLE) && Velocity.Length() > 0.1f)
+                if (stunTimer > 0f)
+                {
+                    Texture2D text = BHLeft;
+                    if (!wasLeft)
+                        text = BHRight;
+                    draw = false;
+                    spriteBatch.Draw(text, Position, null, Color.White, rotation, Origin, Scale, SpriteEffects.None, 0f);
+                }
+                else if (frame.Equals(AnimationFrame.IDLE) && Velocity.Length() > 0.1f)
                 {
                     draw = false;
                     Texture2D texture2 = walkLeftTexture;
@@ -592,7 +606,7 @@ namespace TinoHacksGame.Sprites {
                     (int)(Position.Y - (tri.Height) / 2) - 80, (tri.Width),
                     (tri.Height)), Color);
 
-                if (!hasAttacked)
+                if (!hasAttacked && stunTimer <= 0)
                     frame = AnimationFrame.IDLE;
 
             }

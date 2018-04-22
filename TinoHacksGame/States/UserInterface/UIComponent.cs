@@ -89,8 +89,9 @@ namespace TinoHacksGame.States.UserInterface
                 {
                     OnEnter?.Invoke(arg);
                 }
-
-                if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.A))
+                
+                if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.A) || GamePad.GetState(PlayerIndex.Two).IsButtonDown(Buttons.A) ||
+                    GamePad.GetState(PlayerIndex.Three).IsButtonDown(Buttons.A) || GamePad.GetState(PlayerIndex.Four).IsButtonDown(Buttons.A))
                     OnPress?.Invoke(arg);
 
                 isEntered = true;

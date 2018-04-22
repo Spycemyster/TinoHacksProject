@@ -37,7 +37,8 @@ namespace TinoHacksGame.States
         }
 
         public Stage currentStage;
-        
+        private Texture2D blank;
+        private SpriteFont font;
 
         /// <summary>
         /// Creates a new instance of <c>GameState</c>.
@@ -58,6 +59,8 @@ namespace TinoHacksGame.States
             base.Initialize(Content);
 
             Texture2D placeHolder = Content.Load<Texture2D>("Placeholder");
+            font = Content.Load<SpriteFont>("Font");
+            blank = Content.Load<Texture2D>("Blank");
             foreach (Player p in Players) p.state = this;
         }
 
@@ -97,9 +100,27 @@ namespace TinoHacksGame.States
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 
             GameManager.GetInstance().stage.Draw(spriteBatch);
-            foreach (Player p in Players) p.Draw(spriteBatch);
-            foreach (Platform p in currentStage.Platforms) p.Draw(spriteBatch);
-            foreach (HitBox h in GameManager.GetInstance().hitBoxes) h.Draw(spriteBatch);
+            foreach (Player p in Players)
+                p.Draw(spriteBatch);
+            foreach (Platform p in currentStage.Platforms)
+                p.Draw(spriteBatch);
+            foreach (HitBox h in GameManager.GetInstance().hitBoxes)
+                h.Draw(spriteBatch);
+
+            int border = 32;
+            int width = Players.Count * 300 + (Players.Count) * border;
+
+            for (int i = 0; i < Players.Count; i++)
+            {
+                Point position = new Point((int)(i * 300 + (i + 0.5) * border + 800 - width / 2), 690);
+                Rectangle drawRect = new Rectangle(position, new Point(300, 200));
+                spriteBatch.Draw(blank, drawRect, Players[i].Color * 0.3f);
+
+                string text = "%" + (int)Players[i].percentage;
+                Vector2 pos = new Vector2(position.X + 150 - font.MeasureString(text).X, position.Y);
+                spriteBatch.DrawString(font, text, pos + new Vector2(2, 2), Color.Black * 0.3f, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font, text, pos, Color.White, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+            }
 
             spriteBatch.End();
         }

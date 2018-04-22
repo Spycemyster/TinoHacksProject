@@ -145,6 +145,7 @@
     <Content Include="Content\Move_Left.png" />
     <Content Include="Content\Move_Right.png" />
     <Content Include="Content\Placeholder.png" />
+    <Content Include="Content\Profile.png" />
     <Content Include="Content\stanford.png" />
     <Content Include="Content\StartScreen.png" />
   </ItemGroup>

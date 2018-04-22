@@ -70,8 +70,8 @@ namespace TinoHacksGame
             if (countDownTimer >= timerMax)
             {
                 isLeft = !isLeft;
-                timerMax /= 1.05f;
-                width = Math.Min((int)(width * 1.05), 1400);
+                timerMax /= 1.01f;
+                width = Math.Min((int)(width * 1.02), 1400);
                 countDownTimer = 0f;
                 CheckDamageEntity();
             }
