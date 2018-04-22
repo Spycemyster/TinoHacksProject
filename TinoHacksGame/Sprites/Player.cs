@@ -20,7 +20,7 @@ namespace TinoHacksGame.Sprites {
         /// <summary>
         /// The maximum fastfall speed.
         /// </summary>
-        public const float FASTFALL = 12f;
+        public const float FASTFALL = 14f;
         /// <summary>
         /// The maximum walking speed.
         /// </summary>
@@ -44,7 +44,10 @@ namespace TinoHacksGame.Sprites {
 
         public bool AisUP = true;
 
-        public bool fastFalling = false;
+        /// <summary>
+        /// Whether the <c>Player</c> is fast falling.
+        /// </summary>
+        public bool FastFalling = false;
         private bool firstTapDown = false;
         private bool secondTapNotDown = false;
         private float fastFallTimer = 0f;
@@ -80,7 +83,9 @@ namespace TinoHacksGame.Sprites {
         /// Updates the <c>Player</c>'s logic and conditional checking.
         /// </summary>
         /// <param name="gameTime"></param>
-        public override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
             Size = Texture.Bounds.Size;
             GamePadState gamePadState = GamePad.GetState(index);
             rotation += gamePadState.ThumbSticks.Right.X * MathHelper.Pi / 10;
@@ -135,7 +140,7 @@ namespace TinoHacksGame.Sprites {
                     if (rect.Bottom <= rect2.Bottom && Velocity.Y > 0)
                     {
                         Position = new Vector2(Position.X, rect2.Top - Origin.Y * GameState.SCALE);
-                        fastFalling = false;
+                        FastFalling = false;
                         IsFloating = false;
                         numJumps = 0;
                         jumpTimer = 0f;
@@ -153,15 +158,15 @@ namespace TinoHacksGame.Sprites {
                 if (AisUP && numJumps < MAXJUMPS) {
                     jumpTimer = 0f;
                     numJumps++;
-                    fastFalling = false;
+                    FastFalling = false;
                     AisUP = false;
                     Velocity = new Vector2(Velocity.X, -1.5f);
                     IsFloating = true;
                 }
                 else if (IsFloating) {
                     Console.WriteLine("lolz" + jumpTimer);
-                    if (jumpTimer < 175f) Velocity = new Vector2(Velocity.X, -1.75f);
-                    else if (jumpTimer < 150f) Velocity = new Vector2(Velocity.X, -2f);
+                    if (jumpTimer < 125f) Velocity = new Vector2(Velocity.X, -1.55f);
+                    else if (jumpTimer < 150f) Velocity = new Vector2(Velocity.X, -1.55f);
                 }
                 jumpTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
@@ -172,7 +177,7 @@ namespace TinoHacksGame.Sprites {
             //fast falling
             if (IsFloating && gamePadState.ThumbSticks.Left.Y == -1) {
                 if (secondTapNotDown && fastFallTimer < 50f) {
-                    fastFalling = true;
+                    FastFalling = true;
                     firstTapDown = false;
                     secondTapNotDown = false;
                 }
@@ -181,7 +186,7 @@ namespace TinoHacksGame.Sprites {
             }
             else if (firstTapDown) secondTapNotDown = true;
             //gravity
-            if (fastFalling && IsFloating) {
+            if (FastFalling && IsFloating) {
                 Velocity += new Vector2(0, FASTFALL * GameState.GRAVITY);
             }
             else if (IsFloating) {
@@ -195,9 +200,8 @@ namespace TinoHacksGame.Sprites {
                 fastFallTimer = 0f;
                 firstTapDown = false;
                 secondTapNotDown = false;
-                fastFalling = false;
+                FastFalling = false;
             }
-            base.Update(gameTime);
         }
 
         /// <summary>

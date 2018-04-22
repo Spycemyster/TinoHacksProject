@@ -104,14 +104,14 @@ namespace TinoHacksGame.States
 
                 Platform plat = new Platform(null) {
                     Texture = blank,
-                    Position = new Vector2(50, 850),
-                    Size = new Point(1000, 30),
+                    Position = new Vector2(50, 875),
+                    Size = new Point(1000, 100),
                 };
 
                 Platform plat2 = new Platform(null) {
                     Texture = blank,
-                    Position = new Vector2(300, 600),
-                    Size = new Point(300, 20),
+                    Position = new Vector2(300, 550),
+                    Size = new Point(300, 17),
                 };
                 List<Platform> platforms = new List<Platform>();
                 platforms.Add(plat2);

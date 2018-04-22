@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using TinoHacksGame.Sprites;
 
 namespace TinoHacksGame.States
@@ -72,6 +73,10 @@ namespace TinoHacksGame.States
 
             foreach (Platform p in currentStage.Platforms)
                 p.Update(gameTime);
+
+            if (InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.One) || InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.Two) ||
+                (InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.Three) || InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.Four)))
+                GameManager.GetInstance().ChangeScreen(Screens.MENU);
         }
 
         /// <summary>
