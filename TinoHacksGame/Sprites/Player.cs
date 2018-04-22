@@ -43,7 +43,8 @@ namespace TinoHacksGame.Sprites {
         }
 
         private Texture2D walkRightTexture, walkLeftTexture, dashRightTexture, dashLeftTexture,
-            idleTexture, idleLeftTexture, fastFallTexture, slowFallTexture, jumpLeftTexture, jumpRightTexture;
+            idleTexture, idleLeftTexture, fastFallTexture, fallRightTexture, jumpLeftTexture,
+            jumpRightTexture, fallLeftTexture, blank;
 
         public bool AisUP = true;
         private bool wasLeft = false;
@@ -83,6 +84,7 @@ namespace TinoHacksGame.Sprites {
         public Player(GameState state, int index) : base(state)
         {
             this.index = index;
+            Scale = GameState.SCALE;
 
             IsFloating = false;
         }
@@ -109,6 +111,9 @@ namespace TinoHacksGame.Sprites {
                 dashRightTexture = state.Content.Load<Texture2D>("Dash_Right");
                 jumpRightTexture = state.Content.Load<Texture2D>("Jump_Right");
                 jumpLeftTexture = state.Content.Load<Texture2D>("Jump_Left");
+                blank = state.Content.Load<Texture2D>("Blank");
+                fallRightTexture = state.Content.Load<Texture2D>("Fall");
+                fallLeftTexture = state.Content.Load<Texture2D>("Fall_Left");
                 idleLeftTexture = state.Content.Load<Texture2D>("Idle_Left");
             }
 
@@ -197,12 +202,13 @@ namespace TinoHacksGame.Sprites {
             //ground detection
             foreach (Platform p in state.currentStage.Platforms) {
                 Rectangle rect = GetDrawRectangle();
+                Rectangle rect3 = new Rectangle(rect.X, rect.Y, rect.Width / 2, rect.Height - 10);
                 Rectangle rect2 = p.GetDrawRectangle();
-                if (rect.Intersects(rect2))
+                if (rect3.Intersects(rect2))
                 {
-                    if (rect.Bottom <= rect2.Bottom && Velocity.Y > 0)
+                    if (rect3.Bottom <= rect2.Bottom && Velocity.Y > 0)
                     {
-                        Position = new Vector2(Position.X, rect2.Top - Origin.Y * GameState.SCALE);
+                        Position = new Vector2(Position.X, rect2.Top - Origin.Y * GameState.SCALE - 1);
                         FastFalling = false;
                         IsFloating = false;
                         numJumps = 0;
@@ -279,6 +285,7 @@ namespace TinoHacksGame.Sprites {
 
             if (idleTexture != null)
             Origin = new Vector2(idleTexture.Width / 2f, idleTexture.Height / 2f);
+            Size = new Point(Size.X / 2, Size.Y);
 
             bool left = Velocity.X < 0f;
 
@@ -304,21 +311,27 @@ namespace TinoHacksGame.Sprites {
 
             if (isJumping)
             {
-                if (!left)
+                if (!wasLeft)
                     drawnTexture = jumpRightTexture;
                 else
                     drawnTexture = jumpLeftTexture;
             }
-            //else if (IsFloating)
-            //{
-            //    if (!FastFalling)
-            //        drawnTexture = slowFallTexture;
-            //    else
-            //        drawnTexture = fastFallTexture;
-            //}
+            else if (Velocity.Y > 0.1f)
+            {
+                //if (!FastFalling)
+                //    drawnTexture = slowFallTexture;
+                //else
+                //    drawnTexture = fastFallTexture;
+
+                if (!wasLeft)
+                    drawnTexture = fallRightTexture;
+                else
+                    drawnTexture = fallLeftTexture;
+            }
 
             if (drawnTexture != null)
             {
+                //spriteBatch.Draw(blank, GetDrawRectangle(), Color.White * 0.4f);
                 if (drawnTexture == walkLeftTexture || drawnTexture == walkRightTexture)
                     spriteBatch.Draw(drawnTexture, Position, new Rectangle(29 * walkAnimationFrameNumber, 0, 29, 44), Color.White, rotation,
                         Origin, GameState.SCALE, SpriteEffects.None, 0f);
@@ -333,6 +346,13 @@ namespace TinoHacksGame.Sprites {
                         Origin, GameState.SCALE, SpriteEffects.None, 0f);
             }
             
+        }
+
+        public override Rectangle GetDrawRectangle()
+        {
+            return new Rectangle((int)(Position.X - Origin.X * Scale),
+                (int)(Position.Y - Origin.Y * Scale), (int)(Size.X *
+                Scale), (int)(Size.Y * Scale));
         }
     }
 

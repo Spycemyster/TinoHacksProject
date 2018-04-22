@@ -114,7 +114,7 @@ namespace TinoHacksGame.Sprites
         /// The collidable rectangle of the sprite.
         /// </summary>
         /// <returns></returns>
-        public Rectangle GetDrawRectangle()
+        public virtual Rectangle GetDrawRectangle()
         {
             return new Rectangle((int)(Position.X - Origin.X * Scale), 
                 (int)(Position.Y - Origin.Y * Scale), (int)(Size.X *
