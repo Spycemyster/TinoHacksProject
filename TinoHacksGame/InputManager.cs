@@ -42,6 +42,7 @@ namespace TinoHacksGame
         {
             for (int i = 0; i < currentStates.Length; i++)
                 prevStates[i] = currentStates[i];
+
             for (int i = 0; i < currentStates.Length; i++)
                 currentStates[i] = GamePad.GetState((PlayerIndex)i);
         }

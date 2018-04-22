@@ -74,6 +74,23 @@ namespace TinoHacksGame.States
             foreach (Slide s in slides)
                 s.Update(gameTime);
 
+            if (InputManager.GetInstance().IsPressed(Buttons.Start, PlayerIndex.One))
+            {
+                int num = ControllersConnected();
+                GameManager.GetInstance().Players = new List<Player>();
+
+                for (int i = 0; i < num; i++)
+                {
+                    Player p = new Player(null, i)
+                    {
+                        Texture = placeHolder,
+                        Position = new Vector2(100, 0),
+                    };
+                    GameManager.GetInstance().Players.Add(p);
+                }
+                GameManager.GetInstance().ChangeScreen(Screens.GAME);
+            }
+
             //for (int i = 0; i < 4; i++) {
             //    GamePadCapabilities capabilities = GamePad.GetCapabilities(i);
             //    if (capabilities.IsConnected) {

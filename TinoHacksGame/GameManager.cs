@@ -66,7 +66,7 @@ namespace TinoHacksGame
             graphicsDevice = game.GraphicsDevice;
             Content = new ContentManager(game.Content.ServiceProvider, "Content");
 
-            ChangeScreen(Screens.MENU);
+            ChangeScreen(Screens.TITLE);
         }
 
         /// <summary>
@@ -88,6 +88,10 @@ namespace TinoHacksGame
 
                 case Screens.PLAYERSELECT:
                     CurrentState = new PlayerSelectState();
+                    break;
+
+                case Screens.TITLE:
+                    CurrentState = new TitleState();
                     break;
             }
 
@@ -119,6 +123,11 @@ namespace TinoHacksGame
     /// </summary>
     public enum Screens
     {
+        /// <summary>
+        /// The state where the title is displayed.
+        /// </summary>
+        TITLE,
+
         /// <summary>
         /// The state where most of the gameplay will occur on.
         /// </summary>

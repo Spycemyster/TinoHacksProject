@@ -19,6 +19,7 @@ namespace TinoHacksGame.States {
         private float selectTimerDown = 0f;
         private float selectTimerUp = 0f;
         private Cursor cursor;
+        private Texture2D backgroundPic;
         private UIButton[] button = new UIButton[3];
 
         /// <summary>
@@ -39,6 +40,7 @@ namespace TinoHacksGame.States {
             cursor.Texture = Content.Load<Texture2D>("Cursor");
             cursor.Size = new Point(cursor.Texture.Width, cursor.Texture.Height);
             Texture2D blank = Content.Load<Texture2D>("Blank");
+            backgroundPic = Content.Load<Texture2D>("StartScreen");
 
             button[0] = new UIButton(cursor);
             button[0].Position = new Vector2(400, 100);
@@ -130,6 +132,7 @@ namespace TinoHacksGame.States {
         public override void Draw(SpriteBatch spriteBatch, GraphicsDevice device) {
             base.Draw(spriteBatch, device);
             spriteBatch.Begin();
+            spriteBatch.Draw(backgroundPic, new Rectangle(0, 0, 1600, 900), Color.White);
             foreach (UIButton b in button)
                 b.Draw(spriteBatch);
             //spriteBatch.DrawString(font, "Local", new Vector2(400, 100), option == 0 ? Color.Black : Color.Wheat);

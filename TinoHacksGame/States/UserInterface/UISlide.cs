@@ -70,13 +70,18 @@ namespace TinoHacksGame.States.UserInterface
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             GamePadState currentState = GamePad.GetState(Index);
-            float time = 300f;
-            if (currentState.Buttons.A.Equals(ButtonState.Pressed))
-                FinishedSelecting = true;
-            else if (currentState.Buttons.B.Equals(ButtonState.Pressed))
-                FinishedSelecting = false;
+            if (InputManager.GetInstance().IsPressed(Buttons.A, Index))
+                FinishedSelecting = !FinishedSelecting;
+
+            if (InputManager.GetInstance().IsPressed(Buttons.B, Index))
+            {
+                if (!FinishedSelecting)
+                    GameManager.GetInstance().ChangeScreen(Screens.MENU);
+                else
+                    FinishedSelecting = false;
+            }
             //if (currentState.ThumbSticks.Left.Y > 0 && timer > time)
-            if (InputManager.GetInstance().IsPressed(Buttons.LeftShoulder, Index))
+            if (!FinishedSelecting && InputManager.GetInstance().IsPressed(Buttons.LeftShoulder, Index))
             {
                 select++;
 
@@ -85,7 +90,7 @@ namespace TinoHacksGame.States.UserInterface
 
                 timer = 0f;
             }
-            else if (InputManager.GetInstance().IsPressed(Buttons.RightShoulder, Index))
+            else if (!FinishedSelecting && InputManager.GetInstance().IsPressed(Buttons.RightShoulder, Index))
             //else if (currentState.ThumbSticks.Left.Y < 0 && timer > time)
             {
                 select--;
