@@ -47,7 +47,7 @@ namespace TinoHacksGame.Sprites {
             idleTexture, idleLeftTexture, fallRightTexture, jumpLeftTexture,
             jumpRightTexture, fallLeftTexture, ADRight,ADLeft, AULeft, AURight, ASLeft, 
             ASRight, BHLeft, BHRight,FHLeft, FHRight, NLeft, NRight, SLeft, SRight, Spin,
-            URight, ULeft, blank;
+            URight, ULeft, DRight, DLeft, blank;
 
         public bool AisUP = true;
         private bool wasLeft = false;
@@ -126,8 +126,8 @@ namespace TinoHacksGame.Sprites {
                 ADLeft = Content.Load<Texture2D>("Aerial Down Left");
                 AULeft = Content.Load<Texture2D>("Aerial Up Left");
                 AURight = Content.Load<Texture2D>("Aerial Up Right");
-                ASLeft = Content.Load<Texture2D>("Aerial Side Left");
-                ASRight = Content.Load<Texture2D>("Aerial Side Right");
+                ASLeft = Content.Load<Texture2D>("Arial Side Left");
+                ASRight = Content.Load<Texture2D>("Arial Side Right");
                 BHLeft = Content.Load<Texture2D>("BackHit Left");
                 BHRight = Content.Load<Texture2D>("BackHit Right");
                 FHLeft = Content.Load<Texture2D>("FrontHit Left");
@@ -139,6 +139,8 @@ namespace TinoHacksGame.Sprites {
                 Spin = Content.Load<Texture2D>("Spin");
                 URight = Content.Load<Texture2D>("Up Right");
                 ULeft = Content.Load<Texture2D>("Up Left");
+                DLeft = Content.Load<Texture2D>("Down Left");
+                DRight = Content.Load<Texture2D>("Down Right");
             }
 
             float left = gamePadState.ThumbSticks.Left.X;
@@ -301,24 +303,104 @@ namespace TinoHacksGame.Sprites {
             Console.WriteLine(percentage + " " + Velocity + " " + stunTimer);
         }
 
+        private enum AnimationFrame
+        {
+            SIDE_LEFT,
+            SIDE_RIGHT,
+            UP,
+            DOWN,
+            NEUTRAL_RIGHT,
+            NEUTRAL_LEFT,
+            LEFT_AIR,
+            RIGHT_AIR,
+            UP_AIR,
+            DOWN_AIR,
+            NEUTRAL_AIR,
+            DASH,
+            IDLE,
+        }
+
+        private AnimationFrame frame;
+
         public void attack(Vector2 dir, bool inAir) {
             inAir = inAir && Math.Abs(Velocity.Y) > 0.1f;
-            if (!inAir) {
-
-                if (dashing) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-25, -25), blank, new Point(50, 50), 150f, 8));  //dash attack
-                else if (dir.X <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 70f, 9));  //left attack
-                else if (dir.X >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 150f, 9));  //right attack
-                else if (dir.Y >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-30, -80), blank, new Point(30, 50), 100f, 7));  //up attack
-                else if (dir.Y <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-50, 25), blank, new Point(50, 10), 200f, 10));  //down attack
-                else if (wasLeft) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-Size.X - 25, 0), blank, new Point(25, 10), 25f, 4));  //neutral left
-                else GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(25, 10), 25f, 4));  //neutral right
+            if (!inAir)
+            {
+                if (dashing)
+                {
+                    GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this,
+                        new Vector2(-25, -25), blank, new Point(50, 50), 150f, 8));  //dash attack
+                    frame = AnimationFrame.DASH;
+                }
+                else if (dir.X <= -0.75f)
+                {
+                    GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this,
+                        new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 70f, 9));  //left attack
+                    frame = AnimationFrame.SIDE_LEFT;
+                }
+                else if (dir.X >= 0.75f)
+                {
+                    GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(
+                        Size.X / 2, 0), blank, new Point(50, 5), 150f, 9));  //right attack
+                    frame = AnimationFrame.SIDE_RIGHT;
+                }
+                else if (dir.Y >= 0.75f)
+                {
+                    GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(
+                        -30, -80), blank, new Point(30, 50), 100f, 7));  //up attack
+                    frame = AnimationFrame.UP;
+                }
+                else if (dir.Y <= -0.75f)
+                {
+                    GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(
+                        -50, 25), blank, new Point(50, 10), 200f, 10));  //down attack
+                    frame = AnimationFrame.DOWN;
+                }
+                else if (wasLeft)
+                {
+                    GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(-Size.X - 25, 0), blank, new Point(25, 10), 25f, 4));  //neutral left
+                    frame = AnimationFrame.NEUTRAL_LEFT;
+                }
+                else
+                {
+                    GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(25, 10), 25f, 4));  //neutral right
+                    frame = AnimationFrame.NEUTRAL_RIGHT;
+                }
             }
-            else {
-                if (dir.X <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 100f, 10));  //left air
-                else if (dir.X >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 100f, 10));  //right air
-                else if (dir.Y >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-30, -80), blank, new Point(30, 50), 175f, 8));  //up air
-                else if (dir.Y <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-30, 30), blank, new Point(30, 50), 250f, 12));  //down air
-                else GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-25, -25), blank, new Point(50, 50), 200f, 7));  //neutral air
+            else
+            {
+                if (dir.X <= -0.75f)
+                {
+                    GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 100f, 10));  //left air
+                    frame = AnimationFrame.LEFT_AIR;
+                }
+                else if (dir.X >= 0.75f)
+                {
+                    GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 100f, 10));  //right air
+                    frame = AnimationFrame.RIGHT_AIR;
+                }
+                else if (dir.Y >= 0.75f)
+                {
+                    GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(-30, -80), blank, new Point(30, 50), 175f, 8));  //up air
+                    frame = AnimationFrame.UP_AIR;
+                }
+                else if (dir.Y <= -0.75f)
+                {
+                    GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(-30, 30), blank, new Point(30, 50), 250f, 12));  //down air
+                    frame = AnimationFrame.DOWN_AIR;
+                }
+                else
+                {
+                    GameManager.GetInstance().hitBoxes.Add(
+                    new HitBox(null, this, new Vector2(-25, -25), blank, new Point(50, 50), 200f, 7));  //neutral air
+                    frame = AnimationFrame.NEUTRAL_AIR;
+                }
             }
         }
 
@@ -370,24 +452,90 @@ namespace TinoHacksGame.Sprites {
                     drawnTexture = fallLeftTexture;
             }
 
-            if (drawnTexture != null) {
+            if (drawnTexture != null)
+            {
                 //spriteBatch.Draw(blank, GetDrawRectangle(), Color.White * 0.4f);
-                if (drawnTexture == walkLeftTexture || drawnTexture == walkRightTexture)
-                    spriteBatch.Draw(drawnTexture, Position, new Rectangle(29 * walkAnimationFrameNumber, 0, 29, 44), Color.White, rotation,
-                        Origin, GameState.SCALE, SpriteEffects.None, 0f);
-                else if (drawnTexture == dashLeftTexture || dashRightTexture == drawnTexture)
-                    spriteBatch.Draw(drawnTexture, Position, new Rectangle(34 * dashAnimationFrameNumber, 0, 34, 50), Color.White, rotation,
-                        Origin, GameState.SCALE, SpriteEffects.None, 0f);
-                else if (drawnTexture == jumpLeftTexture || drawnTexture == jumpRightTexture)
-                    spriteBatch.Draw(drawnTexture, Position, new Rectangle(28 * jumpAnimationFrame, 0, 28, 42), Color.White, rotation,
-                        Origin, GameState.SCALE, SpriteEffects.None, 0f);
-                else
-                    spriteBatch.Draw(drawnTexture, Position, null, Color.White, rotation,
-                        Origin, GameState.SCALE, SpriteEffects.None, 0f);
+                //if (drawnTexture == walkLeftTexture || drawnTexture == walkRightTexture)
+                //    spriteBatch.Draw(drawnTexture, Position, new Rectangle(29 * walkAnimationFrameNumber, 0, 29, 44), Color.White, rotation,
+                //        Origin, GameState.SCALE, SpriteEffects.None, 0f);
+                //else if (drawnTexture == dashLeftTexture || dashRightTexture == drawnTexture)
+                //    spriteBatch.Draw(drawnTexture, Position, new Rectangle(34 * dashAnimationFrameNumber, 0, 34, 50), Color.White, rotation,
+                //        Origin, GameState.SCALE, SpriteEffects.None, 0f);
+                //else if (drawnTexture == jumpLeftTexture || drawnTexture == jumpRightTexture)
+                //    spriteBatch.Draw(drawnTexture, Position, new Rectangle(28 * jumpAnimationFrame, 0, 28, 42), Color.White, rotation,
+                //        Origin, GameState.SCALE, SpriteEffects.None, 0f);
+                //else
+                //    spriteBatch.Draw(drawnTexture, Position, null, Color.White, rotation,
+                //        Origin, GameState.SCALE, SpriteEffects.None, 0f);
 
-                spriteBatch.Draw(tri, new Rectangle((int)(Position.X - (tri.Width) / 2),
-                    (int)(Position.Y - (tri.Height) / 2) - 80, (int)(tri.Width),
-                    (int)(tri.Height)), Color);
+                //spriteBatch.Draw(tri, new Rectangle((int)(Position.X - (tri.Width) / 2),
+                //    (int)(Position.Y - (tri.Height) / 2) - 80, (int)(tri.Width),
+                //    (int)(tri.Height)), Color);
+                Texture2D texture = null;
+                bool draw = true;
+                switch (frame)
+                {
+                    case AnimationFrame.DASH:
+                        draw = false;
+                        texture = dashLeftTexture;
+                        if (!wasLeft)
+                            texture = dashRightTexture;
+                        spriteBatch.Draw(dashRightTexture, Position, new Rectangle(34 * dashAnimationFrameNumber, 0, 34, 50), Color.White, rotation,
+                        Origin, Scale, SpriteEffects.None, 0f);
+                        break;
+                    case AnimationFrame.DOWN:
+                        texture = DLeft;
+                        if (!wasLeft)
+                            texture = DRight;
+                        break;
+                    case AnimationFrame.DOWN_AIR:
+                        texture = ADLeft;
+                        if (!wasLeft)
+                            texture = ADRight;
+                        break;
+                    case AnimationFrame.IDLE:
+                        texture = idleLeftTexture;
+                        if (!wasLeft)
+                            texture = idleTexture;
+                        break;
+                    case AnimationFrame.LEFT_AIR:
+                        texture = ASLeft;
+                        break;
+                    case AnimationFrame.NEUTRAL_AIR:
+                        texture = Spin;
+                        break;
+                    case AnimationFrame.NEUTRAL_LEFT:
+                        texture = NLeft;
+                        break;
+                    case AnimationFrame.NEUTRAL_RIGHT:
+                        texture = NRight;
+                        break;
+                    case AnimationFrame.RIGHT_AIR:
+                        texture = ASRight;
+                        break;
+                    case AnimationFrame.SIDE_LEFT:
+                        texture = SLeft;
+                        break;
+                    case AnimationFrame.SIDE_RIGHT:
+                        texture = SRight;
+                        break;
+                    case AnimationFrame.UP:
+                        texture = ULeft;
+                        if (!wasLeft)
+                            texture = URight;
+                        break;
+                    case AnimationFrame.UP_AIR:
+                        texture = AULeft;
+                        if (!wasLeft)
+                            texture = AURight;
+                        break;
+                }
+
+                if (draw)
+                    spriteBatch.Draw(texture, Position, null, Color.White, rotation, Origin, Scale, SpriteEffects.None, 0f);
+
+                frame = AnimationFrame.IDLE;
+
             }
 
         }
