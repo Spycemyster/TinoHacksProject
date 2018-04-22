@@ -83,7 +83,7 @@ namespace TinoHacksGame.Sprites {
         /// </summary>
         public int index;
 
-        public int lives = 10;
+        public int lives = 3;
         public int percentage = 0;
         public float stunTimer = 0f;
         private Texture2D tri;
