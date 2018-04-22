@@ -43,6 +43,7 @@ namespace TinoHacksGame.Sprites {
         }
 
         public bool AisUP = true;
+        public bool fastFalling = false;
 
         /// <summary>
         /// The speed in which the player moves at.
@@ -96,6 +97,7 @@ namespace TinoHacksGame.Sprites {
 
                 
                 if (rect.Intersects(rect2)) {
+                    fastFalling = false;
                     Position = new Vector2(Position.X, rect2.Top - Origin.Y * GameState.SCALE);
                     IsFloating = false;
                     numJumps = 0;
@@ -130,6 +132,12 @@ namespace TinoHacksGame.Sprites {
             
         
             if (IsFloating && GamePad.GetState(index).ThumbSticks.Left.Y < 0)
+            {
+                fastFalling = true;
+            }
+            
+
+            if(fastFalling && IsFloating)
             {
                 Velocity += new Vector2(0, FASTFALL*GameState.GRAVITY);
             }
