@@ -83,7 +83,7 @@ namespace TinoHacksGame.Sprites {
         /// </summary>
         public int index;
 
-        public int lives = 3;
+        public int lives = 5;
         public int percentage = 0;
         public float stunTimer = 0f;
         private Texture2D tri;
@@ -316,7 +316,7 @@ namespace TinoHacksGame.Sprites {
                 Velocity = new Vector2(0, 0);
                 Position = new Vector2(800, 0);
                 percentage = 0;
-                stunTimer = 0;
+                stunTimer = 500f;
                 fastFallTimer = 0;
                 delayTimer = 0;
                 animationTimer = 0;
@@ -326,10 +326,10 @@ namespace TinoHacksGame.Sprites {
         public void getHit(int dmg, Vector2 knockback) {
             percentage += dmg;
             Velocity = knockback * (float)Math.Log10(percentage);
-            Velocity = new Vector2(Velocity.X, -Velocity.Y * 1.2f);
+            Velocity = new Vector2(Velocity.X * 1.1f, -Velocity.Y * 1.25f);
 
             // TODO: Calibrate later
-            stunTimer = knockback.Length() * (float)Math.Log10(percentage) * 250f;
+            stunTimer = knockback.Length() * (float)Math.Log10(percentage) * 300f;
             Console.WriteLine(percentage + " " + Velocity + " " + stunTimer);
         }
 

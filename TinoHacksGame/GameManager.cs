@@ -82,7 +82,7 @@ namespace TinoHacksGame
             graphicsDevice = game.GraphicsDevice;
             content = new ContentManager(game.Content.ServiceProvider, "Content");
 
-            ChangeScreen(Screens.PLAYERSELECT);
+            ChangeScreen(Screens.TITLE);
         }
         
         /// <summary>

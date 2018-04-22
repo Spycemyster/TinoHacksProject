@@ -40,7 +40,7 @@ namespace TinoHacksGame
         protected override void Initialize()
         {
             FPSCounter counter = new FPSCounter(this, CornerPosition.TOP_LEFT);
-            Components.Add(counter);
+            //Components.Add(counter);
 
             IsMouseVisible = false;
             IsFixedTimeStep = false;

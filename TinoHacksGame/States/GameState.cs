@@ -123,9 +123,15 @@ namespace TinoHacksGame.States {
                 spriteBatch.Draw(blank, drawRect, Players[i].Color * 0.3f);
 
                 string text = "%" + (int)Players[i].percentage;
-                Vector2 pos = new Vector2(position.X + 150 - font.MeasureString(text).X, position.Y);
+                Vector2 pos = new Vector2(position.X + 150 - font.MeasureString(text).X, position.Y + 8);
                 spriteBatch.DrawString(font, text, pos + new Vector2(2, 2), Color.Black * 0.3f, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
                 spriteBatch.DrawString(font, text, pos, Color.White, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+
+                string text2 = "Lives: " + Players[i].lives;
+                Vector2 pos2 = new Vector2(position.X + 150 - font.MeasureString(text2).X, position.Y + 192 - font.MeasureString(text2).Y * 2);
+                spriteBatch.DrawString(font, text2, pos2 + new Vector2(2, 2), Color.Black * 0.3f, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font, text2, pos2, Color.White, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+
             }
 
             if (gameOver) {
@@ -133,8 +139,8 @@ namespace TinoHacksGame.States {
                 spriteBatch.DrawString(font, text, new Vector2(800 - font.MeasureString(text).X * 2, 400) + new Vector2(2, 2), Color.Black, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0f);
                 spriteBatch.DrawString(font, text, new Vector2(800 - font.MeasureString(text).X * 2, 400), Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0f);
                 text = "Press Start to return to the title.";
-                spriteBatch.DrawString(font, text, new Vector2(800 - font.MeasureString(text).X / 2, 800) + new Vector2(2, 2), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-                spriteBatch.DrawString(font, text, new Vector2(800 - font.MeasureString(text).X / 2, 800), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font, text, new Vector2(800 - font.MeasureString(text).X / 2, 200) + new Vector2(2, 2), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font, text, new Vector2(800 - font.MeasureString(text).X / 2, 200), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
 
             spriteBatch.End();
