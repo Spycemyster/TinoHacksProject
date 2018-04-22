@@ -26,6 +26,8 @@ namespace TinoHacksGame.States
         private float[] backButtonHeld = new float[4];  //for going back to main menu
         private float[][] selectTimer = new float[4][];  //player 1 2 3 4, down up left right.
         private Slide[] slides;
+        private Texture2D[] logos;
+        private int stage;
 
         private Texture2D placeHolder, blank;
         private Texture2D backgroundCollege;
@@ -44,11 +46,17 @@ namespace TinoHacksGame.States
         /// <param name="Content"></param>
         public override void Initialize(ContentManager Content)
         {
+            stage = 0;
             slides = new Slide[4];
             int border = 32;
             int width = 360;
             blank = Content.Load<Texture2D>("Blank");
             int num = ControllersConnected();
+            logos = new Texture2D[4];
+            logos[0] = Content.Load<Texture2D>("John Hopkins Logo");
+            logos[1] = Content.Load<Texture2D>("Cambridge Logo");
+            logos[2] = Content.Load<Texture2D>("De Anza Logo");
+            logos[3] = Content.Load<Texture2D>("Stanford Logo");
             for (int i = 0; i < slides.Length; i++)
             {
                 slides[i] = new Slide(Content)
@@ -248,11 +256,25 @@ namespace TinoHacksGame.States
                 }
             }
 
+            if (InputManager.GetInstance().IsPressed(Buttons.DPadLeft, PlayerIndex.One))
+            {
+                stage--;
+                if (stage < 0)
+                    stage = 3;
+            }
+            else if (InputManager.GetInstance().IsPressed(Buttons.DPadRight, PlayerIndex.One))
+            {
+                stage++;
+                if (stage > 3)
+                    stage = 0;
+            }
+
             if (InputManager.GetInstance().IsPressed(Buttons.Start, PlayerIndex.One)) {
                 int num = ControllersConnected();
                 GameManager.GetInstance().Players = new List<Player>();
 
                 //stagemaking START
+                GameManager.GetInstance().stage = Stages[stage];
                 for (int i = 0; i < num; i++) {
                     Player p = new Player(null, i, slides[i].Color) {
                         Texture = placeHolder,
@@ -278,7 +300,8 @@ namespace TinoHacksGame.States
             spriteBatch.Begin();
             spriteBatch.Draw(backgroundCollege, new Rectangle(0, 0, 1600, 900), Color.White);
             foreach (Slide s in slides) s.Draw(spriteBatch);
-            spriteBatch.Draw(blank, new Rectangle(32, 464, 1536, 404), Color.Red);
+            spriteBatch.Draw(blank, new Rectangle(32, 464, 1536, 404), Color.White);
+            spriteBatch.Draw(logos[stage], new Rectangle(32, 464, 1536, 404), Color.White);
             spriteBatch.End();
         }
 
