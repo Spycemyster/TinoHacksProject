@@ -275,8 +275,22 @@ namespace TinoHacksGame.Sprites {
         }
 
         public void attack(Vector2 dir, bool inAir) {
-            int side = wasLeft ? -1 : 1;
-            GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2 * side - (wasLeft ? 50 + Size.X / 2 : 0), 0), blank, new Point(50, 5), 20f, 10, 5f));
+            inAir = inAir && Math.Abs(Velocity.Y) > 0.1f;
+            if (!inAir) {
+                if (dir.X <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else if (dir.X >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else if (dir.Y >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else if (dir.Y <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-50, 25), blank, new Point(50, 10), 20f, 10, 5f));
+                else if (wasLeft) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-Size.X - 25, 0), blank, new Point(25, 10), 20f, 10, 5f));
+                else GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(25, 10), 20f, 10, 5f));
+            }
+            else {
+                if (dir.X <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-Size.X - 50, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else if (dir.X >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else if (dir.Y >= 0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else if (dir.Y <= -0.75f) GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(Size.X / 2, 0), blank, new Point(50, 5), 20f, 10, 5f));
+                else GameManager.GetInstance().hitBoxes.Add(new HitBox(null, this, new Vector2(-25, -25), blank, new Point(50, 50), 20f, 10, 5f));
+            }
         }
 
         /// <summary>
