@@ -46,6 +46,7 @@ namespace TinoHacksGame.States
         {
             Players = GameManager.GetInstance().Players;
             currentStage = GameManager.GetInstance().stage;
+            GameManager.GetInstance().hitBoxes = new List<HitBox>();
         }
 
         /// <summary>
@@ -68,11 +69,15 @@ namespace TinoHacksGame.States
         {
             base.Update(gameTime);
 
-            foreach (Player p in Players)
-                p.Update(gameTime);
-
-            foreach (Platform p in currentStage.Platforms)
-                p.Update(gameTime);
+            foreach (Player p in Players) p.Update(gameTime);
+            foreach (Platform p in currentStage.Platforms) p.Update(gameTime);
+            for (int i = 0; i < GameManager.GetInstance().hitBoxes.Count; i++) {
+                if (GameManager.GetInstance().hitBoxes[i].isActive())  GameManager.GetInstance().hitBoxes[i].Update(gameTime);
+                else {
+                    GameManager.GetInstance().hitBoxes.RemoveAt(i);
+                    i--;
+                }
+            }
             GameManager.GetInstance().stage.Update(gameTime);
 
             if (InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.One) || InputManager.GetInstance().IsPressed(Buttons.Back, PlayerIndex.Two) ||
@@ -89,16 +94,12 @@ namespace TinoHacksGame.States
         {
             base.Draw(spriteBatch, device);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
-                SamplerState.PointClamp, null, null, null, null);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 
             GameManager.GetInstance().stage.Draw(spriteBatch);
-
-            foreach (Player p in Players)
-                p.Draw(spriteBatch);
-
-            foreach (Platform p in currentStage.Platforms)
-                p.Draw(spriteBatch);
+            foreach (Player p in Players) p.Draw(spriteBatch);
+            foreach (Platform p in currentStage.Platforms) p.Draw(spriteBatch);
+            foreach (HitBox h in GameManager.GetInstance().hitBoxes) h.Draw(spriteBatch);
 
             spriteBatch.End();
         }

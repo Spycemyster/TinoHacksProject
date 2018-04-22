@@ -28,6 +28,10 @@ namespace TinoHacksGame
             get;
             set;
         }
+        public List<HitBox> hitBoxes {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Retrieves the single ton instance of the <c>GameManager</c>.
@@ -35,9 +39,7 @@ namespace TinoHacksGame
         /// <returns></returns>
         public static GameManager GetInstance()
         {
-            if (inst == null)
-                inst = new GameManager();
-
+            if (inst == null) inst = new GameManager();
             return inst;
         }
 
