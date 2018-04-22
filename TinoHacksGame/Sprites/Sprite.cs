@@ -92,6 +92,15 @@ namespace TinoHacksGame.Sprites
         public GameState state;
 
         /// <summary>
+        /// The transform matrix for the <c>Sprite</c>.
+        /// </summary>
+        public Matrix Transform
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Creates a new instance of a <c>Sprite</c>.
         /// </summary>
         public Sprite(GameState state)

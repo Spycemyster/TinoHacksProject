@@ -15,6 +15,11 @@ namespace TinoHacksGame
     public class State
     {
         /// <summary>
+        /// The contentmanager for the <c>State</c>
+        /// </summary>
+        public ContentManager Content;
+
+        /// <summary>
         /// Creates a new instance of a <c>State</c>.
         /// </summary>
         public State()
@@ -28,7 +33,7 @@ namespace TinoHacksGame
         /// <param name="Content"></param>
         public virtual void Initialize(ContentManager Content)
         {
-
+            this.Content = new ContentManager(Content.ServiceProvider, "Content");
         }
 
         /// <summary>

@@ -42,7 +42,11 @@ namespace TinoHacksGame.Sprites {
             set;
         }
 
+        private Texture2D walkRightTexture, walkLeftTexture, dashRightTexture, dashLeftTexture,
+            idleTexture, idleLeftTexture, fastFallTexture, slowFallTexture, jumpLeftTexture, jumpRightTexture;
+
         public bool AisUP = true;
+        private bool wasLeft = false;
 
         /// <summary>
         /// Whether the <c>Player</c> is fast falling.
@@ -64,6 +68,9 @@ namespace TinoHacksGame.Sprites {
 
         private float rotation;
         private float jumpTimer;
+        private float walkAnimationTimer, dashAnimationTimer, jumpAnimationTimer;
+        private int walkAnimationFrameNumber, dashAnimationFrameNumber, jumpAnimationFrame;
+        private bool isJumping;
 
         /// <summary>
         /// The player number.
@@ -73,9 +80,11 @@ namespace TinoHacksGame.Sprites {
         /// <summary>
         /// Creates a new instance of <c>Player</c>
         /// </summary>
-        public Player(GameState state, int index) : base(state) {
+        public Player(GameState state, int index) : base(state)
+        {
             this.index = index;
-            IsFloating = true;
+
+            IsFloating = false;
         }
 
 
@@ -90,8 +99,58 @@ namespace TinoHacksGame.Sprites {
             GamePadState gamePadState = GamePad.GetState(index);
             rotation += gamePadState.ThumbSticks.Right.X * MathHelper.Pi / 10;
 
-            //dashing
+            // animations
+            if (walkLeftTexture == null)
+            {
+                walkLeftTexture = state.Content.Load<Texture2D>("Move_Left");
+                walkRightTexture = state.Content.Load<Texture2D>("Move_Right");
+                idleTexture = state.Content.Load<Texture2D>("Idle");
+                dashLeftTexture = state.Content.Load<Texture2D>("Dash_Left");
+                dashRightTexture = state.Content.Load<Texture2D>("Dash_Right");
+                jumpRightTexture = state.Content.Load<Texture2D>("Jump_Right");
+                jumpLeftTexture = state.Content.Load<Texture2D>("Jump_Left");
+                idleLeftTexture = state.Content.Load<Texture2D>("Idle_Left");
+            }
+
             float left = gamePadState.ThumbSticks.Left.X;
+            if (Math.Abs(left) > 0)
+            {
+                walkAnimationTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (walkAnimationTimer >= 250f)
+                {
+                    walkAnimationTimer = 0f;
+                    walkAnimationFrameNumber = (walkAnimationFrameNumber + 1) % 4;
+                }
+            }
+
+            if (left > 0)
+                wasLeft = false;
+            else if (left < 0)
+                wasLeft = true;
+
+            if (isJumping)
+            {
+                jumpAnimationTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+                if (jumpAnimationTimer > 200f)
+                    jumpAnimationFrame = 1;
+            }
+
+            if (dashing)
+            {
+                dashTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+                if (dashTimer >= 100f)
+                {
+                    dashTimer = 0f;
+                    if (dashAnimationFrameNumber == 0)
+                        dashAnimationFrameNumber = 1;
+                    else
+                        dashAnimationFrameNumber = 0;
+                }
+            }
+
+            //dashing
             if (gamePadState.ThumbSticks.Left.X == -1) {
                 if (secondTapNotSide == -1 && dashTimer < 50f) {
                     dashing = true;
@@ -114,9 +173,13 @@ namespace TinoHacksGame.Sprites {
                 secondTapNotSide = firstTapSide;
             }
             //left/right movement
-            if (left < 0 && Velocity.X > 0) Velocity += new Vector2(-0.25f, 0);
-            else if (left > 0 && Velocity.X < 0) Velocity += new Vector2(0.25f, 0);
-            else Velocity = new Vector2(Math.Max(Math.Min(dashing ? DASH : WALK, Velocity.X + left * SPEED), -(dashing ? DASH : WALK)), Velocity.Y);
+            if (left < 0 && Velocity.X > 0)
+                Velocity += new Vector2(-0.25f, 0);
+            else if (left > 0 && Velocity.X < 0)
+                Velocity += new Vector2(0.25f, 0);
+            else
+                Velocity = new Vector2(Math.Max(Math.Min(dashing ? DASH : WALK, Velocity.X + left * SPEED),
+                    -(dashing ? DASH : WALK)), Velocity.Y);
             dashTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             //air and ground friction
@@ -148,13 +211,14 @@ namespace TinoHacksGame.Sprites {
                     break;
                 }
                 else
-                {
                     IsFloating = true;
-                }
             }
 
             //jump
-            if (gamePadState.IsButtonDown(Buttons.A)) {
+            if (gamePadState.IsButtonDown(Buttons.A))
+
+            {
+                isJumping = true;
                 if (AisUP && numJumps < MAXJUMPS) {
                     jumpTimer = 0f;
                     numJumps++;
@@ -173,6 +237,7 @@ namespace TinoHacksGame.Sprites {
             else if (gamePadState.IsButtonUp(Buttons.A)) {
                 AisUP = true;
                 jumpTimer = 200f;
+                isJumping = false;
             }
             //fast falling
             if (IsFloating && gamePadState.ThumbSticks.Left.Y == -1) {
@@ -208,11 +273,65 @@ namespace TinoHacksGame.Sprites {
         /// Draws the <c>Player</c> to the screen.
         /// </summary>
         /// <param name="spriteBatch"></param>
-        public override void Draw(SpriteBatch spriteBatch) {
+        public override void Draw(SpriteBatch spriteBatch)
+        {
             base.Draw(spriteBatch);
-            Origin = new Vector2(Texture.Width / 2f, Texture.Height / 2f);
-            spriteBatch.Draw(Texture, Position, null, Color.White, rotation,
-                Origin, GameState.SCALE, SpriteEffects.None, 0f);
+
+            if (idleTexture != null)
+            Origin = new Vector2(idleTexture.Width / 2f, idleTexture.Height / 2f);
+
+            bool left = Velocity.X < 0f;
+
+            Texture2D drawnTexture = idleTexture;
+
+            if (wasLeft)
+                drawnTexture = idleLeftTexture;
+            
+            if (dashing)
+            {
+                if (left)
+                    drawnTexture = dashLeftTexture;
+                else
+                    drawnTexture = dashRightTexture;
+            }
+            else if (Math.Abs(Velocity.X) > 0)
+            {
+                if (!left)
+                    drawnTexture = walkRightTexture;
+                else
+                    drawnTexture = walkLeftTexture;
+            }
+
+            if (isJumping)
+            {
+                if (!left)
+                    drawnTexture = jumpRightTexture;
+                else
+                    drawnTexture = jumpLeftTexture;
+            }
+            //else if (IsFloating)
+            //{
+            //    if (!FastFalling)
+            //        drawnTexture = slowFallTexture;
+            //    else
+            //        drawnTexture = fastFallTexture;
+            //}
+
+            if (drawnTexture != null)
+            {
+                if (drawnTexture == walkLeftTexture || drawnTexture == walkRightTexture)
+                    spriteBatch.Draw(drawnTexture, Position, new Rectangle(29 * walkAnimationFrameNumber, 0, 29, 44), Color.White, rotation,
+                        Origin, GameState.SCALE, SpriteEffects.None, 0f);
+                else if (drawnTexture == dashLeftTexture || dashRightTexture == drawnTexture)
+                    spriteBatch.Draw(drawnTexture, Position, new Rectangle(34 * dashAnimationFrameNumber, 0, 34, 50), Color.White, rotation,
+                        Origin, GameState.SCALE, SpriteEffects.None, 0f);
+                else if (drawnTexture == jumpLeftTexture || drawnTexture == jumpRightTexture)
+                    spriteBatch.Draw(drawnTexture, Position, new Rectangle(28 * jumpAnimationFrame, 0, 28, 42), Color.White, rotation,
+                        Origin, GameState.SCALE, SpriteEffects.None, 0f);
+                else
+                    spriteBatch.Draw(drawnTexture, Position, null, Color.White, rotation,
+                        Origin, GameState.SCALE, SpriteEffects.None, 0f);
+            }
             
         }
     }

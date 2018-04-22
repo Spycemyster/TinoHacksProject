@@ -135,8 +135,15 @@
     <Content Include="Content\cambridge.png" />
     <Content Include="Content\Card.png" />
     <Content Include="Content\Cursor.png" />
+    <Content Include="Content\Dash_Left.png" />
+    <Content Include="Content\Dash_Right.png" />
     <Content Include="Content\deanza.png" />
+    <Content Include="Content\Idle.png" />
     <Content Include="Content\jhu.png" />
+    <Content Include="Content\Jump_Left.png" />
+    <Content Include="Content\Jump_Right.png" />
+    <Content Include="Content\Move_Left.png" />
+    <Content Include="Content\Move_Right.png" />
     <Content Include="Content\Placeholder.png" />
     <Content Include="Content\stanford.png" />
     <Content Include="Content\StartScreen.png" />
