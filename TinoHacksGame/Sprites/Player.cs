@@ -24,11 +24,11 @@ namespace TinoHacksGame.Sprites {
         /// <summary>
         /// The maximum walking speed.
         /// </summary>
-        public const float WALK = 2.5f;
+        public const float WALK = 1f;
         /// <summary>
         /// The maximum dashing speed.
         /// </summary>
-        public const float DASH = 4f;
+        public const float DASH = 2.5f;
         /// <summary>
         /// The maximum number of jumps.
         /// </summary>
@@ -47,7 +47,7 @@ namespace TinoHacksGame.Sprites {
         /// <summary>
         /// The speed in which the player moves at.
         /// </summary>
-        public const float SPEED = 0.02f;
+        public const float SPEED = 0.1f;
 
         private float rotation;
         private float jumpTimer;
@@ -76,20 +76,18 @@ namespace TinoHacksGame.Sprites {
             rotation += gamePadState.ThumbSticks.Right.X * MathHelper.Pi / 10;
 
             //left/right movement
-            if (Velocity.X <= WALK && Velocity.X >= -WALK) {
-                if(Velocity.X > 0 && gamePadState.ThumbSticks.Left.X < 0) {
-                    Velocity += new Vector2(-0.2f, 0);
-                }
-                else if (Velocity.X < 0 && gamePadState.ThumbSticks.Left.X > 0) {
-                    Velocity += new Vector2(0.2f, 0);
-                }
-                else Velocity += gamePadState.ThumbSticks.Left * SPEED;
+            float left = gamePadState.ThumbSticks.Left.X;
+            if (gamePadState.ThumbSticks.Left.X < 0 && Velocity.X > 0) Velocity += new Vector2(-0.25f, 0);
+            else if (gamePadState.ThumbSticks.Left.X > 0 && Velocity.X < 0) Velocity += new Vector2(0.25f, 0);
+            else Velocity = new Vector2(Math.Max(Math.Min(WALK, Velocity.X + left * SPEED), -WALK), Velocity.Y);
 
-                if (Velocity.X > WALK) Velocity = new Vector2(WALK, Velocity.Y);
-                if (Velocity.X < -WALK) Velocity = new Vector2(-WALK, Velocity.Y);
+            //air and ground friction
+            if (gamePadState.ThumbSticks.Left.Length() == 0) {
+                float coeff = IsFloating ? 0.02f : 0.4f;
+                if ((Velocity.X >= 0.1 || Velocity.X <= -0.1)) Velocity -= new Vector2(Velocity.X * coeff, 0);
+                else Velocity = new Vector2(0.0f, Velocity.Y);
             }
-            
-            
+
             //ground detection
             foreach (Platform p in state.Platforms) {
                 Rectangle rect = GetDrawRectangle();
@@ -105,22 +103,24 @@ namespace TinoHacksGame.Sprites {
                 }
             }
 
-            //friction
-            if (gamePadState.ThumbSticks.Left.Length() == 0 && !IsFloating) {
-                if ((Velocity.X >= 0.1 || Velocity.X <= -0.1))
-                    Velocity -= new Vector2(Velocity.X * 0.4f, Velocity.Y);
-                else //prevents player from sliding forever
-                    Velocity = new Vector2(0.0f, Velocity.Y);
-            }
-
             //jump
-            if (gamePadState.IsButtonDown(Buttons.A) && AisUP && numJumps < MAXJUMPS) {
-                numJumps++;
-                AisUP = false;
-                Velocity = new Vector2(Velocity.X, -1.5f);
-                IsFloating = true;
+            if (gamePadState.IsButtonDown(Buttons.A)) {
+                if (AisUP && numJumps < MAXJUMPS) {
+                    numJumps++;
+                    AisUP = false;
+                    Velocity = new Vector2(Velocity.X, -1.5f);
+                    IsFloating = true;
+                }
+                else if (IsFloating) {
+                    if (jumpTimer < 75f) Velocity = new Vector2(Velocity.X, -1.5f);
+                    else if (jumpTimer < 100f) Velocity = new Vector2(Velocity.X, -1.75f);
+                }
+                jumpTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
-            if (gamePadState.IsButtonUp(Buttons.A)) AisUP = true;
+            else if (gamePadState.IsButtonUp(Buttons.A)) {
+                AisUP = true;
+                jumpTimer = 0f;
+            }
 
             if (IsFloating) {
                 Velocity += new Vector2(0, GameState.GRAVITY);
