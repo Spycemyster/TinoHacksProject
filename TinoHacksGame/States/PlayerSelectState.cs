@@ -17,6 +17,7 @@ namespace TinoHacksGame.States
     /// </summary>
     public class PlayerSelectState : State
     {
+        private List<Stage> Stages = new List<Stage>();
         private SpriteFont font;
         private Boolean playerOneAButtonUp;  //lulz
         private Boolean[] characterSelected = new Boolean[4];  //whether or not the player selected a character
@@ -62,6 +63,29 @@ namespace TinoHacksGame.States
             font = Content.Load<SpriteFont>("Font");
             placeHolder = Content.Load<Texture2D>("Placeholder");
             backgroundCollege = Content.Load<Texture2D>("jhu");
+
+            Platform plat = new Platform(null)
+            {
+                Texture = blank,
+                Position = new Vector2(-150, 875),
+                Size = new Point(1900, 100),
+                Scale = 1f,
+            };
+
+            Platform plat2 = new Platform(null)
+            {
+                Texture = blank,
+                Position = new Vector2(350, 550),
+                Size = new Point(700, 34),
+                Scale = 1f,
+            };
+            List<Platform> platforms = new List<Platform>
+            {
+                plat2,
+                plat
+            };
+            Stages.Add(new Stage(platforms, backgroundCollege, blank));
+            GameManager.GetInstance().stage = Stages[0];
         }
 
         /// <summary>
@@ -101,26 +125,7 @@ namespace TinoHacksGame.States
                     };
                     GameManager.GetInstance().Players.Add(p);
                 }
-
-                Platform plat = new Platform(null) {
-                    Texture = blank,
-                    Position = new Vector2(-150, 875),
-                    Size = new Point(1900, 100),
-                    Scale = 1f,
-                };
-
-                Platform plat2 = new Platform(null) {
-                    Texture = blank,
-                    Position = new Vector2(350, 550),
-                    Size = new Point(700, 34),
-                    Scale = 1f,
-                };
-                List<Platform> platforms = new List<Platform>
-                {
-                    plat2,
-                    plat
-                };
-                GameManager.GetInstance().stage = new Stage(platforms, backgroundCollege, blank);
+                
                 //stagemaking END
 
                 GameManager.GetInstance().ChangeScreen(Screens.GAME);
