@@ -33,7 +33,7 @@ namespace TinoHacksGame.Sprites
             Origin = Vector2.Zero;
 
             //spriteBatch.Draw(Texture, Position, null, Color.White, 0f, Origin, 1f, SpriteEffects.None, 0f);
-            spriteBatch.Draw(Texture, GetDrawRectangle(), Color.White);
+            spriteBatch.Draw(Texture, GetDrawRectangle(), Color);
         }
     }
 }

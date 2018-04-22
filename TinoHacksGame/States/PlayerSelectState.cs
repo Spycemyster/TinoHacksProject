@@ -66,6 +66,8 @@ namespace TinoHacksGame.States
             base.Initialize(Content);
             font = Content.Load<SpriteFont>("Font");
             placeHolder = Content.Load<Texture2D>("Placeholder");
+
+            // John Hopkins
             backgroundCollege = Content.Load<Texture2D>("jhu");
 
             Platform plat = new Platform(null)
@@ -74,6 +76,7 @@ namespace TinoHacksGame.States
                 Position = new Vector2(-150, 875),
                 Size = new Point(1900, 100),
                 Scale = 1f,
+                Color = Color.LawnGreen,
             };
 
             Platform plat2 = new Platform(null)
@@ -82,6 +85,7 @@ namespace TinoHacksGame.States
                 Position = new Vector2(350, 550),
                 Size = new Point(700, 34),
                 Scale = 1f,
+                Color = Color.Green,
             };
             List<Platform> platforms = new List<Platform>
             {
@@ -89,7 +93,134 @@ namespace TinoHacksGame.States
                 plat
             };
             Stages.Add(new Stage(platforms, backgroundCollege, blank));
-            GameManager.GetInstance().stage = Stages[0];
+
+            // Cambridge
+            backgroundCollege = Content.Load<Texture2D>("cambridge");
+
+            Platform plat3 = new Platform(null)
+            {
+                Texture = blank,
+                Position = new Vector2(0, 800),
+                Size = new Point(400, 150),
+                Scale = 1f,
+                Color = Color.LightSkyBlue,
+            };
+            Platform plat4 = new Platform(null)
+            {
+                Texture = blank,
+                Position = new Vector2(1200, 800),
+                Size = new Point(400, 150),
+                Scale = 1f,
+                Color = Color.LightSkyBlue,
+            };
+            Platform plat5 = new Platform(null)
+            {
+                Texture = blank,
+                Position = new Vector2(300, 490),
+                Size = new Point(900, 50),
+                Scale = 1f,
+                Color = Color.LightSkyBlue,
+            };
+
+            List<Platform> platforms2 = new List<Platform>
+            {
+                plat5,
+                plat4,
+                plat3,
+            };
+
+            Stages.Add(new Stage(platforms2, backgroundCollege, blank));
+
+            // De Anza
+            backgroundCollege = Content.Load<Texture2D>("deanza");
+
+            Platform plat6 = new Platform(null)
+            {
+                Texture = blank,
+                Position = new Vector2(0, 800),
+                Size = new Point(1600, 300),
+                Scale = 1f,
+                Color = Color.Brown,
+            };
+            List<Platform> platforms3 = new List<Platform>();
+            platforms3.Add(plat6);
+
+            Stages.Add(new Stage(platforms3, backgroundCollege, blank));
+
+            // Stanford
+            backgroundCollege = Content.Load<Texture2D>("stanford");
+
+            Platform plat7 = new Platform(null)
+            {
+                Texture = blank,
+                Position = new Vector2(0, 800),
+                Size = new Point(600, 300),
+                Scale = 1f,
+                Color = Color.RosyBrown,
+            };
+            Platform plat8 = new Platform(null)
+            {
+                Texture = blank,
+                Position = new Vector2(1000, 800),
+                Size = new Point(600, 300),
+                Scale = 1f,
+                Color = Color.RosyBrown,
+            };
+            Platform plat9 = new Platform(null)
+            {
+                Texture = blank,
+                Position = new Vector2(700, 800),
+                Size = new Point(200, 300),
+                Scale = 1f,
+                Color = Color.RosyBrown,
+            };
+            Platform plat10 = new Platform(null)
+            {
+                Texture = blank,
+                Position = new Vector2(0, 550),
+                Size = new Point(400, 30),
+                Scale = 1f,
+                Color = Color.ForestGreen,
+            };
+            Platform plat11 = new Platform(null)
+            {
+                Texture = blank,
+                Position = new Vector2(1200, 550),
+                Size = new Point(400, 30),
+                Scale = 1f,
+                Color = Color.ForestGreen,
+            };
+
+            Platform plat12 = new Platform(null)
+            {
+                Texture = blank,
+                Position = new Vector2(1200, 300),
+                Size = new Point(400, 30),
+                Scale = 1f,
+                Color = Color.BlueViolet,
+            };
+
+            Platform plat13 = new Platform(null)
+            {
+                Texture = blank,
+                Position = new Vector2(0, 300),
+                Size = new Point(400, 30),
+                Scale = 1f,
+                Color = Color.BlueViolet,
+            };
+
+            List<Platform> platforms4 = new List<Platform>();
+            platforms4.Add(plat7);
+            platforms4.Add(plat8);
+            platforms4.Add(plat9);
+            platforms4.Add(plat10);
+            platforms4.Add(plat11);
+            platforms4.Add(plat12);
+            platforms4.Add(plat13);
+
+            Stages.Add(new Stage(platforms4, backgroundCollege, blank));
+
+            GameManager.GetInstance().stage = Stages[3];
         }
 
         /// <summary>
