@@ -109,7 +109,8 @@ namespace TinoHacksGame.States
         {
             base.Draw(spriteBatch, device);
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+                SamplerState.PointClamp, null, null, null, null);
 
             spriteBatch.Draw(backgroundCollege, new Rectangle(0, 0, 1600, 900), Color.White);
 

@@ -81,7 +81,6 @@ namespace TinoHacksGame.Sprites {
         /// </summary>
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
-            base.Update(gameTime);
             Size = Texture.Bounds.Size;
             GamePadState gamePadState = GamePad.GetState(index);
             rotation += gamePadState.ThumbSticks.Right.X * MathHelper.Pi / 10;
@@ -122,22 +121,30 @@ namespace TinoHacksGame.Sprites {
                 else {
                     Velocity = new Vector2(0.0f, Velocity.Y);
                     dashing = false;
+                    firstTapSide = 0;
+                    secondTapNotSide = 0;
                 }
             }
 
             //ground detection
-            foreach (Platform p in state.Platforms) {
+            foreach (Platform p in state.Platforms)
+            {
                 Rectangle rect = GetDrawRectangle();
                 Rectangle rect2 = p.GetDrawRectangle();
-                if (rect.Intersects(rect2)) {
-                    fastFalling = false;
-                    Position = new Vector2(Position.X, rect2.Top - Origin.Y * GameState.SCALE);
-                    IsFloating = false;
-                    numJumps = 0;
-                    jumpTimer = 0f;
+                if (rect.Intersects(rect2))
+                {
+                    if (rect.Bottom <= rect2.Bottom && Velocity.Y > 0)
+                    {
+                        Position = new Vector2(Position.X, rect2.Top - Origin.Y * GameState.SCALE);
+                        fastFalling = false;
+                        IsFloating = false;
+                        numJumps = 0;
+                        jumpTimer = 0f;
+                    }
                     break;
                 }
-                else {
+                else
+                {
                     IsFloating = true;
                 }
             }
@@ -155,7 +162,7 @@ namespace TinoHacksGame.Sprites {
                 else if (IsFloating) {
                     Console.WriteLine("lolz" + jumpTimer);
                     if (jumpTimer < 175f) Velocity = new Vector2(Velocity.X, -1.75f);
-                    else if (jumpTimer < 200f) Velocity = new Vector2(Velocity.X, -2f);
+                    else if (jumpTimer < 150f) Velocity = new Vector2(Velocity.X, -2f);
                 }
                 jumpTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
@@ -191,6 +198,7 @@ namespace TinoHacksGame.Sprites {
                 secondTapNotDown = false;
                 fastFalling = false;
             }
+            base.Update(gameTime);
         }
 
         /// <summary>
@@ -202,6 +210,7 @@ namespace TinoHacksGame.Sprites {
             Origin = new Vector2(Texture.Width / 2f, Texture.Height / 2f);
             spriteBatch.Draw(Texture, Position, null, Color.White, rotation,
                 Origin, GameState.SCALE, SpriteEffects.None, 0f);
+            
         }
     }
 

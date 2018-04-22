@@ -14,7 +14,6 @@ namespace TinoHacksGame.Sprites
     /// </summary>
     public class Platform : Sprite
     {
-
         /// <summary>
         /// Creates a new instance of a <c>Platform</c>.
         /// </summary>
@@ -31,7 +30,7 @@ namespace TinoHacksGame.Sprites
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            Origin = Texture.Bounds.Size.ToVector2() / 2;
+            Origin = Vector2.Zero;
 
             //spriteBatch.Draw(Texture, Position, null, Color.White, 0f, Origin, 1f, SpriteEffects.None, 0f);
             spriteBatch.Draw(Texture, GetDrawRectangle(), Color.White);
