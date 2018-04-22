@@ -95,10 +95,10 @@ namespace TinoHacksGame
                 {
                     if (isLeft)
                     {
-                        p.getHit(100, new Vector2(rand.Next(0, 2), rand.Next(0, 2)), 5f);
+                        p.getHit(100, new Vector2(rand.Next(0, 2), rand.Next(0, 2)));
                     }
                     else
-                        p.getHit(100, new Vector2(rand.Next(-2, 0), rand.Next(0, 2)), 5f);
+                        p.getHit(100, new Vector2(rand.Next(-2, 0), rand.Next(0, 2)));
                 }
             }
         }

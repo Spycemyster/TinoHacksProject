@@ -81,13 +81,16 @@ namespace TinoHacksGame.Sprites {
         public int lives = 10;
         public int percentage = 0;
         public float stunTimer = 0f;
+        private Texture2D tri;
+
         /// <summary>
         /// Creates a new instance of <c>Player</c>
         /// </summary>
-        public Player(GameState state, int index) : base(state) {
+        public Player(GameState state, int index, Color color) : base(state) {
             this.index = index;
             Scale = GameState.SCALE;
             IsFloating = false;
+            Color = color;
         }
 
 
@@ -114,6 +117,7 @@ namespace TinoHacksGame.Sprites {
                 fallRightTexture = state.Content.Load<Texture2D>("Fall");
                 fallLeftTexture = state.Content.Load<Texture2D>("Fall_Left");
                 idleLeftTexture = state.Content.Load<Texture2D>("Idle_Left");
+                tri = state.Content.Load<Texture2D>("Arrow");
             }
 
             float left = gamePadState.ThumbSticks.Left.X;
@@ -265,12 +269,13 @@ namespace TinoHacksGame.Sprites {
 
         }
 
-        public void getHit(int dmg, Vector2 knockback, float stunTime) {
+        public void getHit(int dmg, Vector2 knockback) {
             percentage += dmg;
             Velocity = knockback * (float)Math.Log10(percentage);
             Velocity = new Vector2(Velocity.X, -Velocity.Y * 1.2f);
 
-            stunTimer = stunTime * (float)Math.Log10(percentage) * 20f;
+            // TODO: Calibrate later
+            stunTimer = knockback.Length() * (float)Math.Log10(percentage) * 20f;
             Console.WriteLine(percentage + " " + Velocity + " " + stunTimer);
         }
 
@@ -355,6 +360,10 @@ namespace TinoHacksGame.Sprites {
                 else
                     spriteBatch.Draw(drawnTexture, Position, null, Color.White, rotation,
                         Origin, GameState.SCALE, SpriteEffects.None, 0f);
+
+                spriteBatch.Draw(tri, new Rectangle((int)(Position.X - (tri.Width) / 2),
+                    (int)(Position.Y - (tri.Height) / 2) - 80, (int)(tri.Width),
+                    (int)(tri.Height)), Color);
             }
 
         }

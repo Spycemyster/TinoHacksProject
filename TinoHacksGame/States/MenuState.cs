@@ -20,7 +20,7 @@ namespace TinoHacksGame.States {
         private float selectTimerUp = 0f;
         private Cursor cursor;
         private Texture2D backgroundPic;
-        private UIButton[] button = new UIButton[3];
+        private UIButton[] button = new UIButton[4];
 
         /// <summary>
         /// Creates a new instance of <c>MenuState</c>.
@@ -78,11 +78,27 @@ namespace TinoHacksGame.States {
                 Scale = 1f,
                 Color = Color.Green
             };
+
+            button[3] = new UIButton(cursor)
+            {
+                Position = new Vector2(650, 770),
+                Size = new Point(300, 50),
+                Text = "Exit",
+                Texture = blank,
+                Font = font,
+                Scale = 1f,
+                Color = Color.Green,
+            };
             button[0].OnPress += OnPress;
             button[1].OnPress += OnPress;
             button[2].OnPress += OnPress;
+            button[3].OnPress += OnPress;
         }
 
+        /// <summary>
+        /// Invoked whenever a button is pressed.
+        /// </summary>
+        /// <param name="arg"></param>
         private void OnPress(UIArg arg)
         {
             if (arg.Component == button[0])
@@ -97,13 +113,18 @@ namespace TinoHacksGame.States {
             {
                 GameManager.GetInstance().ChangeScreen(Screens.SETTINGS);
             }
+            else if (arg.Component == button[3])
+            {
+                GameManager.GetInstance().Exit();
+            }
         }
 
         /// <summary>
         /// Updates the logic and conditional checking for the <c>MenuState</c>.
         /// </summary>
         /// <param name="gameTime"></param>
-        public override void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime)
+        {
             base.Update(gameTime);
 
             //GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
@@ -145,16 +166,16 @@ namespace TinoHacksGame.States {
         /// </summary>
         /// <param name="spriteBatch"></param>
         /// <param name="device"></param>
-        public override void Draw(SpriteBatch spriteBatch, GraphicsDevice device) {
+        public override void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
+        {
             base.Draw(spriteBatch, device);
             spriteBatch.Begin();
+
             spriteBatch.Draw(backgroundPic, new Rectangle(0, 0, 1600, 900), Color.White);
             foreach (UIButton b in button)
                 b.Draw(spriteBatch);
-            //spriteBatch.DrawString(font, "Local", new Vector2(400, 100), option == 0 ? Color.Black : Color.Wheat);
-            //spriteBatch.DrawString(font, "Online", new Vector2(400, 200), option == 1 ? Color.Black : Color.Wheat);
-            //spriteBatch.DrawString(font, "Settings", new Vector2(400, 300), option == 2 ? Color.Black : Color.Wheat);
             cursor.Draw(spriteBatch);
+
             spriteBatch.End();
         }
     }

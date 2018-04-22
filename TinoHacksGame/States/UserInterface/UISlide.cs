@@ -111,25 +111,24 @@ namespace TinoHacksGame.States.UserInterface
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            Color c = Color.White;
             switch(select)
             {
                 case 0:
-                    c = Color.Yellow;
+                    Color = Color.Yellow;
                     break;
                 case 1:
-                    c = Color.Gray;
+                    Color = Color.Gray;
                     break;
                 case 2:
-                    c = Color.AliceBlue;
+                    Color = Color.AliceBlue;
                     break;
                 case 3:
-                    c = Color.DarkOliveGreen;
+                    Color = Color.DarkOliveGreen;
                     break;
             }
 
             spriteBatch.Draw(Texture, GetDrawRectangle(), Color.White);
-            spriteBatch.Draw(textures[select], GetDrawRectangle(), c);
+            spriteBatch.Draw(textures[select], GetDrawRectangle(), Color);
 
             if (FinishedSelecting)
             {

@@ -16,7 +16,6 @@ namespace TinoHacksGame.Sprites
         public int index;
         public float duration;
         public int dmg;
-        public float stuntime;
 
         public HitBox(GameState state, Player p, Vector2 os, Texture2D sprite, Point size, float d, int damage, float st) : base(state) {
             player = p;
@@ -24,7 +23,6 @@ namespace TinoHacksGame.Sprites
             index = p.index;
             duration = d;
             dmg = damage;
-            stuntime = st;
             this.Size = size;
             Scale = GameState.SCALE;
             this.Texture = sprite;
@@ -39,7 +37,7 @@ namespace TinoHacksGame.Sprites
                     Rectangle pRect = p.GetDrawRectangle();
                     Rectangle hRect = GetDrawRectangle();
                     if (pRect.Intersects(hRect)) {
-                        p.getHit(dmg, Vector2.Normalize(new Vector2(hRect.X - pRect.X, hRect.Y - pRect.Y)), stuntime);
+                        p.getHit(dmg, Vector2.Normalize(new Vector2(hRect.X - pRect.X, hRect.Y - pRect.Y)));
                     }
                 }
             }
