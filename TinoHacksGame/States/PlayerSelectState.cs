@@ -30,7 +30,7 @@ namespace TinoHacksGame.States
         private int stage;
 
         private Texture2D placeHolder, blank;
-        private Texture2D backgroundCollege;
+        private Texture2D[] backgroundColleges;
         /// <summary>
         /// Creates a new instance of the <c>PlayerSelectState</c>.
         /// </summary>
@@ -52,6 +52,11 @@ namespace TinoHacksGame.States
             int width = 360;
             blank = Content.Load<Texture2D>("Blank");
             int num = ControllersConnected();
+            backgroundColleges = new Texture2D[4];
+            backgroundColleges[0] = Content.Load<Texture2D>("jhu");
+            backgroundColleges[1] = Content.Load<Texture2D>("cambridge");
+            backgroundColleges[2] = Content.Load<Texture2D>("deanza");
+            backgroundColleges[3] = Content.Load<Texture2D>("stanford");
             logos = new Texture2D[4];
             logos[0] = Content.Load<Texture2D>("John Hopkins Logo");
             logos[1] = Content.Load<Texture2D>("Cambridge Logo");
@@ -77,8 +82,6 @@ namespace TinoHacksGame.States
             placeHolder = Content.Load<Texture2D>("Placeholder");
 
             // John Hopkins
-            backgroundCollege = Content.Load<Texture2D>("jhu");
-
             Platform plat = new Platform(null)
             {
                 Texture = blank,
@@ -106,10 +109,9 @@ namespace TinoHacksGame.States
             spawn0[1] = new Vector2(1550, 400);
             spawn0[2] = new Vector2(300, 400);
             spawn0[3] = new Vector2(1300, 400);
-            Stages.Add(new Stage(platforms, backgroundCollege, blank, spawn0));
+            Stages.Add(new Stage(platforms, backgroundColleges[0], blank, spawn0));
 
             // Cambridge
-            backgroundCollege = Content.Load<Texture2D>("cambridge");
 
             Platform plat3 = new Platform(null)
             {
@@ -148,10 +150,9 @@ namespace TinoHacksGame.States
                 plat3,
             };
 
-            Stages.Add(new Stage(platforms2, backgroundCollege, blank, spawn1));
+            Stages.Add(new Stage(platforms2, backgroundColleges[1], blank, spawn1));
 
             // De Anza
-            backgroundCollege = Content.Load<Texture2D>("deanza");
 
             Platform plat6 = new Platform(null)
             {
@@ -169,10 +170,9 @@ namespace TinoHacksGame.States
             spawn2[2] = new Vector2(100, 300);
             spawn2[3] = new Vector2(1500, 300);
 
-            Stages.Add(new Stage(platforms3, backgroundCollege, blank, spawn2));
+            Stages.Add(new Stage(platforms3, backgroundColleges[2], blank, spawn2));
 
             // Stanford
-            backgroundCollege = Content.Load<Texture2D>("stanford");
 
             Platform plat7 = new Platform(null)
             {
@@ -247,7 +247,7 @@ namespace TinoHacksGame.States
             spawn3[2] = new Vector2(100, 800);
             spawn3[3] = new Vector2(1500, 800);
 
-            Stages.Add(new Stage(platforms4, backgroundCollege, blank, spawn3));
+            Stages.Add(new Stage(platforms4, backgroundColleges[3], blank, spawn3));
 
             GameManager.GetInstance().stage = Stages[3];
         }
@@ -319,7 +319,7 @@ namespace TinoHacksGame.States
         {
             base.Draw(spriteBatch, device);
             spriteBatch.Begin();
-            spriteBatch.Draw(backgroundCollege, new Rectangle(0, 0, 1600, 900), Color.White);
+            spriteBatch.Draw(backgroundColleges[stage], new Rectangle(0, 0, 1600, 900), Color.White);
             foreach (Slide s in slides) s.Draw(spriteBatch);
             spriteBatch.Draw(blank, new Rectangle(32, 464, 1536, 404), Color.White);
             spriteBatch.Draw(logos[stage], new Rectangle(32, 464, 1536, 404), Color.White);

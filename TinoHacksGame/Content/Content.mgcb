@@ -699,3 +699,81 @@
 /processorParam:TextureFormat=Color
 /build:Stanford Logo.png
 
+#begin characterSelect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:characterSelect.mp3
+
+#begin endScreen.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:endScreen.mp3
+
+#begin LapBell.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:LapBell.wav
+
+#begin level 1.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:level 1.mp3
+
+#begin level 2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:level 2.mp3
+
+#begin level 3.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:level 3.mp3
+
+#begin level 4.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:level 4.mp3
+
+#begin level 5.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:level 5.mp3
+
+#begin level 6.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:level 6.mp3
+
+#begin LevelDing.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:LevelDing.wav
+
+#begin stageSelect.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:stageSelect.mp3
+
+#begin takeDmg.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:takeDmg.wav
+
+#begin title.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:title.mp3
+
