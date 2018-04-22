@@ -43,6 +43,7 @@ namespace TinoHacksGame.Sprites {
         }
 
         public bool AisUP = true;
+        public bool fastFalling = false;
 
         /// <summary>
         /// The speed in which the player moves at.
@@ -64,6 +65,7 @@ namespace TinoHacksGame.Sprites {
             this.index = index;
             IsFloating = true;
         }
+       
 
         /// <summary>
         /// Updates the <c>Player</c>'s logic and conditional checking.
@@ -77,9 +79,9 @@ namespace TinoHacksGame.Sprites {
 
             //left/right movement
             float left = gamePadState.ThumbSticks.Left.X;
+            
             if (gamePadState.ThumbSticks.Left.X < 0 && Velocity.X > 0) Velocity += new Vector2(-0.25f, 0);
             else if (gamePadState.ThumbSticks.Left.X > 0 && Velocity.X < 0) Velocity += new Vector2(0.25f, 0);
-            else Velocity = new Vector2(Math.Max(Math.Min(WALK, Velocity.X + left * SPEED), -WALK), Velocity.Y);
 
             //air and ground friction
             if (gamePadState.ThumbSticks.Left.Length() == 0) {
@@ -93,9 +95,13 @@ namespace TinoHacksGame.Sprites {
                 Rectangle rect = GetDrawRectangle();
                 Rectangle rect2 = p.GetDrawRectangle();
 
+                
                 if (rect.Intersects(rect2)) {
+                    fastFalling = false;
                     Position = new Vector2(Position.X, rect2.Top - Origin.Y * GameState.SCALE);
                     IsFloating = false;
+                    numJumps = 0;
+                    jumpTimer = 0f;
                     break;
                 }
                 else {
@@ -105,7 +111,9 @@ namespace TinoHacksGame.Sprites {
 
             //jump
             if (gamePadState.IsButtonDown(Buttons.A)) {
+                Console.WriteLine(numJumps);
                 if (AisUP && numJumps < MAXJUMPS) {
+                    jumpTimer = 0f;
                     numJumps++;
                     AisUP = false;
                     Velocity = new Vector2(Velocity.X, -1.5f);
@@ -119,11 +127,22 @@ namespace TinoHacksGame.Sprites {
             }
             else if (gamePadState.IsButtonUp(Buttons.A)) {
                 AisUP = true;
-                jumpTimer = 0f;
+                
             }
+            
+        
+            if (IsFloating && GamePad.GetState(index).ThumbSticks.Left.Y < 0)
+            {
+                fastFalling = true;
+            }
+            
 
-            if (IsFloating) {
-                Velocity += new Vector2(0, GameState.GRAVITY);
+            if(fastFalling && IsFloating)
+            {
+                Velocity += new Vector2(0, FASTFALL*GameState.GRAVITY);
+            }
+            else if (IsFloating) {
+                Velocity += new Vector2(0, SLOWFALL*GameState.GRAVITY);
             }
             else {
                 numJumps = 0;
