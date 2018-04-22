@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/BackArrow.png</SourceFile>
-  <SourceTime>2018-04-21T11:19:21.9703727-07:00</SourceTime>
-  <DestFile>C:/Users/lalam/source/repos/TinoHacksProject/TinoHacksGame/Content/bin/DesktopGL/BackArrow.xnb</DestFile>
-  <DestTime>2018-04-22T06:58:11.2885869-07:00</DestTime>
+  <SourceFile>E:/GitHub/TinoHacksProject/TinoHacksGame/Content/BackArrow.png</SourceFile>
+  <SourceTime>2018-04-21T11:10:46.9245138-07:00</SourceTime>
+  <DestFile>E:/GitHub/TinoHacksProject/TinoHacksGame/Content/bin/DesktopGL/BackArrow.xnb</DestFile>
+  <DestTime>2018-04-22T06:59:42.3467145-07:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T07:05:36-08:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
