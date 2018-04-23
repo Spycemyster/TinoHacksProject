@@ -91,6 +91,7 @@ namespace TinoHacksGame.Sprites {
         private float animationTimer, delayTimer;
 
         public SoundEffect dmgSFX;
+        public SoundEffect deathFX;
 
         /// <summary>
         /// Creates a new instance of <c>Player</c>
@@ -117,6 +118,7 @@ namespace TinoHacksGame.Sprites {
             if (walkLeftTexture == null) {
                 ContentManager Content = state.Content;
                 dmgSFX = Content.Load<SoundEffect>("takeDmg");
+                deathFX = Content.Load<SoundEffect>("LevelDing");
                 walkLeftTexture = Content.Load<Texture2D>("Move_Left");
                 walkRightTexture = Content.Load<Texture2D>("Move_Right");
                 idleTexture = Content.Load<Texture2D>("Idle");
@@ -320,6 +322,9 @@ namespace TinoHacksGame.Sprites {
                 fastFallTimer = 0;
                 delayTimer = 0;
                 animationTimer = 0;
+                var instance = deathFX.CreateInstance();
+                instance.Volume -= 0.7f;
+                instance.Play();
             }
         }
 

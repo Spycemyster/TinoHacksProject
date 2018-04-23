@@ -23,6 +23,7 @@ namespace TinoHacksGame
             graphics.PreferredBackBufferWidth = 1600;
             graphics.PreferredBackBufferHeight = 900;
             graphics.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(GPDS);
+            graphics.IsFullScreen = true;
         }
 
         private void GPDS(object sender, PreparingDeviceSettingsEventArgs e)
@@ -44,7 +45,7 @@ namespace TinoHacksGame
 
             IsMouseVisible = false;
             IsFixedTimeStep = false;
-
+            
             base.Initialize();
         }
 

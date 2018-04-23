@@ -144,10 +144,10 @@ namespace TinoHacksGame.States
                 Color = Color.LightSkyBlue,
             };
             Vector2[] spawn1 = new Vector2[4];
-            spawn1[0] = new Vector2(175, 200);
-            spawn1[1] = new Vector2(1425, 200);
-            spawn1[2] = new Vector2(500, 600);
-            spawn1[3] = new Vector2(1300, 600);
+            spawn1[0] = new Vector2(175, 400);
+            spawn1[1] = new Vector2(1425, 400);
+            spawn1[2] = new Vector2(400, 400);
+            spawn1[3] = new Vector2(1300, 400);
 
             List<Platform> platforms2 = new List<Platform>
             {
